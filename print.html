@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>{{GROUP_NAME}} {{GROUP_TYPE}} Group</title>
+        <title>Generic Associated Types Initiative</title>
                 <meta name="robots" content="noindex" />
                 
 
@@ -112,7 +112,7 @@
                         </button>
                                             </div>
 
-                    <h1 class="menu-title">{{GROUP_NAME}} {{GROUP_TYPE}} Group</h1>
+                    <h1 class="menu-title">Generic Associated Types Initiative</h1>
 
                     <div class="right-buttons">
                                                 <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -147,88 +147,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="group_name-group_type-group"><a class="header" href="#group_name-group_type-group">{{GROUP_NAME}} {{GROUP_TYPE}} Group</a></h1>
-<!--
- This is the template for creating project groups in rust-lang. Be sure to go
- through all sections marked with `**FIX ME**`, and make sure that the text is
- correct, and feel free to replace/remove any part that's not relevant to
- your group.
-
- All of the text across all of the initial files uses the same group of
- variables to allow for easy search and replace. They are listed below.
-
- Example sed command: `sed -i '' 's/{{GROUP_NAME}}/Inline ASM/g' ./**/*.md`
- *Note* the `-i ''` is important as it is required on some platforms e.g. macOS
-
- * {{GROUP_NAME}} -> The display name of your group e.g. "Inline ASM".
- * {{GROUP_SLUG}} -> The url slug name of your group used for
-   `rust-lang/team` and repo name. e.g. "pg-inline-asm".
- * {{CHAT_PLATFORM}} -> The name of your chat app e.g. "Zulip".
- * {{CHAT_LINK}} -> The hyperlink to your discussions on the chat app
-   e.g. "https://rust-lang.zulipchat.com/#narrow/stream/216763-project-inline-asm".
--->
-<!--
- Status badge advertising the project as being actively worked on. When the
- project has finished be sure to replace the active badge with a badge
- like: https://img.shields.io/badge/status-archived-grey.svg
--->
+                        <h1 id="generic-associated-types-initiative"><a class="header" href="#generic-associated-types-initiative">Generic Associated Types Initiative</a></h1>
 <p><img src="https://img.shields.io/badge/status-active-brightgreen.svg" alt="project group status: active" />
 <a href="https://rust-lang.github.io/%7B%7BGROUP_SLUG%7D%7D"><img src="https://img.shields.io/badge/MDBook-View%20Documentation-blue" alt="project group documentation" /></a></p>
-<p><strong>FIX ME</strong></p>
-<!--
- Provide a short introduction about your project group. Make sure to include any
- relevant links to information about your group.
--->
-<p>Welcome to the repository for the {{GROUP_NAME}} Project Group! This is the
-repository we use to organise our work. Please refer to our <a href="./CHARTER.html">charter</a> as well
+<p>Welcome to the repository for the Generic Associated Types <a href="https://lang-team.rust-lang.org/initiatives.html">initiative</a>! This is the repository we use to organise our work. Please refer to our <a href="./CHARTER.html">charter</a> as well
 as our <a href="https://rust-lang.github.io/%7B%7BGROUP_SLUG%7D%7D">github pages website</a> for more information on our goals and
 current scope.</p>
-<p><strong>/FIX ME</strong></p>
 <h2 id="how-can-i-get-involved"><a class="header" href="#how-can-i-get-involved">How Can I Get Involved?</a></h2>
-<p><strong>FIX ME</strong></p>
-<!--
- List ways that people from outside your group can get involved and potentially
- become members, include what meetings your team has, and how a person could
- start participating and contributing. Make sure to mention the main platform
- your group hosts its discussions. Be sure to also include links to any
- other projects that your group maintains.
--->
-<p><a href="https://github.com/rust-lang/team/blob/master/teams/%7B%7BGROUP_TYPE%7D%7D-%7B%7BGROUP_SLUG%7D%7D.toml">You can find a list of the current members available
-on <code>rust-lang/team</code>.</a></p>
-<p>If you'd like to participate be sure to check out any of our <a href="/issues">open issues</a> on this
-repository.</p>
-<p>We also participate on <a href="%7B%7BCHAT_LINK%7D%7D">{{CHAT_PLATFORM}}</a>, feel free to introduce
-yourself over there and ask us any questions you have.</p>
-<p><strong>/FIX ME</strong></p>
+<ul>
+<li>We are not looking for coding support at this time.</li>
+<li>You may wish to submit experience reports or participate in active discussions, however, please visit our <a href="/issues">issues page</a>.</li>
+</ul>
+<p>If you'd like to participate be sure to check out any of our [open issues] on this repository.</p>
+<p>We also chat in the <code>#wg-traits</code> stream on the <a href="https://rust-lang.zulipchat.com/">rust-lang Zulip</a>, feel free to introduce yourself over there and ask us any questions you have.</p>
 <h2 id="building-documentation"><a class="header" href="#building-documentation">Building Documentation</a></h2>
 <p>This repository is also an mdbook project. You can view and build it using the
 following command.</p>
 <pre><code>mdbook serve
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="group_name-charter"><a class="header" href="#group_name-charter">{{GROUP_NAME}} Charter</a></h1>
-<!--
- Provide an introduction summarising the goals and motivation behind your
- project group.
--->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="generic-associated-types-charter"><a class="header" href="#generic-associated-types-charter">&quot;Generic Associated Types&quot; Charter</a></h1>
 <h2 id="goals"><a class="header" href="#goals">Goals</a></h2>
-<!--
- Explain what changes you'd like to see your group your group to focus on, and
- how you plan to approach these issues. Focus on explaining the highest possible
- level of your change.
--->
-<h2 id="constraints-and-considerations"><a class="header" href="#constraints-and-considerations">Constraints And Considerations</a></h2>
-<!--
- Explain the scope of your group, what you have chosen not to include in
- your goals, and your motivations behind making them non-goals.
--->
+<ul>
+<li>Deliver an initial version of <a href="https://github.com/rust-lang/rfcs/pull/1598">generic associated types</a> feature.</li>
+</ul>
 <h2 id="membership"><a class="header" href="#membership">Membership</a></h2>
-<!--
- Mention your initial membership and who has decided take the roles of
- shepherd(s) and liason.
--->
-<p><strong>Shepherd:</strong>
-<strong>Team Liason:</strong>
-<strong>Members:</strong></p>
+<ul>
+<li><strong>Owner:</strong> jackh726</li>
+<li><strong>Liaison:</strong> nikomatsakis</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="meetings"><a class="header" href="#meetings">Meetings</a></h1>
 <p>This folder contains the minutes of all the recorded meetings that have happened
 so far.</p>
