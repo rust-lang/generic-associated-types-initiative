@@ -7,4 +7,8 @@ title = "Generic Associated Types Initiative"
 
 [output.html]
 no-section-label=true
-git-repository-url="https://github.com/rust-lang/{{GROUP_SLUG}}"
+git-repository-url="https://github.com/rust-lang/generic-associated-types-initiative"
+
+[output.html.fold]
+enable = true
+level = 0
