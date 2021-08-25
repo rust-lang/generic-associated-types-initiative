@@ -1,6 +1,6 @@
 ---
 name: Experience report
-about: Describe your experiences with GATs
+about: Describe your experiences using this feature
 title: ''
 labels: experience-report
 assignees: ''
