@@ -2,7 +2,15 @@
 
 ## Summary
 
-Where to place the where clause with respect to the value of a generic associated type?
+Proposed: to alter the syntax of where clauses on type aliases so that they appear *after* the value:
+
+```
+type StringMap<K> = BTreeMap<K, String>
+where
+    K: PartialOrd
+```
+
+This applies both in top-level modules and in trats (associated types, generic or otherwise).
 
 ## Background
 
@@ -50,6 +58,18 @@ type Foo<T> where T: Eq = Vec<T>;
 fn main() { }
 ```
 
+## Top-level type aliases
+
+Currently, we accept where clauses in top-level type aliases, but they are deprecated (warning) and semi-ignored:
+
+```
+type StringMap<K> where
+    K: PartialOrd
+= BTreeMap<K, String>
+```
+
+Under this proposal, this syntax remains, but is deprecated. The newer syntax for type aliases (with `where` coming after the type) would remain feature gated until such time as we enforce the expected semantics.
+
 ## Alternatives
 
 ### Keep the current syntax.
@@ -66,10 +86,6 @@ impl<T> Iterable for Vec<T> {
     }
 }
 ```
-
-### Alter to place the `= ...` first
-
-In that case, we should consider where clauses attached to other type aliases, which also 
 
 ### Accept either
 
