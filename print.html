@@ -369,7 +369,12 @@ pub trait IncomingRequest: Sized {
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="where-does-the-where-clause-go"><a class="header" href="#where-does-the-where-clause-go">Where does the where clause go?</a></h1>
 <h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
-<p>Where to place the where clause with respect to the value of a generic associated type?</p>
+<p>Proposed: to alter the syntax of where clauses on type aliases so that they appear <em>after</em> the value:</p>
+<pre><code>type StringMap&lt;K&gt; = BTreeMap&lt;K, String&gt;
+where
+    K: PartialOrd
+</code></pre>
+<p>This applies both in top-level modules and in trats (associated types, generic or otherwise).</p>
 <h2 id="background"><a class="header" href="#background">Background</a></h2>
 <p>The current syntax for where to place the &quot;where clause&quot; of a generic associated types is awkward. Consider this example (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=bdb55a5d5cb17e20d73e22a3f2db0e57">playground</a>):</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -413,6 +418,13 @@ impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
 
 fn main() { }
 </code></pre></pre>
+<h2 id="top-level-type-aliases"><a class="header" href="#top-level-type-aliases">Top-level type aliases</a></h2>
+<p>Currently, we accept where clauses in top-level type aliases, but they are deprecated (warning) and semi-ignored:</p>
+<pre><code>type StringMap&lt;K&gt; where
+    K: PartialOrd
+= BTreeMap&lt;K, String&gt;
+</code></pre>
+<p>Under this proposal, this syntax remains, but is deprecated. The newer syntax for type aliases (with <code>where</code> coming after the type) would remain feature gated until such time as we enforce the expected semantics.</p>
 <h2 id="alternatives-1"><a class="header" href="#alternatives-1">Alternatives</a></h2>
 <h3 id="keep-the-current-syntax"><a class="header" href="#keep-the-current-syntax">Keep the current syntax.</a></h3>
 <p>In this case, we must settle the question of how we expect it to be formatted (surely not as I have shown it above).</p>
@@ -429,8 +441,6 @@ fn main() { }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="alter-to-place-the---first"><a class="header" href="#alter-to-place-the---first">Alter to place the <code>= ...</code> first</a></h3>
-<p>In that case, we should consider where clauses attached to other type aliases, which also </p>
 <h3 id="accept-either"><a class="header" href="#accept-either">Accept either</a></h3>
 <p>What do we do if both are supplied?</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-faq"><a class="header" href="#-faq">😕 FAQ</a></h1>
