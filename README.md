@@ -21,12 +21,13 @@ The following table lists of the stages of an initiative, along with links to th
 | Stage                                 | State | Artifact(s) |
 | ------------------------------------- | ----- | ----------- |
 | [Proposal]                            | ✅    | [Charter](./CHARTER.md) |
-|                                       |       | [Tracking issue](https://github.com/rust-lang/rust/) |
+|                                       |       | [Tracking issue] |
 | [Experimental]                        | ✅    | [RFC](./RFC.md) |
 | [Development]                         | 🦀    | [Explainer](./explainer.md) | 
 | [Feature complete]                    | 💤    | Stabilization report |
 | [Stabilized]                          | 💤    | |
 
+[Tracking issue]: https://github.com/rust-lang/rust/issues/44265
 [Proposal]: https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html
 [Experimental]: https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html
 [Development]: https://lang-team.rust-lang.org/initiatives/process/stages/development.html
