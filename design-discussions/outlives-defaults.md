@@ -95,6 +95,161 @@ trait Transform<Input> {
 }
 ```
 
+### Example: Iter static
+
+In the previous example, the lifetime parameter for `Output` was not related to the `self` parameter. Are there (realistic) examples where the associated type is applied to the lifetime parameter from `self` *but* the `where Self: 'a` is not desired?
+
+There are some, but they rely on having "special knowledge" of the types that will be used in the impl, and they don't seem especially realistic. The reason is that, if you have a GAT with a lifetime parameter, it is likely that the GAT contains some data borrowed for that lifetime! But if you use the lifetime of `self`, that implies we are borrowing some data from `self` -- however, it doesn't *necessarily* imply that we are borrowing data of any particular type. Consider this example:
+
+```rust
+trait Message {
+    type Data<'a>: Display;
+
+    fn data<'b>(&'b mut self) -> Self::Data<'b>;
+
+    fn default() -> Self::Data<'static>;
+}
+
+struct MyMessage<T> {
+    text: String,
+    payload: T,
+}
+
+impl<T> Message for MyMessage<T> {
+    type Data<'a>: Display = &'a str;
+    // No requirement that `T: 'a`!
+
+    fn data<'b>(&'b mut self) -> Self::Data<'b> {
+        // In here, we know that `T: 'b`
+    }
+
+    fn default() -> Self::Data<'static> {
+        "Hello, world"        
+    }
+}
+```
+
+Here the `where T: 'a` requirement is not necessary, and may in fact be annoying when invoking `<MyMessage<T> as Message>::default()` (as it would then require that `T: 'static`).
+
+Another possibility is that the usage of `<MyMessage<T> as Message>::Data<'static>` doesn't appear inside the trait definition, although it is hard to imagine exactly how one writes a useful function like that in practice.
+
+## Alternatives
+
+### Status quo
+
+We ship with no default. This kind of locks in a box, because adding a default later would be a breaking change to existing impls that are affected by the default. since some of them may be using the associated types with a lifetime unrelated to `Self`. Note though that a sufficiently tailored default would only break code that was going to -- or perhaps *very likely to* -- not compile anyhow.
+
+### Smart default: add `where Self: 'a` if the GAT is used with the lifetime from `&self` (and extend to other type parameters)
+
+Analyze the types of methods within the trait definition. It a GAT is applied to a lifetime `'x`, examine the implied bounds of the method for bounds of the form `T: 'x`, where `T` is an input parameter to the trait. If we find such bounds on all methods for every use of the GAT, then add the corresponding default.
+
+Consider the `LendingIterator` trait:
+
+```rust
+trait LendingIterator {
+    type Item<'a>;
+
+    fn next<'b>(&'b mut self) -> Self::Item<'b>;
+}
+```
+
+Analyzing the closure body, we see that it contains `Self::Item<'b>` where `'b` is the lifetime of the `self` reference (e.g., `self: &'b Self` or `self: &'b mut Self`). The implied bounds of this method contain `Self: 'b`. Since there is only one use of `Self::Item<'b>`, and the implied bound `Self: 'b` applies in that case, then we add the default `where Self: 'a` to the GAT. 
+
+This check is a fairly simple syntactic check, though not necessarily easy to explain. It would accept all the examples that appear in this document, including the example with `fn default() -> Self::Data<'static>` (in that case, the default is not triggered, because we found a use of `Data` that is applied to a lifetime for which no implied bound applies). The only case where this default behaves *incorrectly* is the case where all uses of `Self::Data` that appear within the trait need the default, but there are uses outside the trait that do not (I couldn't come up with a realistic example of how to do this usefully).
+
+#### Extending to other type parameters
+
+The inference can be extended naturally beyond `self` to other type parameters. Therefore this example:
+
+```rust
+trait Parser<Input> {
+    type Output<'i>;
+
+    fn get<'input>(&mut self, i: &'input Input) -> Self::Output<'input>;
+}
+```
+
+would infer a `where Input: 'i` bound on `type Output<'i>`.
+
+Similarly:
+
+```rust
+trait Parser<Input> {
+    type Output<'i>;
+
+    fn get(&mut self, i: &'input Input) -> Self::Output<'input>;
+}
+```
+
+would infer a `where Input: 'i` bound on `type Output<'i>`.
+
+#### Avoiding the default
+
+If this default is truly not desired, there is a workaround: one can declare a supertrait that contains just the associated type. For example:
+
+```rust
+trait IterType {
+    type Iter<'b>;
+}
+
+trait LendingIterator: IterType {
+    fn next(&mut self) -> Self::Iter<'_>;
+}
+```
+
+This workaround is not especially obvious, however.
+
+#### Related precedent
+
+We used to require `T: 'a` bounds in structs:
+
+```rust
+struct Foo<'a, T> {
+    x: &'a T
+}
+```
+
+but as of [RFC 2093] we infer such bounds from the fields in the struct body. In this case, if we do come up with a default rule, we are essentially inferring the presence of such bounds by usages of the associated type within the trait definition.
+
+[RFC 2093]: https://rust-lang.github.io/rfcs/2093-infer-outlives.html
+
+## Appendix A: Ruled out alternatives
+
+### Special syntax
+
+We could use the `'self` "keyword", permitted only in GATs, to indicate "a lifetime with the where clause `where Self: 'self`". The `LendingIterator` trait would therefore be written
+
+```rust
+trait LendingIterator {
+    type Item<'self>;
+
+    fn next(&mut self) -> Self::Item<'_>;
+}
+```
+
+*Forwards compatibility note:* This option could be added later; note also that `'self` is not currently valid.
+
+**Why not?** `'self` is an awfully suggestive syntax. It may be useful for things like self-referential structs. This just doesn't important enough.
+
+### Force people to write `where Self: 'a`
+
+To buy time, we could force people to write `where Self: 'a`, so that we can later allow it to be elided. This unfortunately would eliminate a number of valid use cases for GATs (though they would later be supported).
+
+**Why not?** Rules out a number of useful cases.
+
+### Dumb default: Always default to `where Self: 'a`
+
+The most obvious default is to add `where Self: 'a` to the where clause list for any GAT with a lifetime parameter `'a`, but that seems too crude. It will rule out all existing cases unless we add some form of "opt-out" syntax, for which we have no real precedent.
+
+
+**Why not?** Rules out a number of useful cases.
+
+## Appendix B: Considerations
+
+* [How 'obvious' are the rules?](https://github.com/rust-lang/rust/issues/87479#issuecomment-890111937)
+
+## Appendix C: Other examples
+
 ### Example: Ruma
 
 ```rust
@@ -116,62 +271,3 @@ pub trait IncomingRequest: Sized {
 
 [full definition](https://docs.rs/ruma-api/0.17.1/ruma_api/trait.IncomingRequest.html)
 
-### Example: something :) 
-
-[link](https://github.com/rust-lang/rust/issues/87479#issuecomment-890760913)
-
-### Example: Sanakirja
-
-
-## Alternatives
-
-### Status quo
-
-We ship with no default. This kind of locks in a box, because adding a default later would be a breaking change to existing impls that are affected by the default. since some of them may be using the associated types with a lifetime unrelated to `Self`. Note though that a sufficiently tailored default would only break code that was going to -- or perhaps *very likely to* -- not compile anyhow.
-
-### Force people to write `where Self: 'a`
-
-To buy time, we could force people to write `where Self: 'a`, so that we can later allow it to be elided. This unfortunately would eliminate a number of valid use cases for GATs (though they would later be supported).
-
-### Special syntax
-
-We could use the `'self` "keyword", permitted only in GATs, to indicate "a lifetime with the where clause `where Self: 'self`". The `LendingIterator` trait would therefore be written
-
-```rust
-trait LendingIterator {
-    type Item<'self>;
-
-    fn next(&mut self) -> Self::Item<'_>;
-}
-```
-
-*Forwards compatibility note:* This option could be added later; note also that `'self` is not currently valid.
-
-### Smart default: add `where Self: 'a` if the GAT is used with the lifetime from `&self` 
-
-Consider the `LendingIterator` trait:
-
-```rust
-trait LendingIterator {
-    type Item<'a>;
-
-    fn next<'b>(&'b mut self) -> Self::Item<'b>;
-}
-```
-
-Analyzing the closure body, we see that it contains `Self::Item<'b>` where `'b` is the lifetime of the `self` reference (e.g., `self: &'b Self` or `self: &'b mut Self`). Because we find at least one such method, we can deduce that this associated type refers to contents potentially borrowed from `self`, and therefore `where Self: 'a` is appropriate and added as a default.
-
-This check is a fairly simple syntactic check, though not necessarily easy to explain. There are no known "false defaults" (defaults where you wouldn't actually want it). It would accept all examples given in the "not desired" list. 
-
-If it is truly not desired, there is a workaround: one can eschew method form and write `fn next(this: &mut self)`, for example. 
-
-## Ruled out alternatives
-
-### Dumb default: Always default to `where Self: 'a`
-
-The most obvious default is to add `where Self: 'a` to the where clause list for any GAT with a lifetime parameter `'a`, but that seems too crude. It will rule out all existing cases unless we add some form of "opt-out" syntax, for which we have no real precedent.
-
-
-## Considerations
-
-* [How 'obvious' are the rules?](https://github.com/rust-lang/rust/issues/87479#issuecomment-890111937)
