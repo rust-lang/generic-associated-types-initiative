@@ -407,6 +407,10 @@ trait LendingIterator: IterType {
 <span class="boring">}
 </span></code></pre></pre>
 <p>but as of <a href="https://rust-lang.github.io/rfcs/2093-infer-outlives.html">RFC 2093</a> we infer such bounds from the fields in the struct body. In this case, if we do come up with a default rule, we are essentially inferring the presence of such bounds by usages of the associated type within the trait definition.</p>
+<h2 id="recommendation"><a class="header" href="#recommendation">Recommendation</a></h2>
+<p>Niko's recommendation is to use the &quot;smart defaults&quot;. Why? They basically always do the right thing, thus contributing to <a href="https://rustacean-principles.netlify.app/how_rust_empowers/supportive.html">supportive</a>, at the cost of (theoretical) <a href="https://rustacean-principles.netlify.app/how_rust_empowers/versatile.html">versatility</a>. This seems like the right trade-off to me.</p>
+<p>The counterargument would be: the rules are sufficiently complex, we can potentially add this later, and people are going to be surprised by this default when it &quot;goes wrong&quot; for them. It would be hard, but not impossible, to add a tailored error message for cases where the <code>where T: 'b</code> check fails.</p>
+<p>Not sure about Jack's opinion. =)</p>
 <h2 id="appendix-a-ruled-out-alternatives"><a class="header" href="#appendix-a-ruled-out-alternatives">Appendix A: Ruled out alternatives</a></h2>
 <h3 id="special-syntax"><a class="header" href="#special-syntax">Special syntax</a></h3>
 <p>We could use the <code>'self</code> &quot;keyword&quot;, permitted only in GATs, to indicate &quot;a lifetime with the where clause <code>where Self: 'self</code>&quot;. The <code>LendingIterator</code> trait would therefore be written</p>
