@@ -213,6 +213,14 @@ but as of [RFC 2093] we infer such bounds from the fields in the struct body. In
 
 [RFC 2093]: https://rust-lang.github.io/rfcs/2093-infer-outlives.html
 
+## Recommendation
+
+Niko's recommendation is to use the "smart defaults". Why? They basically always do the right thing, thus contributing to [supportive](https://rustacean-principles.netlify.app/how_rust_empowers/supportive.html), at the cost of (theoretical) [versatility](https://rustacean-principles.netlify.app/how_rust_empowers/versatile.html). This seems like the right trade-off to me.
+
+The counterargument would be: the rules are sufficiently complex, we can potentially add this later, and people are going to be surprised by this default when it "goes wrong" for them. It would be hard, but not impossible, to add a tailored error message for cases where the `where T: 'b` check fails.
+
+Not sure about Jack's opinion. =)
+
 ## Appendix A: Ruled out alternatives
 
 ### Special syntax
