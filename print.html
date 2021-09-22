@@ -303,6 +303,136 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h3 id="example-iter-static"><a class="header" href="#example-iter-static">Example: Iter static</a></h3>
+<p>In the previous example, the lifetime parameter for <code>Output</code> was not related to the <code>self</code> parameter. Are there (realistic) examples where the associated type is applied to the lifetime parameter from <code>self</code> <em>but</em> the <code>where Self: 'a</code> is not desired?</p>
+<p>There are some, but they rely on having &quot;special knowledge&quot; of the types that will be used in the impl, and they don't seem especially realistic. The reason is that, if you have a GAT with a lifetime parameter, it is likely that the GAT contains some data borrowed for that lifetime! But if you use the lifetime of <code>self</code>, that implies we are borrowing some data from <code>self</code> -- however, it doesn't <em>necessarily</em> imply that we are borrowing data of any particular type. Consider this example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Message {
+    type Data&lt;'a&gt;: Display;
+
+    fn data&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Data&lt;'b&gt;;
+
+    fn default() -&gt; Self::Data&lt;'static&gt;;
+}
+
+struct MyMessage&lt;T&gt; {
+    text: String,
+    payload: T,
+}
+
+impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
+    type Data&lt;'a&gt;: Display = &amp;'a str;
+    // No requirement that `T: 'a`!
+
+    fn data&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Data&lt;'b&gt; {
+        // In here, we know that `T: 'b`
+    }
+
+    fn default() -&gt; Self::Data&lt;'static&gt; {
+        &quot;Hello, world&quot;        
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Here the <code>where T: 'a</code> requirement is not necessary, and may in fact be annoying when invoking <code>&lt;MyMessage&lt;T&gt; as Message&gt;::default()</code> (as it would then require that <code>T: 'static</code>).</p>
+<p>Another possibility is that the usage of <code>&lt;MyMessage&lt;T&gt; as Message&gt;::Data&lt;'static&gt;</code> doesn't appear inside the trait definition, although it is hard to imagine exactly how one writes a useful function like that in practice.</p>
+<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
+<h3 id="status-quo"><a class="header" href="#status-quo">Status quo</a></h3>
+<p>We ship with no default. This kind of locks in a box, because adding a default later would be a breaking change to existing impls that are affected by the default. since some of them may be using the associated types with a lifetime unrelated to <code>Self</code>. Note though that a sufficiently tailored default would only break code that was going to -- or perhaps <em>very likely to</em> -- not compile anyhow.</p>
+<h3 id="smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters"><a class="header" href="#smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters">Smart default: add <code>where Self: 'a</code> if the GAT is used with the lifetime from <code>&amp;self</code> (and extend to other type parameters)</a></h3>
+<p>Analyze the types of methods within the trait definition. It a GAT is applied to a lifetime <code>'x</code>, examine the implied bounds of the method for bounds of the form <code>T: 'x</code>, where <code>T</code> is an input parameter to the trait. If we find such bounds on all methods for every use of the GAT, then add the corresponding default.</p>
+<p>Consider the <code>LendingIterator</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait LendingIterator {
+    type Item&lt;'a&gt;;
+
+    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Analyzing the closure body, we see that it contains <code>Self::Item&lt;'b&gt;</code> where <code>'b</code> is the lifetime of the <code>self</code> reference (e.g., <code>self: &amp;'b Self</code> or <code>self: &amp;'b mut Self</code>). The implied bounds of this method contain <code>Self: 'b</code>. Since there is only one use of <code>Self::Item&lt;'b&gt;</code>, and the implied bound <code>Self: 'b</code> applies in that case, then we add the default <code>where Self: 'a</code> to the GAT. </p>
+<p>This check is a fairly simple syntactic check, though not necessarily easy to explain. It would accept all the examples that appear in this document, including the example with <code>fn default() -&gt; Self::Data&lt;'static&gt;</code> (in that case, the default is not triggered, because we found a use of <code>Data</code> that is applied to a lifetime for which no implied bound applies). The only case where this default behaves <em>incorrectly</em> is the case where all uses of <code>Self::Data</code> that appear within the trait need the default, but there are uses outside the trait that do not (I couldn't come up with a realistic example of how to do this usefully).</p>
+<h4 id="extending-to-other-type-parameters"><a class="header" href="#extending-to-other-type-parameters">Extending to other type parameters</a></h4>
+<p>The inference can be extended naturally beyond <code>self</code> to other type parameters. Therefore this example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Parser&lt;Input&gt; {
+    type Output&lt;'i&gt;;
+
+    fn get&lt;'input&gt;(&amp;mut self, i: &amp;'input Input) -&gt; Self::Output&lt;'input&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
+<p>Similarly:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Parser&lt;Input&gt; {
+    type Output&lt;'i&gt;;
+
+    fn get(&amp;mut self, i: &amp;'input Input) -&gt; Self::Output&lt;'input&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
+<h4 id="avoiding-the-default"><a class="header" href="#avoiding-the-default">Avoiding the default</a></h4>
+<p>If this default is truly not desired, there is a workaround: one can declare a supertrait that contains just the associated type. For example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait IterType {
+    type Iter&lt;'b&gt;;
+}
+
+trait LendingIterator: IterType {
+    fn next(&amp;mut self) -&gt; Self::Iter&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This workaround is not especially obvious, however.</p>
+<h4 id="related-precedent"><a class="header" href="#related-precedent">Related precedent</a></h4>
+<p>We used to require <code>T: 'a</code> bounds in structs:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo&lt;'a, T&gt; {
+    x: &amp;'a T
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>but as of <a href="https://rust-lang.github.io/rfcs/2093-infer-outlives.html">RFC 2093</a> we infer such bounds from the fields in the struct body. In this case, if we do come up with a default rule, we are essentially inferring the presence of such bounds by usages of the associated type within the trait definition.</p>
+<h2 id="appendix-a-ruled-out-alternatives"><a class="header" href="#appendix-a-ruled-out-alternatives">Appendix A: Ruled out alternatives</a></h2>
+<h3 id="special-syntax"><a class="header" href="#special-syntax">Special syntax</a></h3>
+<p>We could use the <code>'self</code> &quot;keyword&quot;, permitted only in GATs, to indicate &quot;a lifetime with the where clause <code>where Self: 'self</code>&quot;. The <code>LendingIterator</code> trait would therefore be written</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait LendingIterator {
+    type Item&lt;'self&gt;;
+
+    fn next(&amp;mut self) -&gt; Self::Item&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><em>Forwards compatibility note:</em> This option could be added later; note also that <code>'self</code> is not currently valid.</p>
+<p><strong>Why not?</strong> <code>'self</code> is an awfully suggestive syntax. It may be useful for things like self-referential structs. This just doesn't important enough.</p>
+<h3 id="force-people-to-write-where-self-a"><a class="header" href="#force-people-to-write-where-self-a">Force people to write <code>where Self: 'a</code></a></h3>
+<p>To buy time, we could force people to write <code>where Self: 'a</code>, so that we can later allow it to be elided. This unfortunately would eliminate a number of valid use cases for GATs (though they would later be supported).</p>
+<p><strong>Why not?</strong> Rules out a number of useful cases.</p>
+<h3 id="dumb-default-always-default-to-where-self-a"><a class="header" href="#dumb-default-always-default-to-where-self-a">Dumb default: Always default to <code>where Self: 'a</code></a></h3>
+<p>The most obvious default is to add <code>where Self: 'a</code> to the where clause list for any GAT with a lifetime parameter <code>'a</code>, but that seems too crude. It will rule out all existing cases unless we add some form of &quot;opt-out&quot; syntax, for which we have no real precedent.</p>
+<p><strong>Why not?</strong> Rules out a number of useful cases.</p>
+<h2 id="appendix-b-considerations"><a class="header" href="#appendix-b-considerations">Appendix B: Considerations</a></h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-890111937">How 'obvious' are the rules?</a></li>
+</ul>
+<h2 id="appendix-c-other-examples"><a class="header" href="#appendix-c-other-examples">Appendix C: Other examples</a></h2>
 <h3 id="example-ruma"><a class="header" href="#example-ruma">Example: Ruma</a></h3>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -324,49 +454,6 @@ pub trait IncomingRequest: Sized {
 <span class="boring">}
 </span></code></pre></pre>
 <p><a href="https://docs.rs/ruma-api/0.17.1/ruma_api/trait.IncomingRequest.html">full definition</a></p>
-<h3 id="example-something-"><a class="header" href="#example-something-">Example: something :)</a></h3>
-<p><a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-890760913">link</a></p>
-<h3 id="example-sanakirja"><a class="header" href="#example-sanakirja">Example: Sanakirja</a></h3>
-<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
-<h3 id="status-quo"><a class="header" href="#status-quo">Status quo</a></h3>
-<p>We ship with no default. This kind of locks in a box, because adding a default later would be a breaking change to existing impls that are affected by the default. since some of them may be using the associated types with a lifetime unrelated to <code>Self</code>. Note though that a sufficiently tailored default would only break code that was going to -- or perhaps <em>very likely to</em> -- not compile anyhow.</p>
-<h3 id="force-people-to-write-where-self-a"><a class="header" href="#force-people-to-write-where-self-a">Force people to write <code>where Self: 'a</code></a></h3>
-<p>To buy time, we could force people to write <code>where Self: 'a</code>, so that we can later allow it to be elided. This unfortunately would eliminate a number of valid use cases for GATs (though they would later be supported).</p>
-<h3 id="special-syntax"><a class="header" href="#special-syntax">Special syntax</a></h3>
-<p>We could use the <code>'self</code> &quot;keyword&quot;, permitted only in GATs, to indicate &quot;a lifetime with the where clause <code>where Self: 'self</code>&quot;. The <code>LendingIterator</code> trait would therefore be written</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'self&gt;;
-
-    fn next(&amp;mut self) -&gt; Self::Item&lt;'_&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p><em>Forwards compatibility note:</em> This option could be added later; note also that <code>'self</code> is not currently valid.</p>
-<h3 id="smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self"><a class="header" href="#smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self">Smart default: add <code>where Self: 'a</code> if the GAT is used with the lifetime from <code>&amp;self</code></a></h3>
-<p>Consider the <code>LendingIterator</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'a&gt;;
-
-    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Analyzing the closure body, we see that it contains <code>Self::Item&lt;'b&gt;</code> where <code>'b</code> is the lifetime of the <code>self</code> reference (e.g., <code>self: &amp;'b Self</code> or <code>self: &amp;'b mut Self</code>). Because we find at least one such method, we can deduce that this associated type refers to contents potentially borrowed from <code>self</code>, and therefore <code>where Self: 'a</code> is appropriate and added as a default.</p>
-<p>This check is a fairly simple syntactic check, though not necessarily easy to explain. There are no known &quot;false defaults&quot; (defaults where you wouldn't actually want it). It would accept all examples given in the &quot;not desired&quot; list. </p>
-<p>If it is truly not desired, there is a workaround: one can eschew method form and write <code>fn next(this: &amp;mut self)</code>, for example. </p>
-<h2 id="ruled-out-alternatives"><a class="header" href="#ruled-out-alternatives">Ruled out alternatives</a></h2>
-<h3 id="dumb-default-always-default-to-where-self-a"><a class="header" href="#dumb-default-always-default-to-where-self-a">Dumb default: Always default to <code>where Self: 'a</code></a></h3>
-<p>The most obvious default is to add <code>where Self: 'a</code> to the where clause list for any GAT with a lifetime parameter <code>'a</code>, but that seems too crude. It will rule out all existing cases unless we add some form of &quot;opt-out&quot; syntax, for which we have no real precedent.</p>
-<h2 id="considerations"><a class="header" href="#considerations">Considerations</a></h2>
-<ul>
-<li><a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-890111937">How 'obvious' are the rules?</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="where-does-the-where-clause-go"><a class="header" href="#where-does-the-where-clause-go">Where does the where clause go?</a></h1>
 <h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
 <p>Proposed: to alter the syntax of where clauses on type aliases so that they appear <em>after</em> the value:</p>
