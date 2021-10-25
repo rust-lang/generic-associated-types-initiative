@@ -84,7 +84,7 @@ With generic associated types, associated types can have generic parameters. Thi
 trait Iterable {
     type Item<'a>
     where
-        Self: 'a;
+        Self: 'a; // <-- see the "required bounds" section for more information
 
     type Iterator<'a>: Iterator<Item = Self::Item<'a>>
     where
@@ -100,7 +100,7 @@ Given this trait definition, we can implement `Iterable` like so:
 impl<T> Iterable for Vec<T> {
     type Item<'a> = &'a T
     where
-        T: 'a;
+        T: 'a; // <-- see the "required bounds" section for more information
 
     type Iterator<'a> = Iter<'a, T>
     where
