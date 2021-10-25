@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>2021-Oct - Generic Associated Types Initiative</title>
+        <title>Future directions - Generic Associated Types Initiative</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item expanded "><a href="../updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../updates/2021-oct.html" class="active">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="../RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="../design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item expanded "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item expanded "><a href="../explainer/future_directions.html" class="active">Future directions</a></li></ol></li><li class="chapter-item "><a href="../RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="../design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,46 +137,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="2021-oct-lang-team-update"><a class="header" href="#2021-oct-lang-team-update">2021-Oct: Lang team update</a></h1>
-<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<ul>
-<li>GATs are moving towards stabilization. Major blockers:
-<ul>
-<li>Resolving the <a href="../design-discussions/outlives-defaults.html">default inference</a> question we discussed earlier (plan described below)</li>
-<li>Resolving the <a href="../design-discussions/where-the-where.html">syntax of where clauses</a></li>
-<li>Explainer that covers common usage patterns</li>
-<li>Documenting test coverage</li>
-<li>Triage known bugs</li>
-</ul>
-</li>
-<li>Since we landed various improvements, jackh726 has been monitoring bugs, many of them are general issues with rustc that come up somewhat more often for GATs</li>
-</ul>
-<h2 id="goals-for-this-month"><a class="header" href="#goals-for-this-month">Goals for this month</a></h2>
-<ul>
-<li>Implement default inference solution</li>
-<li>Settle question of whre clause syntax</li>
-<li>Finish explainer and issue triage</li>
-</ul>
-<h2 id="notes"><a class="header" href="#notes">Notes</a></h2>
-<p>The general plan is to push Generated Associated types towards stabilization, but with the expectation that the current form has ergonomic pitfalls. You can think of it as an MVP to expose functionality. Towards that end we aim to write an explainer that highlights the current state of the feature, what it can do, and what it can't.</p>
-<h2 id="resolving-the-question-of-where-clause-defaults"><a class="header" href="#resolving-the-question-of-where-clause-defaults">Resolving the question of where clause defaults</a></h2>
-<p>Last month we discussed a potential defaulting scheme for <code>where Self: 'a</code> annotations. There were some unknowns, such as the &quot;false default&quot; rate -- i.e., cases where the default would trigger but you don't want it. To help gain more data, the plan is to implement the logic for adding a default, but instead of adding a default, we will require that the default be written explicitly. You can think of it as an extended &quot;well-formedness&quot; requirement.</p>
-<p>This preserves future flexibility:</p>
-<ul>
-<li>Remove the error altogether</li>
-<li>Add as a lint with a fix</li>
-<li>Simply add the where clause by default, perhaps with an opt out</li>
-</ul>
-<p>The error message for this default will include instructions on (a) known workarounds if it is not desired and (b) an issue where folks can comment if they have codebases where the default was not helpful. This should enable us to gain some data.</p>
+                        <h1 id="future-directions"><a class="header" href="#future-directions">Future directions</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../updates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../explainer/required_bounds.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../CHARTER.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../RFC.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -185,10 +155,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../updates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../explainer/required_bounds.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../CHARTER.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../RFC.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

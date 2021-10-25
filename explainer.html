@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item expanded "><a href="explainer.html" class="active">📚 Explainer</a></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item expanded "><a href="explainer.html" class="active">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -143,6 +143,8 @@
 If you want to experiment with the feature, you've come to the right place.
 Until the feature enters &quot;feature complete&quot; form, the explainer should be considered a work-in-progress.</p>
 </blockquote>
+<h2 id="-suboptimal-syntax-alert-"><a class="header" href="#-suboptimal-syntax-alert-">⚠️ Suboptimal syntax alert ⚠️</a></h2>
+<p>In general, the GAT feature is currently in a &quot;minimum viable product&quot; phase. That means that there are a number of places where the syntax is kind of clumsy, and more annotations are required than we would like to have. The explainer describes the feature that we are aiming to stabilize but you can see the <a href="./explainer/future_directions.html">Future Directions</a> section for some notes on the kinds of changes we would like to make.</p>
 <h2 id="the-problem-in-a-nutshell"><a class="header" href="#the-problem-in-a-nutshell">The problem in a nutshell</a></h2>
 <p>If you want to iterate over something in Rust, you might write the following:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -216,17 +218,20 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <h2 id="enter-generic-associated-types"><a class="header" href="#enter-generic-associated-types">Enter: generic associated types</a></h2>
-<p>With generic associated types, associated types can have generic parameters. This makes it possible to model the <code>Iterable</code> trait:</p>
+<p>With generic associated types, associated types can have generic parameters. This makes it possible to model the <code>Iterable</code> trait by having the <code>Iterator</code> type take a generic parameter, <code>'a</code>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
-    type Item&lt;'a&gt;;
-    type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt;;
-    //           ^^^^^ this changed
+    type Item&lt;'a&gt;
+    where
+        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+
+    type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt;
+    where
+        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
 
     fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
-    //                                     ^^^^ this changed
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -235,7 +240,13 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Iterator&lt;'a&gt; = Iter&lt;'a, T&gt;;
+    type Item&lt;'a&gt; = &amp;'a T
+    where
+        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+
+    type Iterator&lt;'a&gt; = Iter&lt;'a, T&gt;
+    where
+        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
 
     fn iter&lt;'a&gt;(&amp;'a self) -&gt; Iter&lt;'a, T&gt; {
         Iter { vec: self, position: 0 }
@@ -243,39 +254,6 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="bounds"><a class="header" href="#bounds">Bounds</a></h2>
-<p>Suppose I want to write a function that accepts any iterable and creates a vector by cloning its elements. I can now write such a thing like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn into_vec&lt;T&gt;(
-    iterable: &amp;impl for&lt;'a&gt; Iterable&lt;Item&lt;'a&gt; = &amp;'a T&gt;,
-) -&gt; Vec&lt;T&gt;
-where
-    T: Clone
-{
-    let mut out = vec![];
-    for elem in iterable.iter() {
-        out.push(elem.clone());
-    }
-    out
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Let's look at this function more closely. The most interesting part is the type of the <code>iterable</code> parameter:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>iterable: &amp;impl for&lt;'a&gt; Iterable&lt;Item&lt;'a&gt; = &amp;'a T&gt;,
-//              ^^^^^^^          ^^^^^^^^
-<span class="boring">}
-</span></code></pre></pre>
-<p>What this type says is &quot;some <code>Iterable</code> which yields up values of type <code>&amp;'a T</code>&quot;. The <code>'a</code> here represents the lifetime of the collection you pass in.</p>
-<p>You might be surprised by the <code>for&lt;'a&gt;</code> here. What this is saying is, given some </p>
-<h3 id="suboptimal-syntax-alert"><a class="header" href="#suboptimal-syntax-alert">Suboptimal syntax alert</a></h3>
-<p>It is clear that this syntax is suboptimal. Generic associated types in this form remain a bit clumsy and we expect to invest effort in finding better syntax for expressing this sort of bound! Stay tuned.</p>
-<h2 id="bounds-for-specific-lifetimes"><a class="header" href="#bounds-for-specific-lifetimes">Bounds for specific lifetimes</a></h2>
-<p>In the previous</p>
 
                     </main>
 
@@ -284,7 +262,7 @@ where
                             <a rel="prev" href="CHARTER.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="RFC.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="explainer/using.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -296,7 +274,7 @@ where
                     <a rel="prev" href="CHARTER.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="RFC.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="explainer/using.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

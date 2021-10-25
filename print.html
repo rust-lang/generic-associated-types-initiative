@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where.html">💬 Where does the where clause go?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -227,6 +227,8 @@ following command.</p>
 If you want to experiment with the feature, you've come to the right place.
 Until the feature enters &quot;feature complete&quot; form, the explainer should be considered a work-in-progress.</p>
 </blockquote>
+<h2 id="-suboptimal-syntax-alert-"><a class="header" href="#-suboptimal-syntax-alert-">⚠️ Suboptimal syntax alert ⚠️</a></h2>
+<p>In general, the GAT feature is currently in a &quot;minimum viable product&quot; phase. That means that there are a number of places where the syntax is kind of clumsy, and more annotations are required than we would like to have. The explainer describes the feature that we are aiming to stabilize but you can see the <a href="./explainer/future_directions.html">Future Directions</a> section for some notes on the kinds of changes we would like to make.</p>
 <h2 id="the-problem-in-a-nutshell"><a class="header" href="#the-problem-in-a-nutshell">The problem in a nutshell</a></h2>
 <p>If you want to iterate over something in Rust, you might write the following:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -300,17 +302,20 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <h2 id="enter-generic-associated-types"><a class="header" href="#enter-generic-associated-types">Enter: generic associated types</a></h2>
-<p>With generic associated types, associated types can have generic parameters. This makes it possible to model the <code>Iterable</code> trait:</p>
+<p>With generic associated types, associated types can have generic parameters. This makes it possible to model the <code>Iterable</code> trait by having the <code>Iterator</code> type take a generic parameter, <code>'a</code>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
-    type Item&lt;'a&gt;;
-    type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt;;
-    //           ^^^^^ this changed
+    type Item&lt;'a&gt;
+    where
+        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+
+    type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt;
+    where
+        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
 
     fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
-    //                                     ^^^^ this changed
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -319,7 +324,13 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Iterator&lt;'a&gt; = Iter&lt;'a, T&gt;;
+    type Item&lt;'a&gt; = &amp;'a T
+    where
+        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+
+    type Iterator&lt;'a&gt; = Iter&lt;'a, T&gt;
+    where
+        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
 
     fn iter&lt;'a&gt;(&amp;'a self) -&gt; Iter&lt;'a, T&gt; {
         Iter { vec: self, position: 0 }
@@ -327,7 +338,7 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="bounds"><a class="header" href="#bounds">Bounds</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="using-gats"><a class="header" href="#using-gats">Using GATs</a></h1>
 <p>Suppose I want to write a function that accepts any iterable and creates a vector by cloning its elements. I can now write such a thing like this:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -354,12 +365,123 @@ where
 //              ^^^^^^^          ^^^^^^^^
 <span class="boring">}
 </span></code></pre></pre>
-<p>What this type says is &quot;some <code>Iterable</code> which yields up values of type <code>&amp;'a T</code>&quot;. The <code>'a</code> here represents the lifetime of the collection you pass in.</p>
-<p>You might be surprised by the <code>for&lt;'a&gt;</code> here. What this is saying is, given some </p>
-<h3 id="suboptimal-syntax-alert"><a class="header" href="#suboptimal-syntax-alert">Suboptimal syntax alert</a></h3>
-<p>It is clear that this syntax is suboptimal. Generic associated types in this form remain a bit clumsy and we expect to invest effort in finding better syntax for expressing this sort of bound! Stay tuned.</p>
-<h2 id="bounds-for-specific-lifetimes"><a class="header" href="#bounds-for-specific-lifetimes">Bounds for specific lifetimes</a></h2>
-<p>In the previous</p>
+<p>This admittedly verbose syntax is a way of saying:</p>
+<ul>
+<li><code>iterable</code> is some kind of <code>Iterable</code> that, when iterated with some lifetime <code>'a</code>, yields up values of type <code>&amp;'a T</code>.</li>
+</ul>
+<p>The <code>for&lt;'a&gt;</code> binder is a way of making this bound apply for any lifetime, rather than talking about some specific lifetime.</p>
+<h2 id="applying-gats-to-a-specific-lifetime"><a class="header" href="#applying-gats-to-a-specific-lifetime">Applying GATs to a specific lifetime</a></h2>
+<p>The previous example showed an iterable applied to any lifetime. It is also possible to give bounds for some specific lifetime. This function, for example, takes an <code>iterable</code> with lifetime <code>'i</code> and yields up the first element:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first&lt;'i, T&gt;(
+    iterable: &amp;'i impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;,
+) -&gt; Option&lt;&amp;'i T&gt;
+{
+    iterable.iter().next()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The bound <code>impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;</code> says &quot;when iterated with lifetime <code>'i</code>, the resulting reference is <code>&amp;'i T</code>&quot;.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="required-bounds"><a class="header" href="#required-bounds">Required bounds</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="nightly" /> <img src="https://img.shields.io/badge/note-seeking%20feedback-informational" alt="seeking-feedback" /> </p>
+<blockquote>
+<p><em>We are actively soliciting feedback on the design of this aspect of GATs. This section explains the current nightly behavior, but at the end there is note about the behavior we expect to adopt in the future.</em></p>
+</blockquote>
+<p>A common use for GATs is to represent the lifetime of data that is borrowed from a value of type <code>Self</code>, or some other parameter. Consider the <code>iter</code> method of the <code>Iterable</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    ...
+
+    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Here, the argument <code>'a</code> that is given to <code>Self::Iterator</code> represents the lifetime of the <code>self</code> reference. However, by default, there is nothing in the definition of the <code>Iterator</code> associated type that links its lifetime argument and the <code>Self</code> type:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Warning: For reasons we are in the midst of explaining,
+// this version of the trait will not compile.
+trait Iterable {
+    type Item&lt;'me&gt;;
+
+    type Iterator&lt;'me&gt;: Iterator&lt;Item = Self::Item&lt;'me&gt;&gt;;
+
+    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If you try to compile this trait, you will find that you get an error. To make it compile, you have to indicate the link between <code>'me</code> and <code>Self</code> by adding <code>where Self: 'me</code>. This <a href="https://doc.rust-lang.org/nightly/reference/trait-bounds.html?highlight=outlives#lifetime-bounds">outlives bound</a> indicates the GATs can only be used with a lifetime <code>'me</code> that could legally be used to borrow <code>Self</code>. This version compiles:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Item&lt;'me&gt;
+    where
+        Self: 'me;
+
+    type Iterator&lt;'me&gt;: Iterator&lt;Item = Self::Item&lt;'me&gt;&gt;
+    where
+        Self: 'me;
+
+    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="why-are-these-bounds-required"><a class="header" href="#why-are-these-bounds-required">Why are these bounds required?</a></h2>
+<p>Without these bounds, users of the trait would almost certainly not be able to write the impls that they need to write. Consider an implementation of <code>Iterable</code> for <code>Vec&lt;T&gt;</code>, assuming that there are no <code>where Self: 'me</code> bounds on the GATs:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Iterable for Vec&lt;T&gt; {
+    type Item&lt;'me&gt; = &amp;'me T;
+    type Iterator&lt;'me&gt; = std::vec::Iter&lt;'me, T&gt;;
+    fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt; { self.iter() }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The problem comes from the associated types. Consider the <code>type Item&lt;'me&gt; = &amp;'me T</code> declaration, for example: for the type <code>&amp;'me T</code> to be legal, we must know that <code>T: 'me</code>. Otherwise, nothing stops us from using <code>Self::Item&lt;'static&gt;</code> to construct a reference with a lietime <code>'static</code> that may outlive its referent <code>T</code>, and that can lead to unsoundness in the type system. In the case of the <code>iter</code> method, the fact that it takes a parameter <code>self</code> of type <code>&amp;'me Vec&lt;T&gt;</code> already implies that <code>T: 'me</code> (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT <code>Item</code>. This is why the associated types need a where clause:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Iterable for Vec&lt;T&gt; {
+    type Item&lt;'me&gt; = &amp;'me T where Self: 'me;
+    type Iterator&lt;'me&gt; = std::vec::Iter&lt;'me, T&gt; where Self: 'me;
+    fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt; { self.iter() }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>However, this impl is not legal unless the trait <em>also</em> has a <code>where Self: 'me</code> requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.</p>
+<h2 id="precise-rules"><a class="header" href="#precise-rules">Precise rules</a></h2>
+<p>The precise rules that the compiler uses to decide when to issue an error are as follows:</p>
+<ul>
+<li>For every GAT <code>G</code> in a trait definition with generic parameters <code>X0...Xn</code> from the trait and <code>Xn..Xm</code> on the GAT... (e.g., <code>Item</code> or <code>Iterable</code>, in the case of <code>Iterable</code>, with generic parameters <code>[Self]</code> from the trait and <code>['me]</code> from the GAT)
+<ul>
+<li>If for every method in the trait... (e.g., <code>iter</code>, in the case of <code>Iterable</code>)
+<ul>
+<li>When the method signature (argument types, return type, where clauses) references <code>G</code> like <code>&lt;P0 as Trait&lt;P1..Pn&gt;&gt;::G&lt;Pn..Pm&gt;</code> (e.g., <code>&lt;Self as Iterable&gt;::Iterator&lt;'a&gt;</code>, in the <code>iter</code> method, where <code>P0 = Self</code> and <code>P1</code> = <code>'a</code>)...
+<ul>
+<li>we can show that <code>Pi: Pj</code> for two parameters on the reference to <code>G</code> (e.g., <code>Self: 'a</code>, in our example)
+<ul>
+<li>then the GAT must have <code>Xi: Xj</code> in its where clause list in the trait (e.g., <code>Self: 'me</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="plan-going-forward-add-rules-by-default"><a class="header" href="#plan-going-forward-add-rules-by-default">Plan going forward: Add rules by default</a></h2>
+<p>In the future, rather than reporting an error in cases like this, we expect to add these where clauses to the trait and impl by default. However, there is some possibility that this will rule out legal impls for which the where clause might not be necessary. This can happen if either (a) the lifetime, despite being linked to a type like <code>Self</code> in the methods, is not used to borrow content from <code>Self</code>; or (b) in all impls of this trait that could exist, the types being borrowed don't have references and are known to be <code>'static</code>.</p>
+<h2 id="feedback-requested"><a class="header" href="#feedback-requested">Feedback requested!</a></h2>
+<p>The current compiler adds the future defaults as a <strong>hard error</strong> precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please <a href="https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose">file an issue</a> on this repository, and use the &quot;Feedback on required bounds&quot; template.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="future-directions"><a class="header" href="#future-directions">Future directions</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-rfc"><a class="header" href="#-rfc">✨ RFC</a></h1>
 <p><a href="https://github.com/rust-lang/rfcs/pull/1598">RFC #1598</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="design-discussions"><a class="header" href="#design-discussions">Design discussions</a></h1>
