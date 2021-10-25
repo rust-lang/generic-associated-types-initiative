@@ -89,3 +89,20 @@ In the future, rather than reporting an error in cases like this, we expect to a
 The current compiler adds the future defaults as a **hard error** precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please [file an issue] on this repository, and use the "Feedback on required bounds" template.
 
 [file an issue]: https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose
+
+### Workaround
+
+If you find that this requirement is causing you a problem, there is a workaround. You can refactor your trait into two traits. For example, to write a version of `Iterable` that doesn't require `where Self: 'me`, you might do the following:
+
+```rust
+trait IterableTypes {
+    type Item<'me>;
+    type Iterator<'me>: Iterator<Item = Self::Item<'me>>;
+}
+
+trait Iterable: IterableTypes {
+    fn iter<'a>(&'a self) -> Self::Iterator<'a>;
+}
+```
+
+This is a bit heavy-handed, but there's a logic to it: the rules are geared around ensuring that the associated types and methods that appear together in a single trait will work well together. By separating the associated types from the function into distinct traits, you are effectively asserting that the associated types are meant to be used independently from the function and hence it doesn't necessarily make sense to have the where clauses derived from the method signature.
