@@ -4,6 +4,10 @@
 > If you want to experiment with the feature, you've come to the right place.
 > Until the feature enters "feature complete" form, the explainer should be considered a work-in-progress.
 
+## ⚠️ Suboptimal syntax alert ⚠️
+
+In general, the GAT feature is currently in a "minimum viable product" phase. That means that there are a number of places where the syntax is kind of clumsy, and more annotations are required than we would like to have. The explainer describes the feature that we are aiming to stabilize but you can see the [Future Directions](./explainer/future_directions.md) section for some notes on the kinds of changes we would like to make.
+
 ## The problem in a nutshell
 
 If you want to iterate over something in Rust, you might write the following:
@@ -74,16 +78,19 @@ impl<T> Iterable for Vec<T> {
 
 ## Enter: generic associated types
 
-With generic associated types, associated types can have generic parameters. This makes it possible to model the `Iterable` trait:
+With generic associated types, associated types can have generic parameters. This makes it possible to model the `Iterable` trait by having the `Iterator` type take a generic parameter, `'a`:
 
 ```rust
 trait Iterable {
-    type Item<'a>;
-    type Iterator<'a>: Iterator<Item = Self::Item<'a>>;
-    //           ^^^^^ this changed
+    type Item<'a>
+    where
+        Self: 'a;
+
+    type Iterator<'a>: Iterator<Item = Self::Item<'a>>
+    where
+        Self: 'a; // <-- see the "required bounds" section for more information
 
     fn iter<'a>(&'a self) -> Self::Iterator<'a>;
-    //                                     ^^^^ this changed
 }
 ```
 
@@ -91,7 +98,13 @@ Given this trait definition, we can implement `Iterable` like so:
 
 ```rust
 impl<T> Iterable for Vec<T> {
-    type Iterator<'a> = Iter<'a, T>;
+    type Item<'a> = &'a T
+    where
+        T: 'a;
+
+    type Iterator<'a> = Iter<'a, T>
+    where
+        T: 'a; // <-- see the "required bounds" section for more information
 
     fn iter<'a>(&'a self) -> Iter<'a, T> {
         Iter { vec: self, position: 0 }
@@ -99,40 +112,3 @@ impl<T> Iterable for Vec<T> {
 }
 ```
 
-## Bounds
-
-Suppose I want to write a function that accepts any iterable and creates a vector by cloning its elements. I can now write such a thing like this:
-
-```rust
-fn into_vec<T>(
-    iterable: &impl for<'a> Iterable<Item<'a> = &'a T>,
-) -> Vec<T>
-where
-    T: Clone
-{
-    let mut out = vec![];
-    for elem in iterable.iter() {
-        out.push(elem.clone());
-    }
-    out
-}
-```
-
-Let's look at this function more closely. The most interesting part is the type of the `iterable` parameter:
-
-```rust
-iterable: &impl for<'a> Iterable<Item<'a> = &'a T>,
-//              ^^^^^^^          ^^^^^^^^
-```
-
-What this type says is "some `Iterable` which yields up values of type `&'a T`". The `'a` here represents the lifetime of the collection you pass in.
-
-You might be surprised by the `for<'a>` here. What this is saying is, given some 
-
-### Suboptimal syntax alert
-
-It is clear that this syntax is suboptimal. Generic associated types in this form remain a bit clumsy and we expect to invest effort in finding better syntax for expressing this sort of bound! Stay tuned.
-
-## Bounds for specific lifetimes
-
-In the previous
