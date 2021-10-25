@@ -138,6 +138,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="future-directions"><a class="header" href="#future-directions">Future directions</a></h1>
+<p>There are some points about GATs which we expect to change. Deciding on the best solution, however, requires more information about the way GATs are used in practice. Therefore, we encourage you to [file a new issue] sharing your experiences and giving feedback on these points.</p>
+<p>[open issues]: [file an issue]: https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose</p>
+<h2 id="proposal-a-supply-a-hrefrequired_boundshtmlrequired-boundsa-by-default"><a class="header" href="#proposal-a-supply-a-hrefrequired_boundshtmlrequired-boundsa-by-default">Proposal A: Supply <a href="./required_bounds.html">required bounds</a> by default</a></h2>
+<p>The first planned change is to make the <a href="./required_bounds.html">required bounds</a> on associated types be supplied by default, rather than requiring that they be typed explicitly. We may or may not include some form of annotation to &quot;opt-out&quot; from this default. In short, the expectation is that -- in practice -- virtually all traits will want these where clauses, and there will be negligibly few cases that do not. We are therefore looking for examples where having to add the required bounds was a problem, and you were forced to <a href="./required_bounds.html#workaround">adopt the workaround</a>.</p>
 
                     </main>
 

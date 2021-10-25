@@ -481,7 +481,27 @@ trait Iterable {
 <p>In the future, rather than reporting an error in cases like this, we expect to add these where clauses to the trait and impl by default. However, there is some possibility that this will rule out legal impls for which the where clause might not be necessary. This can happen if either (a) the lifetime, despite being linked to a type like <code>Self</code> in the methods, is not used to borrow content from <code>Self</code>; or (b) in all impls of this trait that could exist, the types being borrowed don't have references and are known to be <code>'static</code>.</p>
 <h2 id="feedback-requested"><a class="header" href="#feedback-requested">Feedback requested!</a></h2>
 <p>The current compiler adds the future defaults as a <strong>hard error</strong> precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please <a href="https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose">file an issue</a> on this repository, and use the &quot;Feedback on required bounds&quot; template.</p>
+<h3 id="workaround"><a class="header" href="#workaround">Workaround</a></h3>
+<p>If you find that this requirement is causing you a problem, there is a workaround. You can refactor your trait into two traits. For example, to write a version of <code>Iterable</code> that doesn't require <code>where Self: 'me</code>, you might do the following:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait IterableTypes {
+    type Item&lt;'me&gt;;
+    type Iterator&lt;'me&gt;: Iterator&lt;Item = Self::Item&lt;'me&gt;&gt;;
+}
+
+trait Iterable: IterableTypes {
+    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This is a bit heavy-handed, but there's a logic to it: the rules are geared around ensuring that the associated types and methods that appear together in a single trait will work well together. By separating the associated types from the function into distinct traits, you are effectively asserting that the associated types are meant to be used independently from the function and hence it doesn't necessarily make sense to have the where clauses derived from the method signature.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="future-directions"><a class="header" href="#future-directions">Future directions</a></h1>
+<p>There are some points about GATs which we expect to change. Deciding on the best solution, however, requires more information about the way GATs are used in practice. Therefore, we encourage you to [file a new issue] sharing your experiences and giving feedback on these points.</p>
+<p>[open issues]: [file an issue]: https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose</p>
+<h2 id="proposal-a-supply-a-hrefexplainerrequired_boundshtmlrequired-boundsa-by-default"><a class="header" href="#proposal-a-supply-a-hrefexplainerrequired_boundshtmlrequired-boundsa-by-default">Proposal A: Supply <a href="explainer/./required_bounds.html">required bounds</a> by default</a></h2>
+<p>The first planned change is to make the <a href="explainer/./required_bounds.html">required bounds</a> on associated types be supplied by default, rather than requiring that they be typed explicitly. We may or may not include some form of annotation to &quot;opt-out&quot; from this default. In short, the expectation is that -- in practice -- virtually all traits will want these where clauses, and there will be negligibly few cases that do not. We are therefore looking for examples where having to add the required bounds was a problem, and you were forced to <a href="explainer/./required_bounds.html#workaround">adopt the workaround</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-rfc"><a class="header" href="#-rfc">✨ RFC</a></h1>
 <p><a href="https://github.com/rust-lang/rfcs/pull/1598">RFC #1598</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="design-discussions"><a class="header" href="#design-discussions">Design discussions</a></h1>

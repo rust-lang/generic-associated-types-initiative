@@ -234,6 +234,22 @@ trait Iterable {
 <p>In the future, rather than reporting an error in cases like this, we expect to add these where clauses to the trait and impl by default. However, there is some possibility that this will rule out legal impls for which the where clause might not be necessary. This can happen if either (a) the lifetime, despite being linked to a type like <code>Self</code> in the methods, is not used to borrow content from <code>Self</code>; or (b) in all impls of this trait that could exist, the types being borrowed don't have references and are known to be <code>'static</code>.</p>
 <h2 id="feedback-requested"><a class="header" href="#feedback-requested">Feedback requested!</a></h2>
 <p>The current compiler adds the future defaults as a <strong>hard error</strong> precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please <a href="https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose">file an issue</a> on this repository, and use the &quot;Feedback on required bounds&quot; template.</p>
+<h3 id="workaround"><a class="header" href="#workaround">Workaround</a></h3>
+<p>If you find that this requirement is causing you a problem, there is a workaround. You can refactor your trait into two traits. For example, to write a version of <code>Iterable</code> that doesn't require <code>where Self: 'me</code>, you might do the following:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait IterableTypes {
+    type Item&lt;'me&gt;;
+    type Iterator&lt;'me&gt;: Iterator&lt;Item = Self::Item&lt;'me&gt;&gt;;
+}
+
+trait Iterable: IterableTypes {
+    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This is a bit heavy-handed, but there's a logic to it: the rules are geared around ensuring that the associated types and methods that appear together in a single trait will work well together. By separating the associated types from the function into distinct traits, you are effectively asserting that the associated types are meant to be used independently from the function and hence it doesn't necessarily make sense to have the where clauses derived from the method signature.</p>
 
                     </main>
 
