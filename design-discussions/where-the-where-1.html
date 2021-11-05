@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>💬 Where does the where clause go? - Generic Associated Types Initiative</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="../RFC.html">✨ RFC</a></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item expanded "><a href="../design-discussions/where-the-where-1.html" class="active">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Generic Associated Types Initiative</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/generic-associated-types-initiative" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-where-does-the-where-clause-go"><a class="header" href="#-where-does-the-where-clause-go">💬 Where does the where clause go?</a></h1>
+<p>This is write-up of the conclusion to the [where does the where clause go?] question. To read more background, see the <a href="#links-to-older-discussions">links</a> section below.</p>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<h3 id="where-clauses-in-generic-associated-types-comes-after-valuebinding"><a class="header" href="#where-clauses-in-generic-associated-types-comes-after-valuebinding">Where clauses in generic associated types comes after value/binding</a></h3>
+<p>Example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait MyTrait {
+    type MyType&lt;T&gt;: Iterator
+    where
+        T: Ord;
+}
+    
+impl MyTrait for MyOtherType {
+    type MyType&lt;T&gt; = MyIterator
+    where
+        T: Ord;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Effectively the <code>= type</code> in the impl replaces the <code>: Bound</code> from the declaration with the value that has to meet those bounds.</p>
+<h3 id="later-phase-type-aliases"><a class="header" href="#later-phase-type-aliases">Later phase: type aliases</a></h3>
+<p>Type aliases will eventually be aligned to this syntax as well:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type MyType&lt;T&gt; = Vec&lt;T&gt; where T: Ord;
+<span class="boring">}
+</span></code></pre></pre>
+<p>Currently, however, where clauses on type aliases are ignored, so we will not stabilize this new syntax until they have the meaning we want.</p>
+<h3 id="suggestions-for-users-who-put-the-where-clause-in-the-wrong-place"><a class="header" href="#suggestions-for-users-who-put-the-where-clause-in-the-wrong-place">Suggestions for users who put the where clause in the wrong place</a></h3>
+<p>We will parse where clauses in both positions and suggest to users that they be moved:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl MyTrait for MyOtherType {
+    type MyType&lt;T&gt;
+    where
+        T: Ord
+    = MyIterator;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Gets an error with a suggested rewrite. The compiler proceeds &quot;as if&quot; the where clauses had been written after the <code>= Type</code>.</p>
+<h3 id="where-clause-syntax-for-trait-aliases-will-have-to-be-revisited"><a class="header" href="#where-clause-syntax-for-trait-aliases-will-have-to-be-revisited">Where clause syntax for trait aliases will have to be revisited</a></h3>
+<p>As described in the FAQ below, we currently support trait alias syntax like</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>This syntax will be removed. Although its capabilities could be useful, it is also quite confusing (the placement of the <code>where</code> is a subtle distinction), and not clearly needed. If we find that we do want it, we can add in a similar syntax later, but hopefully in a way that is more broadly consistent with the language.</p>
+<h2 id="discussion-and-faq"><a class="header" href="#discussion-and-faq">Discussion and FAQ</a></h2>
+<h3 id="but-isnt-it-inconsistent-with-other-trait-items-to-put-the-where-clauses-before-the-"><a class="header" href="#but-isnt-it-inconsistent-with-other-trait-items-to-put-the-where-clauses-before-the-">But isn't it inconsistent with other trait items to put the where clauses <em>before</em> the <code>=</code>?</a></h3>
+<p>From one perspective, yes. One can view the value of an associated type as its &quot;body&quot;, and the where clauses typically come before the &quot;body&quot; of an item. Put another way, typically you can &quot;copy and paste&quot; the impl and then add some text to the end of each item to specify its value: but with this syntax, you have to edit the &quot;middle&quot; of an associated type to specify its value.</p>
+<p>The analogy of an associated type value to a function body, however, is somewhat flawed. The value of an associated type needs to be considered part of the &quot;signature&quot;, or public facing, part of the impl. Consider: you can change the body of a function and be certain that your callees will still compile, but you cannot do the same for the value of an associated type.</p>
+<p>Given this perspective, when you copy the associated type from the trait to the impl, you are &quot;completing&quot; the signature that was left incomplete by the trait. Moreover, to do so, you replace the <code>: Bound1 + Bound2</code> list (which constraints what kinds of types the impl might use) with a specific type, thus making it more specific.</p>
+<h3 id="what-about-a-more-purely-syntactic-point-of-view-what-is-more-consistent"><a class="header" href="#what-about-a-more-purely-syntactic-point-of-view-what-is-more-consistent">What about a more purely syntactic point-of-view? What is more consistent?</a></h3>
+<p>There is precedent that the placement of the where clause has less to do with the logical role that it plays and more to do with other factors, like whether it is followed by a braced list of items:</p>
+<ul>
+<li>With <code>struct Foo&lt;T&gt; where T: Ord { t: T }</code>, the &quot;body&quot; of the struct is its fields, and the where clause comes first.</li>
+<li>But we write <code>struct Foo&lt;T&gt;(T) where T: Ord</code>, thus placing the &quot;body&quot; (the fields <code>(T)</code>) first and the where clause second. Moreover, we initially implemented the grammar <code>struct Foo&lt;T&gt; where T: Ord (T)</code> but this was deemed so obviously confusing that it was <a href="https://github.com/rust-lang/rust/issues/17904#issuecomment-58603749">changed with little discussion</a>.</li>
+</ul>
+<p>As further evidence that this syntax is inconsistent with Rust's traditions, placing the where clauses before the <code>= ty</code> makes it objectively hard to determine how to run rustfmt in a way that feels natural. rustfmt handles <code>where</code> by putting the <code>where</code> onto its own line, with one line per where clause. This structure works for existing Rust items because where clauses are always either following by nothing (tuple structs) or by a braced (<code>{}</code>) list of items (e.g., struct fields, fn body, etc). That opening <code>{</code> can therefore go on its own line. This <code>where</code> clause formatting does not work well with <code>=</code>.</p>
+<p>The idea of having where clauses come at the &quot;end&quot; of the signature is also supported by the <a href="https://rust-lang.github.io/rfcs/0135-where.html#readability">original RFC</a>, which motivated where clauses in part by describing how they allow you to treat the precise bounds as &quot;secondary&quot; to the &quot;important stuff&quot;:</p>
+<blockquote>
+<p>If I may step aside from the &quot;impersonal voice&quot; of the RFC for a moment, I personally find that when writing generic code it is helpful to focus on the types and signatures, and come to the bounds later. Where clauses help to separate these distinctions. Naturally, your mileage may vary. - nmatsakis</p>
+</blockquote>
+<p>In the case of an impl specifying the value for an associated type, the &quot;important stuff&quot; the value of the associated type.</p>
+<h3 id="what-about-trait-aliases-dont-they-distinguish-where-clause-placement"><a class="header" href="#what-about-trait-aliases-dont-they-distinguish-where-clause-placement">What about trait aliases, don't they distinguish where clause placement?</a></h3>
+<p>As currently implemented, trait aliases have two distinct possible placements for where clauses, which effectively distinguishes between a <em>where clause</em> (which must be proven true in order to use the alias) and an <em>implied bound</em> (which is part of what the alias expands to). One can write:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Foo&lt;T: Debug&gt; = Bar&lt;T&gt; + Baz&lt;T&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>in which case <code>where X: Foo&lt;Y&gt;</code> is only legal if <code>Y: Debug</code> is known from some other place. This is roughly equivalent to a trait like so:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Foo1&lt;T: Debug&gt;: Bar&lt;T&gt; + Baz&lt;T&gt; { }
+<span class="boring">}
+</span></code></pre></pre>
+<p>The clause <code>where X: Foo1&lt;Y&gt;</code> is also only valid when <code>Y: Debug</code> is known. This is in contrast to the &quot;supertraits&quot; <code>Bar&lt;Y&gt;</code> and <code>Baz&lt;Y&gt;</code>, which are implied by <code>X: Foo1&lt;Y&gt;</code> (&quot;supertraits&quot; are also sometimes called &quot;implied bounds&quot;).</p>
+<p>Alternatively, one can include the where clause in the &quot;value&quot; of the trait alias like so:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In this case, <code>where X: ReverseEq&lt;Y&gt;</code> is equivalent to <code>Y: PartialEq&lt;X&gt;</code>. There is no &quot;equivalent trait&quot; for usage like this; the <code>T: PartialEq&lt;Self&gt;</code> effectively acts like a supertrait or implied bound.</p>
+<p>Our decision was that this is a subtle distinction and that using the placement of the where clause was not a great way to make it.</p>
+<h3 id="is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language"><a class="header" href="#is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language">Is that trait alias syntax consistent with the rest of the language?</a></h3>
+<p>Not really. There are other places in the language that could benefit from a similar flexibility around implied bounds. For example, one could imagine wanting to have an associated type <code>T::MyType&lt;Y&gt;</code> where it is known that <code>Y: PartialEq&lt;T::MyType&lt;Y&gt;&gt;</code>, but this cannot be readily written with today's syntax:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait MyTrait {
+    type MyType&lt;T&gt;: PartialEq&lt;T&gt;;
+    //              ^^^^^^^^^ not what we wanted
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>We decided that if we were going to offer that capability, we should find a way to offer it more generally, and hopefully with more clarity than putting the where clause before or after the <code>=</code>. As we have seen, where clauses for different kinds of items can be rather variable in their placement, so it is not clear that all users will recognize that distinction and understand it (many present in the meeting were surprised by the distinction as well).</p>
+<p>Alternatively, the implied bounds proposal goes another way, turning most where clauses into implied bounds by default!</p>
+<h3 id="why-do-you-even-need-where-clauses-in-the-impl-anyway"><a class="header" href="#why-do-you-even-need-where-clauses-in-the-impl-anyway">Why do you even need where clauses in the impl anyway?</a></h3>
+<p>Given that the where clauses appear in the trait, you might wonder why they are needed in the impl anyway. After all, the impl could just assume that the trait bounds are met when checking the value of the associated type for validity, making the whole issue moot.</p>
+<p>This would however be inconsistent with other sorts of items, which do require users to copy over the bounds from the trait. Furthermore, we have discussed the idea of allowing impls to relax the bounds from those described in the trait if they are not needed in the impl -- this came up most recently in the context of allowing impls to forego the <code>unsafe</code> keyword for <code>unsafe fn</code> declared in the trait if the fn in the impl body is completely safe. This could then even be relied upon by people invoking the method who know the precise impl they will be using.</p>
+<p>In short, this might be a reasonable choice to make, but we should make it uniformly, and it shuts down the direction of using the lack of bounds in the impl as a kind of signal.</p>
+<h3 id="why-not-change-type-alias-notation-too"><a class="header" href="#why-not-change-type-alias-notation-too">Why not change type alias notation too?</a></h3>
+<p>Top-level type aliases currently parse with the where clause before the <code>=</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>type Foo&lt;T&gt; where T: Ord = T;
+<span class="boring">}
+</span></code></pre></pre>
+<p>If you try that above example, however, you will find that you get a warning: this is because the <code>where T: Ord</code> is completely ignored! This is an implementation limitation in the way the current compiler eagerly expands type aliases. Moving the placement of where clauses actually gives us an opportunity to change this behavior without breaking any existing code, which is nice. It will however require some kind of opt-in (such as a <code>cargo fix</code> run) to migrate existing code that uses where clauses in the &quot;ignored place&quot; to the new format.</p>
+<h2 id="links-to-older-discussions"><a class="header" href="#links-to-older-discussions">Links to older discussions</a></h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/90076">Implementation PR</a></li>
+<li><a href="https://rust-lang.github.io/generic-associated-types-initiative/design-discussions/where-the-where.html">Design document</a></li>
+<li><a href="https://github.com/rust-lang/lang-team/blob/master/design-meeting-minutes/2021-10-13-where-the-where.md">Design meeting minutes</a></li>
+<li><a href="https://github.com/rust-lang/rust/issues/89122">Rust issue</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../design-discussions/outlives-defaults.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../design-discussions/where-the-where.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../design-discussions/outlives-defaults.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../design-discussions/where-the-where.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
