@@ -1,5 +1,9 @@
 # Where does the where clause go?
 
+## UPDATE
+
+This document is retained for historical purposes. See the [Where the Where](./where-the-where-1.md) conclusion for the most up-to-date conversation.
+
 ## Summary
 
 Proposed: to alter the syntax of where clauses on type aliases so that they appear *after* the value:

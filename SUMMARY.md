@@ -11,5 +11,6 @@
 - [✨ RFC](./RFC.md)
 - [💬 Design discussions](./design-discussions/README.md)
     - [💬 Outlives defaults](./design-discussions/outlives-defaults.md)
-    - [💬 Where does the where clause go?](./design-discussions/where-the-where.md)
+    - [💬 Where does the where clause go?](./design-discussions/where-the-where-1.md)
+        - [Initial write-up](./design-discussions/where-the-where.md)
 - [😕 FAQ](./FAQ.md)
