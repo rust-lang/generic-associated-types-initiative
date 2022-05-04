@@ -61,7 +61,7 @@ trait Iterable {
 }
 ```
 
-Well, if you look closely at this trait, you'll see that it does't work. The type that an impl needs to provide for `Iterator` needs to be able to reference `'a`, the lifetime of the `self` parameter. But currently, it can't! That lifetime is not in scope:
+Well, if you look closely at this trait, you'll see that it doesn't work. The type that an impl needs to provide for `Iterator` needs to be able to reference `'a`, the lifetime of the `self` parameter. But currently, it can't! That lifetime is not in scope:
 
 ```rust
 impl<T> Iterable for Vec<T> {
