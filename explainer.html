@@ -201,7 +201,7 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Well, if you look closely at this trait, you'll see that it does't work. The type that an impl needs to provide for <code>Iterator</code> needs to be able to reference <code>'a</code>, the lifetime of the <code>self</code> parameter. But currently, it can't! That lifetime is not in scope:</p>
+<p>Well, if you look closely at this trait, you'll see that it doesn't work. The type that an impl needs to provide for <code>Iterator</code> needs to be able to reference <code>'a</code>, the lifetime of the <code>self</code> parameter. But currently, it can't! That lifetime is not in scope:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
