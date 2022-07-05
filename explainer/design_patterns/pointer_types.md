@@ -1,0 +1,3 @@
+
+* The "pointer types" pattern:
+    * I didn't dig deep enough into Pythonesque's hypotheticals, but [this comment](https://github.com/rust-lang/rust/pull/96709#issuecomment-1150127168) seemed to be describing a desire to talk about "pointer types" in the abstract, which is definitely a common need; looking at [the comits from Veloren](https://github.com/amethyst/specs/blob/master/src/storage/generic.rs#L114-L150) that pythonesque also cited, this might be a kind of "pointer types" pattern, but I think I might also call it "many modes".

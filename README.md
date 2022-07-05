@@ -16,6 +16,18 @@ This page tracks the work of the Generic Associated Types [initiative]! To learn
 
 ## Current status
 
+Implementation of GATs has taken a long time because it required a number of refactorings in the compiler. Because there are so many crates that are struggling without GATs, We're currently working to stabilize a *minimum viable product* og AT
+
+| Feature | In a word | Status |
+| --- | --- | --- |
+| MVP | Able to write `type Foo<T>` in a trait | Pending stabilization in [rust-lang/rust#96709] |
+| Implied bounds | | 
+| Convenient forall syntax | | 
+| HRTB over types | |
+| Solution for `where  | |
+
+[rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709
+
 The following table lists of the stages of an initiative, along with links to the artifacts that will be produced by the start of that stage.
 
 | Stage                                 | State | Artifact(s) |
@@ -23,6 +35,7 @@ The following table lists of the stages of an initiative, along with links to th
 | [Proposal]                            | ✅    | [Charter](./CHARTER.md) |
 |                                       |       | [Tracking issue] |
 | [Experimental]                        | ✅    | [RFC](./RFC.md) |
+| []
 | [Development]                         | 🦀    | [Explainer](./explainer.md) | 
 | [Feature complete]                    | 💤    | Stabilization report |
 | [Stabilized]                          | 💤    | |
