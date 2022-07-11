@@ -12,3 +12,6 @@ git-repository-url="https://github.com/rust-lang/generic-associated-types-initia
 [output.html.fold]
 enable = true
 level = 0
+
+[output.html.redirect]
+"/explainer/using.html" = "/explainer/where-clauses.html"

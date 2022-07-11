@@ -7,20 +7,26 @@
 -->
 ![initiative status: active](https://img.shields.io/badge/status-active-brightgreen.svg)
 
-## What is this?
-
-This page tracks the work of the Generic Associated Types [initiative]! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the [charter]. 
+This page tracks the work of the Generic Associated Types (GATs) [initiative]! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the [charter]. 
 
 [charter]: ./CHARTER.md
 [initiative]: https://lang-team.rust-lang.org/initiatives.html
 
-## Current status
+## Current focus: MVP
+
+We are currently focused on stabilizing a **Minimum Viable Product** form of GATs in [rust-lang/rust#96709]. You can learn more:
+
+* [Explainer](./mvp/explainer.md)
+* [Known shortcomings](./mvp/shortcomings.md)
+* [Design patterns](./mvp/desig)
+
+You 
 
 Implementation of GATs has taken a long time because it required a number of refactorings in the compiler. Because there are so many crates that are struggling without GATs, We're currently working to stabilize a *minimum viable product* og AT
 
 | Feature | In a word | Status |
 | --- | --- | --- |
-| MVP | Able to write `type Foo<T>` in a trait | Pending stabilization in [rust-lang/rust#96709] |
+| MVP | Able to write `type Foo<T>` in a trait | Pending stabilization in  |
 | Implied bounds | | 
 | Convenient forall syntax | | 
 | HRTB over types | |

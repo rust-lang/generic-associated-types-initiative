@@ -1,3 +1,0 @@
-# Design patterns
-
-A natural question with GATs is to ask "what are they used for?" Because GATs represent a kind of "fundamental capability" of traits, though, that question can be difficult to answer in a short summary -- they can be used for all kinds of things! Therefore, this section attempts to answer by summarizing "design patterns" that we have seen in the wild that are enabled by GATs. These patterns are described through a "deep dive" into a particular example, often of a crate in the wild; but they represent patterns that could be extracted and applied in other cases.

@@ -1,5 +1,7 @@
 # Generic scopes
 
+{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}}
+
 ## Summary
 
 APIs like [`std::thread::scope`](https://doc.rust-lang.org/std/thread/fn.scope.html) follow a "scope" pattern:

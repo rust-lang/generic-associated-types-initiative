@@ -1,0 +1,1 @@
+![status: speculative, no RFC](https://img.shields.io/badge/status-speculative,%20not%20RFCd-important)

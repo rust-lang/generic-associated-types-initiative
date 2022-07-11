@@ -1,8 +1,6 @@
 # Required bounds
 
-![nightly][] ![seeking-feedback][] 
-
-{{#include ../badges.md}}
+{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}} {{#include ../badges/seeking-feedback.md}}
 
 > *We are actively soliciting feedback on the design of this aspect of GATs. This section explains the current nightly behavior, but at the end there is note about the behavior we expect to adopt in the future.*
 
@@ -52,23 +50,23 @@ Without these bounds, users of the trait would almost certainly not be able to w
 
 ```rust
 impl Iterable for Vec<T> {
-    type Item<'me> = &'me T;
-    type Iterator<'me> = std::vec::Iter<'me, T>;
+    type Item<'c> = &'c T;
+    type Iterator<'c> = std::vec::Iter<'c, T>;
     fn iter(&self) -> Self::Iterator<'_> { self.iter() }
 }
 ```
 
-The problem comes from the associated types. Consider the `type Item<'me> = &'me T` declaration, for example: for the type `&'me T` to be legal, we must know that `T: 'me`. Otherwise, nothing stops us from using `Self::Item<'static>` to construct a reference with a lietime `'static` that may outlive its referent `T`, and that can lead to unsoundness in the type system. In the case of the `iter` method, the fact that it takes a parameter `self` of type `&'me Vec<T>` already implies that `T: 'me` (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT `Item`. This is why the associated types need a where clause:
+The problem comes from the associated types. Consider the `type Item<'c> = &'c T` declaration, for example: for the type `&'c T` to be legal, we must know that `T: 'c`. Otherwise, nothing stops us from using `Self::Item<'static>` to construct a reference with a lietime `'static` that may outlive its referent `T`, and that can lead to unsoundness in the type system. In the case of the `iter` method, the fact that it takes a parameter `self` of type `&'c Vec<T>` already implies that `T: 'me` (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT `Item`. This is why the associated types need a where clause:
 
 ```rust
 impl Iterable for Vec<T> {
-    type Item<'me> = &'me T where Self: 'me;
-    type Iterator<'me> = std::vec::Iter<'me, T> where Self: 'me;
+    type Item<'c> = &'c T where Self: 'c;
+    type Iterator<'c> = std::vec::Iter<'c, T> where Self: 'c;
     fn iter(&self) -> Self::Iterator<'_> { self.iter() }
 }
 ```
 
-However, this impl is not legal unless the trait *also* has a `where Self: 'me` requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.
+However, this impl is not legal unless the trait *also* has a `where Self: 'c` requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.
 
 ## Precise rules
 

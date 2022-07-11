@@ -1,5 +1,7 @@
 # The "many modes" pattern
 
+{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}}
+
 ## Summary
 
 The "many modes" pattern is being able to take a single function and have it operate in multiple "modes". In the specific case examined here, the chumsky parsing library, [GATs were used](https://github.com/rust-lang/rust/pull/96709#issuecomment-1118409546) to make the parsing combinators generic over a mode (produce a result vs do not produce a result). This results in significant speedups, because producing a result when you don't need one is expensive at runtime.

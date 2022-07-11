@@ -1,5 +1,7 @@
 # Iterable, lending iterators, etc
 
+{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}}
+
 ## Summary
 
 Traits often contain methods that return data borrowed from `self` or some other argument. When the type of data is an associated type, it needs to include a lifetime that links with `self` from a calling method. For example, in the `Iterable` trait...
@@ -28,7 +30,7 @@ There are many variants on this pattern:
 * `LendingIterator` (and other `LendingFoo`) traits, which permit one to iterate over items but where the data may be stored within the iterator itself;
 * etc.
 
-The `where Self: 'me` shown in the summary is (hopefully) a temporary limitation imposed by the current [MVP](../mvp.md). It indicates that the `'me` lifetime can be used to borrow data from `Self`. Currently these where clauses are mandatory; they may be defaulted or made optional in the future. For a deeper explanation, see the [outlives-defaults](../../design-discussions/outlives-defaults.md) design discussion.
+The `where Self: 'me` shown in the summary is (hopefully) a temporary limitation imposed by the current MVP. It indicates that the `'me` lifetime can be used to borrow data from `Self`. Currently these where clauses are mandatory; they may be defaulted or made optional in the future. For a deeper explanation, see the [required bounds](../explainer/required_bounds.md) page in the explainer.
 
 ## Workarounds
 
