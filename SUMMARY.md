@@ -6,7 +6,7 @@
     - [Concern: GATs permit abstractions that make Rust harder to use](./mvp/concern-too-complex.md)
     - [Concern: GATs are too hard to learn, especially in their current state](./mvp/concern-too-rough.md)
     - [Concern: we should stabilize lifetime GATs only](./mvp/concern-lifetimes-only.md)
-    - [Concern: there are too many rough edges to be confident the current MVP is backwards compatible](./mvp/concern-backcompat.md)
+    - [Concern: not confident the current MVP is backwards compatible](./mvp/concern-backcompat.md)
 - [📚 Explainer](./explainer.md)
     - [Why GATs?](./explainer/motivation.md)
     - [Defining and implementing the `Iterable` trait with GATs](./explainer/iterable.md)
