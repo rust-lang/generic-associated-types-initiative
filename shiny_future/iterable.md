@@ -1,5 +1,9 @@
 # Defining and implementing the Iterable trait with GATs
 
+{{#include ../badges/speculative.md}}
+
+> 🚨 **Warning: Speculation ahead.** This is the "shiny future" page that integrates various speculative features. To see how things work today, see [the corresponding page on the explainer](../explainer/iterable.md).
+
 To express traits like `Iterable`, we can make use generic associated types -- that is, associated types with generic parameters. Here is the complete `Iterable` trait:
 
 ```rust
@@ -38,7 +42,7 @@ impl<T> Iterable for Vec<T> {
     
     type Iterator<'c> = Iter<'c, T>;
 
-    fn iter<'c>(&'c self) -> Self::Iterator<'c> {
+    fn iter(&self) -> Self::Iterator<'_> {
         Iter { data: self }
     }
 }

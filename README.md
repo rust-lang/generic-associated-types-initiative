@@ -12,25 +12,14 @@ This page tracks the work of the Generic Associated Types (GATs) [initiative]! T
 [charter]: ./CHARTER.md
 [initiative]: https://lang-team.rust-lang.org/initiatives.html
 
-## Current focus: MVP
+## ⚡ Current focus: MVP ⚡
 
-We are currently focused on stabilizing a **Minimum Viable Product** form of GATs in [rust-lang/rust#96709]. You can learn more:
+We are currently focused on stabilizing a **Minimum Viable Product** form of GATs in [rust-lang/rust#96709]. [Learn more here!](./mvp.md) You can learn more:
 
-* [Explainer](./mvp/explainer.md)
-* [Known shortcomings](./mvp/shortcomings.md)
-* [Design patterns](./mvp/desig)
+* The [explainer](./explainer.md) covers the design that is being stabilized, and the [rough edges](./explainer/rough_edges.md) section explains some of the ways it is currently difficult to use (see the [shiny future](./shiny_future.md) section for speculation on how to address those).
+* The [design patterns](./design_patterns.md) section documents some of the ways GATs are used in the wild.
+* The []
 
-You 
-
-Implementation of GATs has taken a long time because it required a number of refactorings in the compiler. Because there are so many crates that are struggling without GATs, We're currently working to stabilize a *minimum viable product* og AT
-
-| Feature | In a word | Status |
-| --- | --- | --- |
-| MVP | Able to write `type Foo<T>` in a trait | Pending stabilization in  |
-| Implied bounds | | 
-| Convenient forall syntax | | 
-| HRTB over types | |
-| Solution for `where  | |
 
 [rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709
 
