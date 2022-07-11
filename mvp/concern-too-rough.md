@@ -53,6 +53,4 @@ Second, having features on master leads to more attention and volunteers, not le
 
 > And yeah the UX could be better :( I can't speak for everyone but as someone who tries to make diagnostics PRs when I hit issues and have the time/energy, I personally can't really kick the tires if I can't use the feature in my libraries, and thus don't have a very natural path to find pain points to.
 
-More generally, Rust's entire history has been one of taking complex features, exposing them, and sanding down the edges over time -- and sometimes stalling out for an extended period of time. And yet, it's hard to come up with an example where it would've been better to hold off on stabilization. Take async fundtions: when stabilized, they had many diagnostic rough edges, and still do. 
-
-This is very much true of async functions,and yet. Trying to get *everything
+More generally, Rust's entire history has been one of taking complex features, exposing them, and sanding down the edges over time -- and sometimes stalling out for an extended period of time. And yet, it's hard to come up with an example where it would've been better to hold off on stabilization. Take async functions: when stabilized, they had many diagnostic rough edges, and still do. And yet, it's clearly good that they're available.
