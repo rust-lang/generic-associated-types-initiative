@@ -1,6 +1,12 @@
-# Using GATs
+# GATs in where clauses
 
-Suppose I want to write a function that accepts any iterable and creates a vector by cloning its elements. I can now write such a thing like this:
+{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}}
+
+Now that we have defined an [`Iterable`](./iterable.md) trait, we can explore different ways to reference it in where clauses.
+
+## Specifying the value of a GAT
+
+Given some type `T: Clone`, this function takes any `Iterable` that yields `&T` references, clones them, and returns a vector of the resulting `T` values:
 
 ```rust
 fn into_vec<T>(
@@ -44,3 +50,16 @@ fn first<'i, T>(
 ``` 
 
 The bound `impl Iterable<Item<'i> = &'i T>` says "when iterated with lifetime `'i`, the resulting reference is `&'i T`".
+
+## Bounding a GAT
+
+Sometimes we want to specify that the value of a GAT meets some additional trait bound. For example, maybe wish to accept any `Iterable`, so long as its `Item` values implement `Send`. We can do that like so...
+
+```rust
+fn sendable_items<I>(iterable: &I)
+where
+    I: Iterable,
+    for<'a> I::Item<'a>: Send,
+{
+}
+```

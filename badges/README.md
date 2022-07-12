@@ -1,0 +1,1 @@
+Little fragments of markdown meant to be included to display various badges.
