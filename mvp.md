@@ -15,7 +15,10 @@ We are currently focused on stabilizing a **Minimum Viable Product** form of GAT
         * [Given the number of papercuts, how do we know that the current MVP is forwards compatible with the fixes?](./mvp/concern-backcompat.md)
     * One detailed question was raised, about the specifics of our rules for [required bounds](explainer/required_bounds.md):
         * [Do we have the right rules for required bounds?](./mvp/concern-right-rules-for-required-bounds.md)
-    
+* Current status:
+    * We are currently awaiting checkboxes to move to final comment period. The [fcp merge comment](https://github.com/rust-lang/rust/pull/96709#issuecomment-1181931456) includes a detailed write-up of the questions being considered by the lang and types teams.
+
+
 [rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709
 [rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709
 
