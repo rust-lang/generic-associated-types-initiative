@@ -68,27 +68,23 @@ impl Iterable for Vec<T> {
 
 However, this impl is not legal unless the trait *also* has a `where Self: 'c` requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.
 
-## Precise rules
+## Where can I learn more?
 
-The precise rules that the compiler uses to decide when to issue an error are as follows:
-
-* For every GAT `G` in a trait definition with generic parameters `X0...Xn` from the trait and `Xn..Xm` on the GAT... (e.g., `Item` or `Iterable`, in the case of `Iterable`, with generic parameters `[Self]` from the trait and `['me]` from the GAT)
-    * If for every method in the trait... (e.g., `iter`, in the case of `Iterable`)
-        * When the method signature (argument types, return type, where clauses) references `G` like `<P0 as Trait<P1..Pn>>::G<Pn..Pm>` (e.g., `<Self as Iterable>::Iterator<'a>`, in the `iter` method, where `P0 = Self` and `P1` = `'a`)...
-            * we can show that `Pi: Pj` for two parameters on the reference to `G` (e.g., `Self: 'a`, in our example)
-                * then the GAT must have `Xi: Xj` in its where clause list in the trait (e.g., `Self: 'me`).
-
-## Plan going forward: Add rules by default
-
-In the future, rather than reporting an error in cases like this, we expect to add these where clauses to the trait and impl by default. However, there is some possibility that this will rule out legal impls for which the where clause might not be necessary. This can happen if either (a) the lifetime, despite being linked to a type like `Self` in the methods, is not used to borrow content from `Self`; or (b) in all impls of this trait that could exist, the types being borrowed don't have references and are known to be `'static`.
+You can learn more about the precise rules of this decision, as well as the motivations, by visiting the [detailed design page](../design-discussions/outlives-defaults.md).
 
 ## Feedback requested!
 
-The current compiler adds the future defaults as a **hard error** precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please [file an issue] on this repository, and use the "Feedback on required bounds" template.
+The current compiler adds the future defaults as a **hard error** precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. We are not sure yet what long term path is best:
+
+* Remove the required bounds altogether.
+* Remove the required bounds and replace them with a warn-by-default lint, allowing users to more easily opt out.
+* Add the required bounds by default so you don't have to write them explicitly.
+
+If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please [file an issue] on this repository, and use the "Feedback on required bounds" template. In the meantime, there is a workaround described in the next section that should allow any trait to work.
 
 [file an issue]: https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose
 
-### Workaround
+## Workaround
 
 If you find that this requirement is causing you a problem, there is a workaround. You can refactor your trait into two traits. For example, to write a version of `Iterable` that doesn't require `where Self: 'me`, you might do the following:
 

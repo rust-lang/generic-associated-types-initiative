@@ -22,7 +22,6 @@ GATs in their current form have some pretty [severe limitations](../explainer/ro
 
 [#92985]: https://github.com/rust-lang/rust/issues/92985
 
-
 ## Responses
 
 ### Aren't GATs too hard to learn in their current state (or maybe in general)?
