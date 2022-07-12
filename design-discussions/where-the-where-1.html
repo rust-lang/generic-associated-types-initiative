@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="../RFC.html">✨ RFC</a></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item expanded "><a href="../design-discussions/where-the-where-1.html" class="active">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/where-the-where-1.html" class="active">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,8 +142,7 @@
 <h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
 <h3 id="where-clauses-in-generic-associated-types-comes-after-valuebinding"><a class="header" href="#where-clauses-in-generic-associated-types-comes-after-valuebinding">Where clauses in generic associated types comes after value/binding</a></h3>
 <p>Example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait MyTrait {
     type MyType&lt;T&gt;: Iterator
@@ -161,8 +160,7 @@ impl MyTrait for MyOtherType {
 <p>Effectively the <code>= type</code> in the impl replaces the <code>: Bound</code> from the declaration with the value that has to meet those bounds.</p>
 <h3 id="later-phase-type-aliases"><a class="header" href="#later-phase-type-aliases">Later phase: type aliases</a></h3>
 <p>Type aliases will eventually be aligned to this syntax as well:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type MyType&lt;T&gt; = Vec&lt;T&gt; where T: Ord;
 <span class="boring">}
@@ -170,8 +168,7 @@ impl MyTrait for MyOtherType {
 <p>Currently, however, where clauses on type aliases are ignored, so we will not stabilize this new syntax until they have the meaning we want.</p>
 <h3 id="suggestions-for-users-who-put-the-where-clause-in-the-wrong-place"><a class="header" href="#suggestions-for-users-who-put-the-where-clause-in-the-wrong-place">Suggestions for users who put the where clause in the wrong place</a></h3>
 <p>We will parse where clauses in both positions and suggest to users that they be moved:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl MyTrait for MyOtherType {
     type MyType&lt;T&gt;
@@ -184,8 +181,7 @@ impl MyTrait for MyOtherType {
 <p>Gets an error with a suggested rewrite. The compiler proceeds &quot;as if&quot; the where clauses had been written after the <code>= Type</code>.</p>
 <h3 id="where-clause-syntax-for-trait-aliases-will-have-to-be-revisited"><a class="header" href="#where-clause-syntax-for-trait-aliases-will-have-to-be-revisited">Where clause syntax for trait aliases will have to be revisited</a></h3>
 <p>As described in the FAQ below, we currently support trait alias syntax like</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
 <span class="boring">}
@@ -210,23 +206,20 @@ impl MyTrait for MyOtherType {
 <p>In the case of an impl specifying the value for an associated type, the &quot;important stuff&quot; the value of the associated type.</p>
 <h3 id="what-about-trait-aliases-dont-they-distinguish-where-clause-placement"><a class="header" href="#what-about-trait-aliases-dont-they-distinguish-where-clause-placement">What about trait aliases, don't they distinguish where clause placement?</a></h3>
 <p>As currently implemented, trait aliases have two distinct possible placements for where clauses, which effectively distinguishes between a <em>where clause</em> (which must be proven true in order to use the alias) and an <em>implied bound</em> (which is part of what the alias expands to). One can write:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Foo&lt;T: Debug&gt; = Bar&lt;T&gt; + Baz&lt;T&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>in which case <code>where X: Foo&lt;Y&gt;</code> is only legal if <code>Y: Debug</code> is known from some other place. This is roughly equivalent to a trait like so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Foo1&lt;T: Debug&gt;: Bar&lt;T&gt; + Baz&lt;T&gt; { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>The clause <code>where X: Foo1&lt;Y&gt;</code> is also only valid when <code>Y: Debug</code> is known. This is in contrast to the &quot;supertraits&quot; <code>Bar&lt;Y&gt;</code> and <code>Baz&lt;Y&gt;</code>, which are implied by <code>X: Foo1&lt;Y&gt;</code> (&quot;supertraits&quot; are also sometimes called &quot;implied bounds&quot;).</p>
 <p>Alternatively, one can include the where clause in the &quot;value&quot; of the trait alias like so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
 <span class="boring">}
@@ -235,8 +228,7 @@ impl MyTrait for MyOtherType {
 <p>Our decision was that this is a subtle distinction and that using the placement of the where clause was not a great way to make it.</p>
 <h3 id="is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language"><a class="header" href="#is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language">Is that trait alias syntax consistent with the rest of the language?</a></h3>
 <p>Not really. There are other places in the language that could benefit from a similar flexibility around implied bounds. For example, one could imagine wanting to have an associated type <code>T::MyType&lt;Y&gt;</code> where it is known that <code>Y: PartialEq&lt;T::MyType&lt;Y&gt;&gt;</code>, but this cannot be readily written with today's syntax:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait MyTrait {
     type MyType&lt;T&gt;: PartialEq&lt;T&gt;;
@@ -252,8 +244,7 @@ impl MyTrait for MyOtherType {
 <p>In short, this might be a reasonable choice to make, but we should make it uniformly, and it shuts down the direction of using the lack of bounds in the impl as a kind of signal.</p>
 <h3 id="why-not-change-type-alias-notation-too"><a class="header" href="#why-not-change-type-alias-notation-too">Why not change type alias notation too?</a></h3>
 <p>Top-level type aliases currently parse with the where clause before the <code>=</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type Foo&lt;T&gt; where T: Ord = T;
 <span class="boring">}
@@ -271,7 +262,7 @@ impl MyTrait for MyOtherType {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../design-discussions/outlives-defaults.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../design-discussions/outlives-defaults-1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                             <a rel="next" href="../design-discussions/where-the-where.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
@@ -283,7 +274,7 @@ impl MyTrait for MyOtherType {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../design-discussions/outlives-defaults.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../design-discussions/outlives-defaults-1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                     <a rel="next" href="../design-discussions/where-the-where.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">

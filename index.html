@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/where-the-where.html">Initial write-up</a></li></ol></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active">👋 Welcome</a></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,18 +144,25 @@
  like: https://img.shields.io/badge/status-archived-grey.svg
 -->
 <p><img src="https://img.shields.io/badge/status-active-brightgreen.svg" alt="initiative status: active" /></p>
-<h2 id="what-is-this"><a class="header" href="#what-is-this">What is this?</a></h2>
-<p>This page tracks the work of the Generic Associated Types <a href="https://lang-team.rust-lang.org/initiatives.html">initiative</a>! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the <a href="./CHARTER.html">charter</a>. </p>
-<h2 id="current-status"><a class="header" href="#current-status">Current status</a></h2>
+<p>This page tracks the work of the Generic Associated Types (GATs) <a href="https://lang-team.rust-lang.org/initiatives.html">initiative</a>! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the <a href="./CHARTER.html">charter</a>. </p>
+<h2 id="-current-focus-mvp-"><a class="header" href="#-current-focus-mvp-">⚡ Current focus: MVP ⚡</a></h2>
+<p>We are currently focused on stabilizing a <strong>Minimum Viable Product</strong> form of GATs in <a href="https://github.com/rust-lang/rust/pull/96709">rust-lang/rust#96709</a>. <a href="./mvp.html">Learn more here!</a> You can learn more:</p>
+<ul>
+<li>The <a href="./explainer.html">explainer</a> covers the design that is being stabilized, and the <a href="./explainer/rough_edges.html">rough edges</a> section explains some of the ways it is currently difficult to use (see the <a href="./shiny_future.html">shiny future</a> section for speculation on how to address those).</li>
+<li>The <a href="./design_patterns.html">design patterns</a> section documents some of the ways GATs are used in the wild.</li>
+<li>The []</li>
+</ul>
 <p>The following table lists of the stages of an initiative, along with links to the artifacts that will be produced by the start of that stage.</p>
-<table><thead><tr><th>Stage</th><th>State</th><th>Artifact(s)</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Stage</th><th>State</th><th>Artifact(s)</th></tr></thead><tbody>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html">Proposal</a></td><td>✅</td><td><a href="./CHARTER.html">Charter</a></td></tr>
 <tr><td></td><td></td><td><a href="https://github.com/rust-lang/rust/issues/44265">Tracking issue</a></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html">Experimental</a></td><td>✅</td><td><a href="./RFC.html">RFC</a></td></tr>
+<tr><td>[]</td><td></td><td></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/development.html">Development</a></td><td>🦀</td><td><a href="./explainer.html">Explainer</a></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/feature-complete.html">Feature complete</a></td><td>💤</td><td>Stabilization report</td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/stabilized.html">Stabilized</a></td><td>💤</td><td></td></tr>
 </tbody></table>
+</div>
 <p>Key:</p>
 <ul>
 <li>✅ -- phase complete</li>
@@ -182,7 +189,7 @@ following command.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="updates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="CHARTER.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -191,7 +198,7 @@ following command.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="updates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="CHARTER.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="RFC.html">✨ RFC</a></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a></li><li class="chapter-item "><a href="design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/where-the-where.html">Initial write-up</a></li></ol></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="index.html">👋 Welcome</a></li><li class="chapter-item "><a href="CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,18 +145,25 @@
  like: https://img.shields.io/badge/status-archived-grey.svg
 -->
 <p><img src="https://img.shields.io/badge/status-active-brightgreen.svg" alt="initiative status: active" /></p>
-<h2 id="what-is-this"><a class="header" href="#what-is-this">What is this?</a></h2>
-<p>This page tracks the work of the Generic Associated Types <a href="https://lang-team.rust-lang.org/initiatives.html">initiative</a>! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the <a href="./CHARTER.html">charter</a>. </p>
-<h2 id="current-status"><a class="header" href="#current-status">Current status</a></h2>
+<p>This page tracks the work of the Generic Associated Types (GATs) <a href="https://lang-team.rust-lang.org/initiatives.html">initiative</a>! To learn more about what we are trying to do, and to find out the people who are doing it, take a look at the <a href="./CHARTER.html">charter</a>. </p>
+<h2 id="-current-focus-mvp-"><a class="header" href="#-current-focus-mvp-">⚡ Current focus: MVP ⚡</a></h2>
+<p>We are currently focused on stabilizing a <strong>Minimum Viable Product</strong> form of GATs in <a href="https://github.com/rust-lang/rust/pull/96709">rust-lang/rust#96709</a>. <a href="./mvp.html">Learn more here!</a> You can learn more:</p>
+<ul>
+<li>The <a href="./explainer.html">explainer</a> covers the design that is being stabilized, and the <a href="./explainer/rough_edges.html">rough edges</a> section explains some of the ways it is currently difficult to use (see the <a href="./shiny_future.html">shiny future</a> section for speculation on how to address those).</li>
+<li>The <a href="./design_patterns.html">design patterns</a> section documents some of the ways GATs are used in the wild.</li>
+<li>The []</li>
+</ul>
 <p>The following table lists of the stages of an initiative, along with links to the artifacts that will be produced by the start of that stage.</p>
-<table><thead><tr><th>Stage</th><th>State</th><th>Artifact(s)</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Stage</th><th>State</th><th>Artifact(s)</th></tr></thead><tbody>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html">Proposal</a></td><td>✅</td><td><a href="./CHARTER.html">Charter</a></td></tr>
 <tr><td></td><td></td><td><a href="https://github.com/rust-lang/rust/issues/44265">Tracking issue</a></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/proposal.html">Experimental</a></td><td>✅</td><td><a href="./RFC.html">RFC</a></td></tr>
+<tr><td>[]</td><td></td><td></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/development.html">Development</a></td><td>🦀</td><td><a href="./explainer.html">Explainer</a></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/feature-complete.html">Feature complete</a></td><td>💤</td><td>Stabilization report</td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/stages/stabilized.html">Stabilized</a></td><td>💤</td><td></td></tr>
 </tbody></table>
+</div>
 <p>Key:</p>
 <ul>
 <li>✅ -- phase complete</li>
@@ -178,94 +185,248 @@
 following command.</p>
 <pre><code>mdbook serve
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="-updates"><a class="header" href="#-updates">✏️ Updates</a></h1>
-<p>Lang-team initiatives give monthly updates. This section collects the updates from this initiative for posterity.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="2021-oct-lang-team-update"><a class="header" href="#2021-oct-lang-team-update">2021-Oct: Lang team update</a></h1>
-<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<ul>
-<li>GATs are moving towards stabilization. Major blockers:
-<ul>
-<li>Resolving the <a href="updates/../design-discussions/outlives-defaults.html">default inference</a> question we discussed earlier (plan described below)</li>
-<li>Resolving the <a href="updates/../design-discussions/where-the-where.html">syntax of where clauses</a></li>
-<li>Explainer that covers common usage patterns</li>
-<li>Documenting test coverage</li>
-<li>Triage known bugs</li>
-</ul>
-</li>
-<li>Since we landed various improvements, jackh726 has been monitoring bugs, many of them are general issues with rustc that come up somewhat more often for GATs</li>
-</ul>
-<h2 id="goals-for-this-month"><a class="header" href="#goals-for-this-month">Goals for this month</a></h2>
-<ul>
-<li>Implement default inference solution</li>
-<li>Settle question of whre clause syntax</li>
-<li>Finish explainer and issue triage</li>
-</ul>
-<h2 id="notes"><a class="header" href="#notes">Notes</a></h2>
-<p>The general plan is to push Generated Associated types towards stabilization, but with the expectation that the current form has ergonomic pitfalls. You can think of it as an MVP to expose functionality. Towards that end we aim to write an explainer that highlights the current state of the feature, what it can do, and what it can't.</p>
-<h2 id="resolving-the-question-of-where-clause-defaults"><a class="header" href="#resolving-the-question-of-where-clause-defaults">Resolving the question of where clause defaults</a></h2>
-<p>Last month we discussed a potential defaulting scheme for <code>where Self: 'a</code> annotations. There were some unknowns, such as the &quot;false default&quot; rate -- i.e., cases where the default would trigger but you don't want it. To help gain more data, the plan is to implement the logic for adding a default, but instead of adding a default, we will require that the default be written explicitly. You can think of it as an extended &quot;well-formedness&quot; requirement.</p>
-<p>This preserves future flexibility:</p>
-<ul>
-<li>Remove the error altogether</li>
-<li>Add as a lint with a fix</li>
-<li>Simply add the where clause by default, perhaps with an opt out</li>
-</ul>
-<p>The error message for this default will include instructions on (a) known workarounds if it is not desired and (b) an issue where folks can comment if they have codebases where the default was not helpful. This should enable us to gain some data.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="generic-associated-types-charter"><a class="header" href="#generic-associated-types-charter">&quot;Generic Associated Types&quot; Charter</a></h1>
 <h2 id="goals"><a class="header" href="#goals">Goals</a></h2>
+<p>Extend traits by permitting associated types to have generic parameters (types, lifetimes).</p>
+<p>This enables writing traits that capture more complex patterns:</p>
 <ul>
-<li>Deliver an initial version of <a href="https://github.com/rust-lang/rfcs/pull/1598">generic associated types</a> feature.</li>
+<li>an [<code>Iterable</code>] trait for collections that support an <code>iter</code> method, yielding references into themselves</li>
+<li>a [<code>Mode</code>] trait</li>
+</ul>
+<p>It also provides the technical foundation of <a href="https://rust-lang.github.io/async-fundamentals-initiative/explainer/async_fn_in_traits.html">async functions in traits</a> and <a href="https://rust-lang.github.io/impl-trait-initiative/explainer/rpit_trait.html">return-position impl Trait in traits</a> (although this dependence is internal to the compiler and exposed to users).</p>
+<ul>
+<li>Concretely, extend associated types with generic parameters.</li>
+<li>This makes it possible to write traits describing more complex patterns, e.g.
+<ul>
+<li>methods with arguments or return values that borrow from other arguments</li>
+<li></li>
+</ul>
+</li>
+<li>Extend Rust traits to describe patterns that currently cannot be described...
+<ul>
+<li>associated types that reference </li>
+</ul>
+</li>
+<li>Extend associated types on traits to have type and lifetime parameters.</li>
 </ul>
 <h2 id="membership"><a class="header" href="#membership">Membership</a></h2>
-<table><thead><tr><th>Role</th><th>Github</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Role</th><th>Github</th></tr></thead><tbody>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/roles/owner.html">Owner</a></td><td><a href="https://github.com/jackh726/">jackh726</a></td></tr>
 <tr><td><a href="https://lang-team.rust-lang.org/initiatives/process/roles/liaison.html">Liaison</a></td><td><a href="https://github.com/nikomatsakis/">nikomatsakis</a></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="-explainer"><a class="header" href="#-explainer">📚 Explainer</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="mvp-stabilization"><a class="header" href="#mvp-stabilization">MVP Stabilization</a></h1>
+<p>We are currently focused on stabilizing a <strong>Minimum Viable Product</strong> form of GATs in <a href="https://github.com/rust-lang/rust/pull/96709">rust-lang/rust#96709</a>. That's a long github thread, so this page summarizes the key points to understand.</p>
+<ul>
+<li>Understanding GATs in general:
+<ul>
+<li>The <a href="./explainer.html">explainer</a> covers the design that is being stabilized in tutorial form.</li>
+<li>The <a href="./design_patterns.html">design patterns</a> section covers ways that GATs used in the wild.</li>
+<li>The <a href="./explainer/rough_edges.html">rough edges</a> section explains some of the ways GATs are currently difficult to use; the <a href="./shiny_future.html">shiny future</a> section contains speculation on how to address those.</li>
+</ul>
+</li>
+<li>Highlights from the thread:
+<ul>
+<li>The <a href="https://github.com/rust-lang/rust/pull/96709#issue-1225460272">stabilization report</a> lays the groundwork.</li>
+<li>This <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1129311660">summary comment</a> identified the core concerns. We have detailed them here in more depth, and provided some counterpoints:
+<ul>
+<li><a href="./mvp/concern-too-complex.html">GATs permit complex patterns that will, on net, make Rust harder to use</a></li>
+<li><a href="./mvp/concern-lifetimes-only.html">Stabilizing GATs with lifetimes only would help prevent this</a></li>
+<li><a href="./mvp/concern-too-rough.html">GATs are useful but the current state is too rough and should not be stabilized</a></li>
+<li><a href="./mvp/concern-backcompat.html">Given the number of papercuts, how do we know that the current MVP is forwards compatible with the fixes?</a></li>
+</ul>
+</li>
+<li>One detailed question was raised, about the specifics of our rules for <a href="explainer/required_bounds.html">required bounds</a>:
+<ul>
+<li><a href="./mvp/concern-right-rules-for-required-bounds.html">Do we have the right rules for required bounds?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="places-where-conversation-has-been-happening"><a class="header" href="#places-where-conversation-has-been-happening">Places where conversation has been happening?</a></h2>
+<p>Want to read the firehose? Check out these places where conversation has been happening:</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/96709">rust-lang/rust#96709</a> issue thread</li>
+<li><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity">Zulip thread on GATs and complexity</a></li>
+<li><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D">Zulip thread on &quot;type-GATs vs lifetime-GATs&quot;</a></li>
+<li><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/renaming.20.02klzzwxh.3A0000.03">Zulip thread on renaming <code>for</code></a> -- side topic that spun out</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gats-permit-complex-patterns-that-will-on-net-make-rust-harder-to-use"><a class="header" href="#gats-permit-complex-patterns-that-will-on-net-make-rust-harder-to-use">GATs permit complex patterns that will, on net, make Rust harder to use</a></h1>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>There is no question that GATs enable <a href="mvp/../design_patterns.html">new design patterns</a>. For the most part, these design patterns take the form of enabling a new kind of abstraction. For example, <a href="mvp/../design_patterns/many_modes.html">many modes</a> allows a trait that encapsulates a &quot;mode&quot; in which some other code will be executed; lacking GATs, this can only be done in simple cases. These new design patterns may <strong>locally</strong> improve the code, but, if it becomes commonplace to use more complex abstractions in Rust code bases, Rust code overall will become harder for people to understand and read. <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1168643277">As burntsushi wrote:</a></p>
 <blockquote>
-<p>The &quot;explainer&quot; is &quot;end-user readable&quot; documentation that explains how to use the feature being deveoped by this initiative.
-If you want to experiment with the feature, you've come to the right place.
-Until the feature enters &quot;feature complete&quot; form, the explainer should be considered a work-in-progress.</p>
+<p>The complexity increase comes precisely from the abstraction power given to folks. By increasing the accessibility to that power, that power will in turn be used more frequently and users of the language will need to contend with those abstractions. </p>
 </blockquote>
-<h2 id="-suboptimal-syntax-alert-"><a class="header" href="#-suboptimal-syntax-alert-">⚠️ Suboptimal syntax alert ⚠️</a></h2>
-<p>In general, the GAT feature is currently in a &quot;minimum viable product&quot; phase. That means that there are a number of places where the syntax is kind of clumsy, and more annotations are required than we would like to have. The explainer describes the feature that we are aiming to stabilize but you can see the <a href="./explainer/future_directions.html">Future Directions</a> section for some notes on the kinds of changes we would like to make.</p>
-<h2 id="the-problem-in-a-nutshell"><a class="header" href="#the-problem-in-a-nutshell">The problem in a nutshell</a></h2>
-<p>If you want to iterate over something in Rust, you might write the following:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>burntsushi continues (emphasis ours):</p>
+<blockquote>
+<p>Here's where we come to the contentious part of this perspective: <strong>a lot of people have real difficulty understanding abstractions.</strong></p>
+</blockquote>
+<p>Nick Cameron also <a href="https://www.ncameron.org/blog/complexity/">wrote a blog post</a> covering this theme. One of Nick's comments on Zulip points out that duplicated code in an API surface is annoying to maintain, but could be easier for consumers:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287854656">Nick Cameron</a>: I think the risk of features like GATs is that encourages smaller, more abstract APIs which are more satisfying for library authors but which are harder for the median user to comprehend. For a non-GAT example, consider Result and Option compared to a more abstract monadic type. The latter reduces code duplication in the library and perhaps permits more interoperability, but we prefer having separate Result and Option in Rust because for most users, it's easier to understand an API with concrete values and functions like Ok and unwrap, rather than abstract concepts like unit and bind.</p>
+</blockquote>
+<h2 id="what-are-the-alternatives"><a class="header" href="#what-are-the-alternatives">What are the alternatives?</a></h2>
+<p>Nobody is contending that the <a href="mvp/../design_patterns.html">design patterns</a> aren't addressing real problems, but they are contending that <strong>solving those problems with a trait-based abstraction may not be the right approach</strong>. So what are these alternatives? </p>
+<ul>
+<li>In some cases, it's a &quot;slightly less convenient API&quot; (as in <a href="https://docs.rs/csv/latest/csv/struct.Reader.html#method.read_record">CSV reader</a>).</li>
+<li>In others, the answer is some combination of macros and code generation. For example, the <a href="mvp/../design_patterns/many_modes.html">many modes</a> pattern was used to make parser combinators work better, but that could also be addressed via procedural macros and code generation.</li>
+<li>In yet others, it's HRTB; the standard workaround for the <a href="mvp/../design_patterns/iterable.html"><code>Iterable</code></a> pattern is to write <code>for&lt;'c&gt; Iterate&lt;'c&gt;</code>, for example.</li>
+<li>Finally, it is sometimes possible to workaround the lack of GATs by introducing runtime overhead. e.g., foregoing the optimizations that <a href="mvp/../design_patterns/many_modes.html">many modes</a> enabled, or using an enum, or a trait object.</li>
+</ul>
+<h2 id="counterpoint-gats-often-allow-library-authors-to-hide-complexity"><a class="header" href="#counterpoint-gats-often-allow-library-authors-to-hide-complexity">Counterpoint: GATs often allow library authors to hide complexity</a></h2>
+<p>Somewhat counter the above, frequently the goal with GATs is actually to make the interface of the library <em>simpler</em>:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287855607">oli:</a> Yes, and in user libraries right now you do stumble across those very complex APIs that work around the lack of GATs</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1170092720">vultix</a>: I've personally seen two use-cases where GATs would have been useful, both times while writing libraries. We found an ugly workaround for the first use-case that wasn't horrible, but the second workaround made the user-facing api severely worse.</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/amzn/ion-rust/issues/98">almann</a>: Currently, delegation via our current APIs are difficult because we cannot have an associated type that can be constructed with a per invocation lifetime. This <a href="https://gist.github.com/almann/d21da1856d2a3c9f95dd04248a17d3ce">example</a> illustrates this, and shows how we can work around this by the judicious use of <code>unsafe</code> code, by essentially emulating the reference with pointers we know to be scoped appropriately. We also work around the lack of GAT by simplifying the value writer used in the implementation of <code>IonCAnnotationsFieldWriter</code> for <code>IonCWriterHandle</code> by refering to <code>Self</code> which works, but makes the API potentially easier to misuse.</p>
+</blockquote>
+<p>The <a href="mvp/../design_patterns/many_modes.html">many modes</a> pattern shows how the Chumsky parser generator used GATs internally. They don't appear in the public facing methods.</p>
+<p>Jake Goulding points out that we hear very few stories of people who tried GATs but backed off:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287858483">Jake Goulding</a>: It would be wonderful if there were experience reports of people saying &quot;I thought I needed GATs but after writing them I realized I could do X instead and that was much clearer&quot;. My one experience was that I could use one of the stable GAT workarounds, but it felt wrong and I was happy to trial-run the nightly GAT version instead.</p>
+</blockquote>
+<p>Nick Cameron:
+IMO, this is complicated. However, many uses of it do not require understanding every nuance of what's going on in there:</p>
+<p>That's fair. I think in general it is true, like sum is easier to understand than fold, or cloned is easier than map, but that doesn't necessarily mean that the more abstract thing is too difficult to understand. And the more abstract one is likely more general, so there's a trade-off for each case</p>
+<h2 id="counterpoint-macros-are-not-easier"><a class="header" href="#counterpoint-macros-are-not-easier">Counterpoint: Macros are not easier</a></h2>
+<p>Many folks chimed in to express their feeling that proc macros, or duplicated code, are not easier to understand or maintain. Some examples:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288732525">Alice Cecile</a>: Macros are so much worse to read / write / maintain than pretty much any type magic I've ever seen. Even very simple stuff is rough</p>
+</blockquote>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288796879">Ralf Jung</a>: I would not call <a href="https://doc.rust-lang.org/nightly/std/fmt/trait.Debug.html#impl-Debug-for-fn()%20-%3E%20Ret">this kind of nonsense</a> very clear. macros do tend to lead to state explosion and huge amounts of redundancy in the docs, making it very hard to see the actual pattern. that's unsurprising since the compiler is never told about the pattern. (that particular example is not solved by GATs, it requires other new type system features, including variadics. it just demonstrates well the perils of macro-generated code.)</p>
+</blockquote>
+<h2 id="counterpoint-arguing-against-a-feature-because-it-could-be-misused-would-block-many-parts-of-rust"><a class="header" href="#counterpoint-arguing-against-a-feature-because-it-could-be-misused-would-block-many-parts-of-rust">Counterpoint: Arguing against a feature because it could be misused would block many parts of Rust</a></h2>
+<p>https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287765775</p>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287841239">Ralf Jung</a> writes:</p>
+<blockquote>
+<p>yes, that I think is the main argument to me. not having a feature because it could be used to write unnecessarily complicated APIs sounds like a bad argument to me -- it effectively means preventing some people from writing good APIs (assuming we accept there are APIs where the GAT version is clearly superior) for fear of other people writing bad APIs. one can already write unnecessarily complicated APIs in Rust in a lot of ways -- e.g. we didnt block proc-macros just because they can be used for bad APIs, though anyone who had to debug other people's sea of macros knows it can easily lead to terribly opaque API surfaces.
+heck, we have unsafe code, where the consequences of using the feature in the wrong way are (IMO) a lot worse than GATs. I dont understand why GATs are suddenly considered a problem when they are (IMO) a feature much less in danger of being misused than unsafe code or proc macros. Rust has empowerment literally in its one-sentence slurb: we give people powerful tools and all the help we can to use them, and we accept that this means some people will misuse them, and we do what we can (technically and socially) to mitigate the consequences of that.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concern-gats-are-useful-but-the-current-state-is-too-rough-and-should-not-be-stabilized"><a class="header" href="#concern-gats-are-useful-but-the-current-state-is-too-rough-and-should-not-be-stabilized">Concern: GATs are useful but the current state is too rough and should not be stabilized</a></h1>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<p><a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1118275010">nrc wrote:</a></p>
+<blockquote>
+<p>There are numerous cases of small bugs or small gaps in expressivity which have prevented people using GATs for the use cases they want to use them for (see e.g., the blog post linked from the OP, or this reddit thread). These are the sort of things which must be addressed before stabilisation so that we can be sure that they are in fact small and not hiding insurmountable issues.</p>
+</blockquote>
+<p>and <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1118627760">burntsushi wrote:</a></p>
+<blockquote>
+<p>I understand the idea of making incremental progress, but as a total outsider to lang development, this feature looks like it has way too many papercuts and limitations to stabilize right now. Not being able to write a <a href="https://github.com/rust-lang/rust/issues/92985">basic <code>filter</code> implementation on a <code>LendingIterator</code> trait</a> in safe code is a <em>huge</em> red flag to me. Namely, if I can't write a filter adaptor in safe straight-forward code, then... what else can't I do? </p>
+</blockquote>
+<p>clintfred chimes in with a &quot;intermediate Rust user&quot; perspective <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1120054138">similar to this</a>:</p>
+<blockquote>
+<p>As a solidly intermediate Rust user I can say that I have tried wrap my mind around GATs several times over the past 3-4 years, and I don't really &quot;get&quot; it. To be completely fair, I have never tried using them on nightly, so maybe this something best groked hands-on.</p>
+</blockquote>
+<p>Sabrina also wrote a <a href="https://sabrinajewson.org/blog/the-better-alternative-to-lifetime-gats">blog post showing some of the problems with lifetime GATs in their current state</a>.</p>
+<h2 id="details"><a class="header" href="#details">Details</a></h2>
+<p>GATs in their current form have some pretty <a href="mvp/../explainer/rough_edges.html">severe limitations</a>. These limitations block one of the most compelling use cases, lending iterators, and fixing that will require polonius (c.f. <a href="https://github.com/rust-lang/rust/issues/92985">#92985</a>). Worse, these limitations are hard to convey to users: things just kind of randomly don't work, and it's not obvious that this is the compiler's fault (this is kind of a &quot;worst case&quot; for learnability, since it can trick you into thinking you don't understand the model, when in fact you do).</p>
+<h2 id="responses"><a class="header" href="#responses">Responses</a></h2>
+<h3 id="arent-gats-too-hard-to-learn-in-their-current-state-or-maybe-in-general"><a class="header" href="#arent-gats-too-hard-to-learn-in-their-current-state-or-maybe-in-general">Aren't GATs too hard to learn in their current state (or maybe in general)?</a></h3>
+<p>There is no doubt that &quot;papercuts&quot; can have a major impact on learnability. However, the lack of GATs, even in rudimentary form, causes its share of papercuts as well. Things that feel like they <em>ought</em> to be expressable (e.g., an <a href="mvp/../explainer/iterable.html"><code>Iterable</code></a> trait) are not. For example, <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1130190157">CLEckhardt writes</a>:</p>
+<blockquote>
+<p>The complexity is either in the language or the code. There are a lot of complex things that Rust lets me express cleanly, which is why I love it. But when I run into things that Rust can't express, I have to write complex code. So the complexity doesn't leave, it just moves.</p>
+</blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1131885602">mijamo wrote something similar</a>:</p>
+<blockquote>
+<p>For what it's worth I am a rust beginner coming from mostly Python / Typescript. There are MANY things in Rust that make my head hurt but GAT just seem natural after some introduction and I actually get stuck trying to go around the lack of GAT nearly every time I try to write Rust code (I have given up in every single of my rust projects so far and I would say lack of GAT and annoying lifetime handling were my 2 main problems).</p>
+</blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1119760258">audunhalland left a similar comment:</a></p>
+<blockquote>
+<p>I'm no &quot;type theorist&quot; at all, I have no deep insight into how the Rust typesystem works internally, or what is the deeper cause of some random compile error. With GATs I just tend to keep flicking on the code until the compiler is somehow happy. Just like classic non-GAT Rust code :) I have stumbled across some of the HRTB limitations, but have managed to work around them quite easily. My feeling is that for my use-cases GATs now feel like a natural part of the language.</p>
+</blockquote>
+<p>Pzixel describes how they <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1120175346">wind up using GATs in most projects</a>:</p>
+<blockquote>
+<p>It all starts similarly: I have bunch of traits that return Vecs or something. Then I profile and see allocs in tight loops I cannot afford. [..] Every time you want to have zero-cost in traits GATs come into play. Iterators and futures are just some examples, there are more. And I bet that every program written in rust are using these concepts and people there either don't care and put boxes in traits or write their own super niche fragile implementations to fit their needs. [..] I'd like to put some thought on the matter &quot;No one using GATs&quot; and &quot;GATs are just too complicated&quot; - it reminds me of generics discussions in Go. While GATs may be complicated making it work without them is even harder. It worth always keeping it in mind</p>
+</blockquote>
+<h3 id="will-we-really-do-the-follow-up-required"><a class="header" href="#will-we-really-do-the-follow-up-required">Will we really do the follow-up required?</a></h3>
+<p>One specific danger is that we would stabilize GATs and then &quot;declare victory&quot;, leaving the feature unchanged for years. There are a few reasons to think that won't happen. </p>
+<p>For one, the new <a href="https://github.com/rust-lang/types-team">types team</a> is ramping up and focused on precisely these kinds of improvements.</p>
+<p>Second, having features on master leads to more attention and volunteers, not less (although that alone is not enough when the problems are deeper). <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1118868165">jam1garner writes:</a></p>
+<blockquote>
+<p>And yeah the UX could be better :( I can't speak for everyone but as someone who tries to make diagnostics PRs when I hit issues and have the time/energy, I personally can't really kick the tires if I can't use the feature in my libraries, and thus don't have a very natural path to find pain points to.</p>
+</blockquote>
+<p>More generally, Rust's entire history has been one of taking complex features, exposing them, and sanding down the edges over time -- and sometimes stalling out for an extended period of time. And yet, it's hard to come up with an example where it would've been better to hold off on stabilization. Take async functions: when stabilized, they had many diagnostic rough edges, and still do. And yet, it's clearly good that they're available.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concern-we-should-stabilize-lifetimes-only"><a class="header" href="#concern-we-should-stabilize-lifetimes-only">Concern: we should stabilize lifetimes only</a></h1>
+<h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
+<p>This suggestion stems from the concern that <a href="mvp/./concern-too-complex.html">GATs give rise to abstractions that are too complex</a>, combined with a recognition that the lack of lifetime GATs means that common patterns like <a href="mvp/../design_patterns/iterable.html"><code>Iterable</code></a> cannot be expressed, which leads to its own form of complexity.</p>
+<p>The argument then is that we should stabilize lifetime GATs <em>only</em> and avoid types. This limits the kinds of patterns that GATs can be used for. Patterns that abstract over types, like <a href="mvp/../design_patterns/many_modes.html">many modes</a>, <a href="mvp/../design_patterns/pointer_types.html">pointer types</a>, or <a href="mvp/../design_patterns/generic_scopes.html">generic scopes</a>, should instead use alternatives, like code generation or macros.</p>
+<h2 id="counterpoint-irregular-design-is-its-own-learnability-hazard"><a class="header" href="#counterpoint-irregular-design-is-its-own-learnability-hazard">Counterpoint: Irregular design is its own learnability hazard</a></h2>
+<p>Limiting things to types is actually its own kind of learnability hazard. Having to learn &quot;exceptions&quot; (e.g., this only works for lifetimes) rather than a uniform set of rules (everything can take type parameters) can be quite challenging, particularly when the motivation for those exceptions is simply that we don't want people to be able to express certain abstractions (versus, say, the limitations that motivate dyn-safety, which are that it is simply not possible to general compiled code).</p>
+<h2 id="counterpoint-without-types-we-cant-express-rpitit-or-async-fn"><a class="header" href="#counterpoint-without-types-we-cant-express-rpitit-or-async-fn">Counterpoint: Without types, we can't express RPITIT or async fn</a></h2>
+<p>To desugar <code>-&gt; impl Trait</code>, one must have the ability to write type-level GATs. For example:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let v = vec![1, 2, 3];
-for elem in v.iter() { ... }
-<span class="boring">}
-</span></code></pre></pre>
-<p>The <code>iter</code> method returns an iterator of references into the items in the vector. Conceptually, it looks something like this (the actual implementation works differently):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Vec&lt;T&gt; {
-    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Iter&lt;'a, T&gt; {
-        Iter { vec: self, position: 0 }
-    }
+</span>trait Convert {
+    fn convert(&amp;self, c: impl Converter) -&gt; impl Display;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>where <code>Iter</code> is a struct that implements the <code>Iterator</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>would be translated to something like this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct Iter&lt;'a, T&gt; {
-    vec: &amp;'a Vec&lt;T&gt;,
-    position: usize,
+</span>trait Convert {
+    type convert&lt;T: Converter&gt;: Display;
+    fn convert&lt;T: Converter&gt;(&amp;self, c: T) -&gt; Self::convert&lt;T&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>If we lose the ability to write type-only GATs, then we can no longer fully explain or desugar these more complex features, which is also its own learnability hazard (and gives some indication as to the expressiveness that is being lost).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-we-know-that-the-current-mvp-is-forwards-compatible-with-the-fixes"><a class="header" href="#how-do-we-know-that-the-current-mvp-is-forwards-compatible-with-the-fixes">How do we know that the current MVP is forwards compatible with the fixes?</a></h1>
+<h2 id="summary-2"><a class="header" href="#summary-2">Summary</a></h2>
+<p>GATs in their current form have some pretty <a href="mvp/../explainer/rough_edges.html">severe limitations</a>. As we address those limitations, we may find we wish to make backwards incompatible changes. Keeping things unstable ensures we have room to change the details.</p>
+<h2 id="counterpoints"><a class="header" href="#counterpoints">Counterpoints</a></h2>
+<p>The GAT syntax being stabilized is leveraging existing syntactic constructs, like associated types and <code>for&lt;'a&gt;</code> bounds. The problems we are running into exist, for the most part, with those constructs as well. The fixes discussed in the <a href="mvp/../shiny_future.html">shiny future</a> section are not typically specific to GATs.</p>
+<p>One area where we've specifically concerned backcompat is the question of <a href="mvp/../explainer/required_bounds.html">required bounds</a>, and in that area we particularly chose the most forwards compatible option (requiring users to write things out explicitly, thus ensuring they can be made optional or defaulted later on). We will always have to permit users to write where-clauses, so there is no real danger there.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concern-do-we-have-the-right-rules-for-required-bounds"><a class="header" href="#concern-do-we-have-the-right-rules-for-required-bounds">Concern: Do we have the right rules for required bounds?</a></h1>
+<h2 id="summary-3"><a class="header" href="#summary-3">Summary</a></h2>
+<p>QuineDot <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1120050703">writes</a><sup class="footnote-reference"><a href="#footnote">1</a></sup>:</p>
+<blockquote>
+<p>Are the rules actually how we want them to be? </p>
+</blockquote>
+<div class="footnote-definition" id="footnote"><sup class="footnote-definition-label">1</sup>
+<p>QuineDot also asked about the current rules. The rules are documented on the <a href="mvp/../explainer/required_bounds.html">required bounds</a> page, and they've been brought up to date with nightly.</p>
+</div>
+<p>QuineDot pointed out various grey cases. The rules are reviewed in the <a href="mvp/../design-discussions/outlives-defaults.html">outlives-defaults design discussion</a>, which also discussed (in the FAQ) the possibility that we are missing some rules.</p>
+<p>QuineDot also pointed out that the implementation seems to have diverged from the rules as discussed. That needs to be evaluated and reconciled.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-explainer"><a class="header" href="#-explainer">📚 Explainer</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<blockquote>
+<p>🚨 <strong>Warning: Rough edges ahead.</strong> This section describes the GATS <strong>Minimum Viable Product</strong>. This contains a number of known <a href="./explainer/rough_edges.html">rough edges</a>. The <a href="./shiny_future.html">shiny future</a> page desribes GATs how we would like to them to be. Note that things which are not stabilized (as of this writing, all of GATs) are subject to change. The <a href="./design_patterns.html">design pattern</a> page captures and describes uses of GATs in the wild.</p>
+</blockquote>
+<p><a href="./explainer/motivation.html">Read on!</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="why-gats"><a class="header" href="#why-gats">Why GATs?</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<p>As the name suggests, <em>generic</em> associated types are an extension that permit associated types to have generic parameters. This allows associated types to capture types that may include generic parameters that came from a trait method. These can be lifetime or type parameters.</p>
+<p>To see why they are useful, we'll start by looking at the <code>Iterator</code> trait, which defines a single iterator over some items. This trait works great with plain associated types. We'll then consider how we could create an <code>Iterable</code> trait, that defines a collection that can be iterated many times -- this trait requires generic associated types.</p>
+<h2 id="example-iterator"><a class="header" href="#example-iterator">Example: Iterator</a></h2>
+<p>Associated types in a trait are used to capture types that appear in methods but are determined based on the impl that is chosen (i.e., by the type implementing the trait) rather than being specified from the outside. The simplest example is the <code>Iterator</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterator {
+    type Item;
+    fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Because the <code>Iterator</code> trait defines the <code>Item</code> type as an associated type, that implies that every type which implements <code>Iterator</code> will also specify what sort of <code>Item</code> it generates.</p>
+<p>As an example, imagine I have an iterator for items in a slice <code>&amp;'c [T]</code>...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Iter&lt;'c, T&gt; {
+    data: &amp;'c [T],
 }
 
-impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
-    type Item = &amp;'a T;
+impl&lt;'c, T&gt; Iterator for Iter&lt;'c, T&gt; {
+    type Item = &amp;'c T;
 
-    fn next(&amp;mut self) -&gt; Option&lt;&amp;'a T&gt; {
-        let i = self.position;
-        if i &lt; self.vec.len() {
-            self.position += 1;
-            Some(&amp;self.vec[i])
+    fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
+        if let Some((prefix_elem, suffix)) = self.data.split_first() {
+            self.data = suffix;
+            Some(prefix_elem)
         } else {
             None
         }
@@ -273,75 +434,145 @@ impl&lt;'a, T&gt; Iterator for Iter&lt;'a, T&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Rust's other collections also have similar <code>iter</code> methods that work the same way. You might wonder, why not have an <code>Iterable</code> trait, that encapsulates this pattern? Something like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>...the impl specifies that the type of this iterator is <code>&amp;'c T</code>.</p>
+<h2 id="extending-to-iterable"><a class="header" href="#extending-to-iterable">Extending to Iterable</a></h2>
+<p>Associated types are useful, but on their own they are often insufficient to capture the patterns we would like to write as a trait. Often, this occurs when the associated type wants to include data borrowed from <code>self</code> or some other parameter.</p>
+<p>The <code>Iterator</code> trait is great, but if you write a generic function that takes an <code>Iterator</code>, that iterator can only be iterated over a single time. Imagine a function that wanted to iterate once to find a total count and then <em>again</em> to process each item, this time knowing the full count:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn count_twice&lt;I: Iterator&gt;(iterator: I) {
+    let mut count = 0;
+    for _ in iterator {
+        count += 1;
+    }
+
+    // Error: iterator already used
+    for elem in iterator {
+        process(elem, count);
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Of course, most Rust types in the standard library have a method called <code>iter</code> that is exactly what we want (e.g., <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.iter"><code>[T]::iter</code></a>). Given an <code>&amp;'i self</code>, these functions return a fresh iterator that yields up <code>&amp;'i T</code> references into the collection. Because they take a <code>&amp;self</code>, they can be called as many times as we want. So, if we knew which kind of collection we had, we could easily write <code>count_twice</code> to take a <code>[T]</code> or a <code>HashMap&lt;T&gt;</code> or whatever. But what we if want to write it generically, so it works across <em>any</em> collection? That turns out to be impossible to do nicely with associated types.</p>
+<p>To see why, let's try to write the code and see where we get a stuck. We'll start by defining an <code>Iterable</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
+    // Type of item yielded up; will be a reference into `Self`.
     type Item;
-    type Iterator: Iterator&lt;Item = Self::Item&gt;;
 
-    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator;
+    // Type of iterator we return. Will return `Self::Item` elements.
+    type Iter: Iterator&lt;Item = Self::Item&gt;;
+
+
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iter;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Well, if you look closely at this trait, you'll see that it doesn't work. The type that an impl needs to provide for <code>Iterator</code> needs to be able to reference <code>'a</code>, the lifetime of the <code>self</code> parameter. But currently, it can't! That lifetime is not in scope:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>But when we try to write the impl, we run into a problem:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Item = &amp;'a T;
-    //           ^^ 'a is not in scope here!
-    type Iterator = Iter&lt;'a, T&gt;;
-    //                   ^^ 'a is not in scope here!
+</span>impl&lt;T&gt; Iterable for [T] {
+    type Item = &amp;'hmm T;
+    //           ^^^^ what lifetime to use here?
 
-    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Iter&lt;'a, T&gt; {
-        Iter { vec: self, position: 0 }
+    type Iter = Iter&lt;'hmm, T&gt;;
+    //               ^^^^ what lifetime to use here?
+
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iter {
+        //       ^^ THIS is the lifetime we want, but it's not in scope!
+        Iter { data: self }
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="enter-generic-associated-types"><a class="header" href="#enter-generic-associated-types">Enter: generic associated types</a></h2>
-<p>With generic associated types, associated types can have generic parameters. This makes it possible to model the <code>Iterable</code> trait by having the <code>Iterator</code> type take a generic parameter, <code>'a</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>You see the problem? In the case of <code>Iterator</code>, the <code>Self</code> type was <code>&amp;'c [T]</code> and the <code>Item</code> type was <code>&amp;'c T</code>. Since both <code>'c</code> and <code>T</code> appeared at the impl header level, both of those generic parameters were in scope and usable in the associated type. But for <code>Iterable</code>, we still want to yield references like <code>&amp;'c T</code>, but <code>'c</code> is not declared on the impl -- it's specific to the call to <code>iter</code>. </p>
+<p>The fact that the lifetime parameter <code>'c</code> is declared on the method is not just a minor detail. It is exactly what allows something to be iterated many times; that is, the thing we are trying to capture with the <code>Iterable</code> trait. It means that the borrow you get when you call <code>iter()</code> only has to last as long as this specific call to <code>iter</code>. If you call <code>iter</code> multiple times, they can be instantiated with distinct borrows. (In contrast, if <code>'c</code> were declared at the impl scope, the borrow would last across <em>all</em> calls to any method in <code>Iterable</code>.)</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="defining-and-implementing-the-iterable-trait-with-gats"><a class="header" href="#defining-and-implementing-the-iterable-trait-with-gats">Defining and implementing the Iterable trait with GATs</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<blockquote>
+<p><a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">Play with this example on the Rust playground.</a></p>
+</blockquote>
+<p>To express traits like <code>Iterable</code>, we can make use generic associated types -- that is, associated types with generic parameters. Here is the complete <code>Iterable</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
-    type Item&lt;'a&gt;
+    // Type of item yielded up; will be a reference into `Self`.
+    type Item&lt;'collection&gt;
     where
-        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+        Self: 'collection;
 
-    type Iterator&lt;'a&gt;: Iterator&lt;Item = Self::Item&lt;'a&gt;&gt;
+    // Type of iterator we return. Will return `Self::Item` elements.
+    type Iterator&lt;'collection&gt;: Iterator&lt;Item = Self::Item&lt;'collection&gt;&gt;
     where
-        Self: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+        Self: 'collection;
 
-    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Self::Iterator&lt;'a&gt;;
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iterator&lt;'c&gt;;
+    //           ^^                         ^^
+    //
+    // Returns a `Self::Iter` derived from `self`.
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Given this trait definition, we can implement <code>Iterable</code> like so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>Let's walk through it piece by piece...</p>
+<ul>
+<li>We added a <code>'collection</code> parameter to <code>Item</code>. This represents &quot;the specific collection that the <code>Item</code> is borrowed from&quot; (or, if you prefer, the lifetime for which that collection is borrowed). </li>
+<li>The same <code>'collection</code> parameter is added to <code>Iterator</code>, indicating the collection that the iterator borrows its items from.</li>
+<li>In the <code>iter</code> method, the value of <code>'collection</code> comes from <code>self</code>, indicating that <code>iter</code> returns an <code>Iterator</code> linked to <code>self</code>.</li>
+<li>Each associated type also has a <code>where Self: 'collection</code> bound. These bounds are required by the compiler -- if you don't add them, you will get a compilation error. As <a href="explainer/./explainer/required_bounds.html">explained here</a>, this is a compromise that is part of the GATs MVP to give us time to work out the best long-term solution.
+<ul>
+<li>The bound <code>where Self: 'collection</code> is called an <em>outlives bound</em> -- it indicates that the data in <code>Self</code> must outlive the <code>'collection</code> lifetime</li>
+</ul>
+</li>
+</ul>
+<h2 id="implementing-the-trait"><a class="header" href="#implementing-the-trait">Implementing the trait</a></h2>
+<p>Let's write an implementation of this trait. We'll implement it for the <code>Vec&lt;T&gt;</code> type; a <code>&amp;Vec&lt;T&gt;</code> can be coerced into a <code>&amp;[T]</code> slice, so we can re-use the slice <code>Iter</code> that we defined before (the <a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">playground</a> link includes an impl of <code>Iterable</code> for <code>[T]</code> as well, but we'll use <code>Vec</code> here because it's more convenient).</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Item&lt;'a&gt; = &amp;'a T
-    where
-        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+</span>// from before
+struct Iter&lt;'c, T&gt; {
+    data: &amp;'c [T],
+}
 
-    type Iterator&lt;'a&gt; = Iter&lt;'a, T&gt;
+impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
+    type Item&lt;'c&gt; = &amp;'c T
     where
-        T: 'a; // &lt;-- see the &quot;required bounds&quot; section for more information
+        T: 'c;
+    
+    type Iterator&lt;'c&gt; = Iter&lt;'c, T&gt;
+    where
+        T: 'c;
 
-    fn iter&lt;'a&gt;(&amp;'a self) -&gt; Iter&lt;'a, T&gt; {
-        Iter { vec: self, position: 0 }
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iterator&lt;'c&gt; {
+        Iter { data: self }
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="using-gats"><a class="header" href="#using-gats">Using GATs</a></h1>
-<p>Suppose I want to write a function that accepts any iterable and creates a vector by cloning its elements. I can now write such a thing like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<h2 id="invoking-it"><a class="header" href="#invoking-it">Invoking it</a></h2>
+<p>Now that we have the <code>Iterable</code> trait, we can reference it in our &quot;count twice&quot; function.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn count_twice&lt;I: Iterable&gt;(collection: &amp;I) {
+    let mut count = 0;
+    for _ in collection.iter() {
+        count += 1;
+    }
+
+    for elem in collection.iter() {
+        process(elem, count);
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>and we can invoke that by writing code like <code>count_twice(&amp;vec![1, 2, 3, 4, 5, 6])</code>.</p>
+<p><a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">Play with the code from this section on the Rust playground.</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gats-in-where-clauses"><a class="header" href="#gats-in-where-clauses">GATs in where clauses</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<p>Now that we have defined an <a href="explainer/./iterable.html"><code>Iterable</code></a> trait, we can explore different ways to reference it in where clauses.</p>
+<h2 id="specifying-the-value-of-a-gat"><a class="header" href="#specifying-the-value-of-a-gat">Specifying the value of a GAT</a></h2>
+<p>Given some type <code>T: Clone</code>, this function takes any <code>Iterable</code> that yields <code>&amp;T</code> references, clones them, and returns a vector of the resulting <code>T</code> values:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn into_vec&lt;T&gt;(
     iterable: &amp;impl for&lt;'a&gt; Iterable&lt;Item&lt;'a&gt; = &amp;'a T&gt;,
@@ -358,8 +589,7 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>Let's look at this function more closely. The most interesting part is the type of the <code>iterable</code> parameter:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>iterable: &amp;impl for&lt;'a&gt; Iterable&lt;Item&lt;'a&gt; = &amp;'a T&gt;,
 //              ^^^^^^^          ^^^^^^^^
@@ -372,8 +602,7 @@ where
 <p>The <code>for&lt;'a&gt;</code> binder is a way of making this bound apply for any lifetime, rather than talking about some specific lifetime.</p>
 <h2 id="applying-gats-to-a-specific-lifetime"><a class="header" href="#applying-gats-to-a-specific-lifetime">Applying GATs to a specific lifetime</a></h2>
 <p>The previous example showed an iterable applied to any lifetime. It is also possible to give bounds for some specific lifetime. This function, for example, takes an <code>iterable</code> with lifetime <code>'i</code> and yields up the first element:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first&lt;'i, T&gt;(
     iterable: &amp;'i impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;,
@@ -384,14 +613,38 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>The bound <code>impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;</code> says &quot;when iterated with lifetime <code>'i</code>, the resulting reference is <code>&amp;'i T</code>&quot;.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="required-bounds"><a class="header" href="#required-bounds">Required bounds</a></h1>
-<p><img src="https://img.shields.io/badge/status-nightly-important" alt="nightly" /> <img src="https://img.shields.io/badge/note-seeking%20feedback-informational" alt="seeking-feedback" /> </p>
+<h2 id="bounding-a-gat"><a class="header" href="#bounding-a-gat">Bounding a GAT</a></h2>
+<p>Sometimes we want to specify that the value of a GAT meets some additional trait bound. For example, maybe wish to accept any <code>Iterable</code>, so long as its <code>Item</code> values implement <code>Send</code>. We can do that like so...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sendable_items&lt;I&gt;(iterable: &amp;I)
+where
+    I: Iterable,
+    for&lt;'a&gt; I::Item&lt;'a&gt;: Send,
+{
+}
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rough-edges"><a class="header" href="#rough-edges">Rough edges</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> [<img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" />][rust-lang/rust#96709]</p>
+<p>[rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709 <img src="https://img.shields.io/badge/note-seeking%20feedback-informational" alt="seeking feedback" /></p>
+<p>The current MVP state includes a number of known rough edges, explained here.</p>
+<div class="table-wrapper"><table><thead><tr><th>Edge</th><th>Brief explanation</th></tr></thead><tbody>
+<tr><td>Clumsy HRTB syntax</td><td>The syntax <code>for&lt;'a&gt; T: Iterable&lt;Item&lt;'a&gt; = ...&gt;</code> is clumsy</td></tr>
+<tr><td><a href="explainer/./required_bounds.html">Required bounds</a></td><td>Compiler requires you to write <code>where Self: 'me</code> a lot</td></tr>
+<tr><td><a href="explainer/./no_implied_bounds.html">No implied bounds on HRTB</a></td><td>The <code>for&lt;'a&gt;</code> syntax should really mean &quot;for any suitable <code>'a</code>&quot; to avoid false errors</td></tr>
+<tr><td>HRTB limited to lifetimes</td><td>You cannot write <code>for&lt;T&gt;</code> or <code>for&lt;const C&gt;</code> to talk about types, lifetimes</td></tr>
+<tr><td>Polonius interaction</td><td>Some GAT patterns require polonius to pass the borrow checker</td></tr>
+<tr><td>Not dyn safe</td><td>Traits with GATs are not dyn safe, even if those GATs are limited to lifetimes</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="required-bounds"><a class="header" href="#required-bounds">Required bounds</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> [<img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" />][rust-lang/rust#96709]</p>
+<p>[rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709 <img src="https://img.shields.io/badge/note-seeking%20feedback-informational" alt="seeking feedback" /></p>
 <blockquote>
 <p><em>We are actively soliciting feedback on the design of this aspect of GATs. This section explains the current nightly behavior, but at the end there is note about the behavior we expect to adopt in the future.</em></p>
 </blockquote>
 <p>A common use for GATs is to represent the lifetime of data that is borrowed from a value of type <code>Self</code>, or some other parameter. Consider the <code>iter</code> method of the <code>Iterable</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
     ...
@@ -401,8 +654,7 @@ where
 <span class="boring">}
 </span></code></pre></pre>
 <p>Here, the argument <code>'a</code> that is given to <code>Self::Iterator</code> represents the lifetime of the <code>self</code> reference. However, by default, there is nothing in the definition of the <code>Iterator</code> associated type that links its lifetime argument and the <code>Self</code> type:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Warning: For reasons we are in the midst of explaining,
 // this version of the trait will not compile.
@@ -416,8 +668,7 @@ trait Iterable {
 <span class="boring">}
 </span></code></pre></pre>
 <p>If you try to compile this trait, you will find that you get an error. To make it compile, you have to indicate the link between <code>'me</code> and <code>Self</code> by adding <code>where Self: 'me</code>. This <a href="https://doc.rust-lang.org/nightly/reference/trait-bounds.html?highlight=outlives#lifetime-bounds">outlives bound</a> indicates the GATs can only be used with a lifetime <code>'me</code> that could legally be used to borrow <code>Self</code>. This version compiles:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
     type Item&lt;'me&gt;
@@ -434,57 +685,39 @@ trait Iterable {
 </span></code></pre></pre>
 <h2 id="why-are-these-bounds-required"><a class="header" href="#why-are-these-bounds-required">Why are these bounds required?</a></h2>
 <p>Without these bounds, users of the trait would almost certainly not be able to write the impls that they need to write. Consider an implementation of <code>Iterable</code> for <code>Vec&lt;T&gt;</code>, assuming that there are no <code>where Self: 'me</code> bounds on the GATs:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Iterable for Vec&lt;T&gt; {
-    type Item&lt;'me&gt; = &amp;'me T;
-    type Iterator&lt;'me&gt; = std::vec::Iter&lt;'me, T&gt;;
+    type Item&lt;'c&gt; = &amp;'c T;
+    type Iterator&lt;'c&gt; = std::vec::Iter&lt;'c, T&gt;;
     fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt; { self.iter() }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>The problem comes from the associated types. Consider the <code>type Item&lt;'me&gt; = &amp;'me T</code> declaration, for example: for the type <code>&amp;'me T</code> to be legal, we must know that <code>T: 'me</code>. Otherwise, nothing stops us from using <code>Self::Item&lt;'static&gt;</code> to construct a reference with a lietime <code>'static</code> that may outlive its referent <code>T</code>, and that can lead to unsoundness in the type system. In the case of the <code>iter</code> method, the fact that it takes a parameter <code>self</code> of type <code>&amp;'me Vec&lt;T&gt;</code> already implies that <code>T: 'me</code> (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT <code>Item</code>. This is why the associated types need a where clause:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>The problem comes from the associated types. Consider the <code>type Item&lt;'c&gt; = &amp;'c T</code> declaration, for example: for the type <code>&amp;'c T</code> to be legal, we must know that <code>T: 'c</code>. Otherwise, nothing stops us from using <code>Self::Item&lt;'static&gt;</code> to construct a reference with a lietime <code>'static</code> that may outlive its referent <code>T</code>, and that can lead to unsoundness in the type system. In the case of the <code>iter</code> method, the fact that it takes a parameter <code>self</code> of type <code>&amp;'c Vec&lt;T&gt;</code> already implies that <code>T: 'me</code> (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT <code>Item</code>. This is why the associated types need a where clause:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Iterable for Vec&lt;T&gt; {
-    type Item&lt;'me&gt; = &amp;'me T where Self: 'me;
-    type Iterator&lt;'me&gt; = std::vec::Iter&lt;'me, T&gt; where Self: 'me;
+    type Item&lt;'c&gt; = &amp;'c T where Self: 'c;
+    type Iterator&lt;'c&gt; = std::vec::Iter&lt;'c, T&gt; where Self: 'c;
     fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt; { self.iter() }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>However, this impl is not legal unless the trait <em>also</em> has a <code>where Self: 'me</code> requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.</p>
-<h2 id="precise-rules"><a class="header" href="#precise-rules">Precise rules</a></h2>
-<p>The precise rules that the compiler uses to decide when to issue an error are as follows:</p>
-<ul>
-<li>For every GAT <code>G</code> in a trait definition with generic parameters <code>X0...Xn</code> from the trait and <code>Xn..Xm</code> on the GAT... (e.g., <code>Item</code> or <code>Iterable</code>, in the case of <code>Iterable</code>, with generic parameters <code>[Self]</code> from the trait and <code>['me]</code> from the GAT)
-<ul>
-<li>If for every method in the trait... (e.g., <code>iter</code>, in the case of <code>Iterable</code>)
-<ul>
-<li>When the method signature (argument types, return type, where clauses) references <code>G</code> like <code>&lt;P0 as Trait&lt;P1..Pn&gt;&gt;::G&lt;Pn..Pm&gt;</code> (e.g., <code>&lt;Self as Iterable&gt;::Iterator&lt;'a&gt;</code>, in the <code>iter</code> method, where <code>P0 = Self</code> and <code>P1</code> = <code>'a</code>)...
-<ul>
-<li>we can show that <code>Pi: Pj</code> for two parameters on the reference to <code>G</code> (e.g., <code>Self: 'a</code>, in our example)
-<ul>
-<li>then the GAT must have <code>Xi: Xj</code> in its where clause list in the trait (e.g., <code>Self: 'me</code>).</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="plan-going-forward-add-rules-by-default"><a class="header" href="#plan-going-forward-add-rules-by-default">Plan going forward: Add rules by default</a></h2>
-<p>In the future, rather than reporting an error in cases like this, we expect to add these where clauses to the trait and impl by default. However, there is some possibility that this will rule out legal impls for which the where clause might not be necessary. This can happen if either (a) the lifetime, despite being linked to a type like <code>Self</code> in the methods, is not used to borrow content from <code>Self</code>; or (b) in all impls of this trait that could exist, the types being borrowed don't have references and are known to be <code>'static</code>.</p>
+<p>However, this impl is not legal unless the trait <em>also</em> has a <code>where Self: 'c</code> requirement. Otherwise, the impl has more where clauses than the trait, and that causes a problem for generic users that don't know which impl they are using.</p>
+<h2 id="where-can-i-learn-more"><a class="header" href="#where-can-i-learn-more">Where can I learn more?</a></h2>
+<p>You can learn more about the precise rules of this decision, as well as the motivations, by visiting the <a href="explainer/../design-discussions/outlives-defaults.html">detailed design page</a>.</p>
 <h2 id="feedback-requested"><a class="header" href="#feedback-requested">Feedback requested!</a></h2>
-<p>The current compiler adds the future defaults as a <strong>hard error</strong> precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please <a href="https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose">file an issue</a> on this repository, and use the &quot;Feedback on required bounds&quot; template.</p>
-<h3 id="workaround"><a class="header" href="#workaround">Workaround</a></h3>
+<p>The current compiler adds the future defaults as a <strong>hard error</strong> precisely so that we can get the attention of early users and find out if these where clauses pose any kind of problem. We are not sure yet what long term path is best:</p>
+<ul>
+<li>Remove the required bounds altogether.</li>
+<li>Remove the required bounds and replace them with a warn-by-default lint, allowing users to more easily opt out.</li>
+<li>Add the required bounds by default so you don't have to write them explicitly.</li>
+</ul>
+<p>If you are finding that you have a trait and impls that you believe would compile fine, but doesn't because of these where clauses, then we would like to hear from you! Please <a href="https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose">file an issue</a> on this repository, and use the &quot;Feedback on required bounds&quot; template. In the meantime, there is a workaround described in the next section that should allow any trait to work.</p>
+<h2 id="workaround"><a class="header" href="#workaround">Workaround</a></h2>
 <p>If you find that this requirement is causing you a problem, there is a workaround. You can refactor your trait into two traits. For example, to write a version of <code>Iterable</code> that doesn't require <code>where Self: 'me</code>, you might do the following:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait IterableTypes {
     type Item&lt;'me&gt;;
@@ -497,13 +730,466 @@ trait Iterable: IterableTypes {
 <span class="boring">}
 </span></code></pre></pre>
 <p>This is a bit heavy-handed, but there's a logic to it: the rules are geared around ensuring that the associated types and methods that appear together in a single trait will work well together. By separating the associated types from the function into distinct traits, you are effectively asserting that the associated types are meant to be used independently from the function and hence it doesn't necessarily make sense to have the where clauses derived from the method signature.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="future-directions"><a class="header" href="#future-directions">Future directions</a></h1>
-<p>There are some points about GATs which we expect to change. Deciding on the best solution, however, requires more information about the way GATs are used in practice. Therefore, we encourage you to [file a new issue] sharing your experiences and giving feedback on these points.</p>
-<p>[open issues]: [file an issue]: https://github.com/rust-lang/generic-associated-types-initiative/issues/new/choose</p>
-<h2 id="proposal-a-supply-required-bounds-by-default"><a class="header" href="#proposal-a-supply-required-bounds-by-default">Proposal A: Supply <a href="explainer/./required_bounds.html">required bounds</a> by default</a></h2>
-<p>The first planned change is to make the <a href="explainer/./required_bounds.html">required bounds</a> on associated types be supplied by default, rather than requiring that they be typed explicitly. We may or may not include some form of annotation to &quot;opt-out&quot; from this default. In short, the expectation is that -- in practice -- virtually all traits will want these where clauses, and there will be negligibly few cases that do not. We are therefore looking for examples where having to add the required bounds was a problem, and you were forced to <a href="explainer/./required_bounds.html#workaround">adopt the workaround</a>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="-rfc"><a class="header" href="#-rfc">✨ RFC</a></h1>
-<p><a href="https://github.com/rust-lang/rfcs/pull/1598">RFC #1598</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="no-implied-bounds-on-hrtb"><a class="header" href="#no-implied-bounds-on-hrtb">No implied bounds on HRTB</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="-shiny-future"><a class="header" href="#-shiny-future">🔮 Shiny future</a></h1>
+<p><img src="https://img.shields.io/badge/status-speculative,%20not%20RFCd-important" alt="status: speculative, no RFC" /></p>
+<blockquote>
+<p>🚨 <strong>Warning: Speculation ahead.</strong> This section is a rewrite of the <a href="./explainer.html">explainer</a> that includes various improvements. These improvements are still in proposal form and will require RFCs and design work before they are stabilized. </p>
+</blockquote>
+<p>You can also see a list of the <a href="./shiny_future/proposals.html">specific proposals</a> being used in this section.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="defining-and-implementing-the-iterable-trait-with-gats-1"><a class="header" href="#defining-and-implementing-the-iterable-trait-with-gats-1">Defining and implementing the Iterable trait with GATs</a></h1>
+<p><img src="https://img.shields.io/badge/status-speculative,%20not%20RFCd-important" alt="status: speculative, no RFC" /></p>
+<blockquote>
+<p>🚨 <strong>Warning: Speculation ahead.</strong> This is the &quot;shiny future&quot; page that integrates various speculative features. To see how things work today, see <a href="shiny_future/../explainer/iterable.html">the corresponding page on the explainer</a>.</p>
+</blockquote>
+<p>To express traits like <code>Iterable</code>, we can make use generic associated types -- that is, associated types with generic parameters. Here is the complete <code>Iterable</code> trait:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    // Type of item yielded up; will be a reference into `Self`.
+    type Item&lt;'collection&gt;;
+
+    // Type of iterator we return. Will return `Self::Item` elements.
+    type Iterator&lt;'collection&gt;: Iterator&lt;Item = Self::Item&lt;'collection&gt;&gt;;
+
+    fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt;;
+    //      ^                        ^^
+    //
+    // Returns a `Self::Iter` derived from `self`.
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Let's walk through it piece by piece...</p>
+<ul>
+<li>We added a <code>'collection</code> parameter to <code>Item</code>. This represents &quot;the specific collection that the <code>Item</code> is borrowed from&quot; (or, if you prefer, the lifetime for which that collection is borrowed). </li>
+<li>The same <code>'collection</code> parameter is added to <code>Iterator</code>, indicating the collection that the iterator borrows its items from.</li>
+<li>In the <code>iter</code> method, the value of <code>'collection</code> comes from <code>self</code>, indicating that <code>iter</code> returns an <code>Iterator</code> linked to <code>self</code>.</li>
+</ul>
+<h2 id="implementing-the-trait-1"><a class="header" href="#implementing-the-trait-1">Implementing the trait</a></h2>
+<p>Let's write an implementation of this trait. We'll implement it for the <code>Vec&lt;T&gt;</code> type; a <code>&amp;Vec&lt;T&gt;</code> can be coerced into a <code>&amp;[T]</code> slice, so we can re-use the slice <code>Iter</code> that we defined before (the [playground] link includes an impl of <code>Iterable</code> for <code>[T]</code> as well, but we'll use <code>Vec</code> here because it's more convenient).</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// from before
+struct Iter&lt;'c, T&gt; {
+    data: &amp;'c [T],
+}
+
+impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
+    type Item&lt;'c&gt; = &amp;'c T;
+    
+    type Iterator&lt;'c&gt; = Iter&lt;'c, T&gt;;
+
+    fn iter(&amp;self) -&gt; Self::Iterator&lt;'_&gt; {
+        Iter { data: self }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="invoking-it-1"><a class="header" href="#invoking-it-1">Invoking it</a></h2>
+<p>Now that we have the <code>Iterable</code> trait, we can reference it in our &quot;count twice&quot; function.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn count_twice&lt;I: Iterable&gt;(collection: &amp;I) {
+    let mut count = 0;
+    for _ in collection.iter() {
+        count += 1;
+    }
+
+    for elem in collection.iter() {
+        process(elem, count);
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>and we can invoke that by writing code like <code>count_twice(&amp;vec![1, 2, 3, 4, 5, 6])</code>.</p>
+<p>[Play with the code from this section on the Rust playground.][playground]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gats-in-where-clauses-1"><a class="header" href="#gats-in-where-clauses-1">GATs in where-clauses</a></h1>
+<p><img src="https://img.shields.io/badge/status-speculative,%20not%20RFCd-important" alt="status: speculative, no RFC" /></p>
+<blockquote>
+<p>🚨 <strong>Warning: Speculation ahead.</strong> This is the &quot;shiny future&quot; page that integrates various speculative features. To see how things work today, see <a href="shiny_future/../explainer/where-clauses.html">the corresponding page on the explainer</a>.</p>
+</blockquote>
+<p>Now that we have defined an <a href="shiny_future/./iterable.html"><code>Iterable</code></a> trait, we can explore different ways to reference it.</p>
+<h2 id="specifying-the-value-of-a-gat-1"><a class="header" href="#specifying-the-value-of-a-gat-1">Specifying the value of a GAT</a></h2>
+<p>Given some type <code>T: Clone</code>, this function takes any <code>Iterable</code> that yields <code>&amp;T</code> references, clones them, and returns a vector of the resulting <code>T</code> values:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn into_vec&lt;T&gt;(
+    iterable: &amp;impl Iterable&lt;Item&lt;'_&gt; = &amp;T&gt;,
+) -&gt; Vec&lt;T&gt;
+where
+    T: Clone
+{
+    let mut out = vec![];
+    for elem in iterable.iter() {
+        out.push(elem.clone());
+    }
+    out
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Let's look at this function more closely. The most interesting part is the type of the <code>iterable</code> parameter:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn into_vec&lt;T&gt;(
+    iterable: &amp;impl Iterable&lt;Item&lt;'_&gt; = &amp;T&gt;,
+//                                ^^    ^
+//                                |     |
+//                                |    Lifetime elided in output position
+//                               Lifetime elided in input position          
+) -&gt; Vec&lt;T&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>Both <code>'_</code> and <code>&amp;T</code>-with-no-explicit-lifetime are examples of Rust's &quot;lifetime elision&quot; syntax. You're probably familiar with elision from functions like this one:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn pick(c: &amp;[T]) -&gt; &amp;T
+//         ^        ^
+//         |        |
+//         |       Lifetime elided in output position
+//        Lifetime elided in input position          
+<span class="boring">}
+</span></code></pre></pre>
+<p>Whenever lifetimes are elided in <em>input</em> position, it means &quot;pick any lifetime, I don't care&quot;. When they are elided in output position, it means &quot;pick a lifetime from the inputs, or error if that's ambiguous&quot;. For functions, you can use a named lifetime to make the connection more explicit:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn pick&lt;'c&gt;(c: &amp;'c [T]) -&gt; &amp;'c T
+<span class="boring">}
+</span></code></pre></pre>
+<p>In the same way, with GATs, we can use a named lifetime, bound with <code>for</code>, to make things more explicit:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn into_vec&lt;T&gt;(
+    iterable: &amp;impl for&lt;'c&gt; Iterable&lt;Item&lt;'c&gt; = &amp;'c T&gt;,
+    //              -------               --     --
+) -&gt; Vec&lt;T&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>for</code> notation here is meant to read like &quot;for any lifetime <code>'c</code>, <code>Item&lt;'c&gt;</code> will be <code>&amp;'c T</code>&quot;.</p>
+<h2 id="applying-gats-to-a-specific-lifetime-1"><a class="header" href="#applying-gats-to-a-specific-lifetime-1">Applying GATs to a specific lifetime</a></h2>
+<p>The previous example showed an iterable applied to any lifetime. It is also possible to give bounds for some specific lifetime. This function, for example, takes an <code>iterable</code> with lifetime <code>'i</code> and yields up the first element:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first&lt;'i, T&gt;(
+    iterable: &amp;'i impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;,
+) -&gt; Option&lt;&amp;'i T&gt;
+{
+    iterable.iter().next()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The bound <code>impl Iterable&lt;Item&lt;'i&gt; = &amp;'i T&gt;</code> says &quot;when iterated with lifetime <code>'i</code>, the resulting reference is <code>&amp;'i T</code>&quot;.</p>
+<h2 id="bounding-a-gat-1"><a class="header" href="#bounding-a-gat-1">Bounding a GAT</a></h2>
+<p>Sometimes we want to specify that the value of a GAT meets some additional trait bound. For example, maybe wish to accept any <code>Iterable</code>, so long as its <code>Item</code> values implement <code>Send</code>. The <code>'_</code> notation we saw earlier can be used to do that quite easily:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sendable_items&lt;I&gt;(iterable: &amp;I)
+where
+    I: Iterable,
+    I::Item&lt;'_&gt;: Send, // 👈
+{
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Using another nightly feature (<code>associated_type_bounds</code>, tracked in <a href="https://github.com/rust-lang/rust/issues/52662">#52662</a>), you can also write the above more compactly:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sendable_items&lt;I&gt;(iterable: &amp;I)
+where
+    I: Iterable&lt;Item&lt;'_&gt;: Send&gt;, // 👈
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="proposals"><a class="header" href="#proposals">Proposals</a></h1>
+<p><img src="https://img.shields.io/badge/status-speculative,%20not%20RFCd-important" alt="status: speculative, no RFC" /></p>
+<p>Specific improvements being used in the shiny future section include:</p>
+<div class="table-wrapper"><table><thead><tr><th>Improvement</th><th>Summary</th></tr></thead><tbody>
+<tr><td><a href="shiny_future/./hrtb-syntax.html">Concise HRTB syntax</a></td><td>permit <code>T: Iterable&lt;Item&lt;'_&gt; = &amp;u32&gt;</code> or <code>T::Item&lt;'_&gt;: Send</code> instead of <code>for&lt;'a&gt; T: Iterable&lt;Item&lt;'a&gt; = &amp;'a u32&gt;</code></td></tr>
+<tr><td>[HRTB implied bounds]</td><td>The <code>for&lt;'a&gt;</code> syntax in HRTB means &quot;any suitable <code>'a</code>&quot; and not &quot;any <code>'a</code> at all&quot;</td></tr>
+<tr><td>Polonius</td><td>Polonius-style borrow checking</td></tr>
+<tr><td>Default outlives bounds</td><td>Add default bounds for <code>where Self: 'a</code> when appropriate rather than requiring users to write them automatically; add those same defaults to the impl</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="design-patterns"><a class="header" href="#design-patterns">Design patterns</a></h1>
+<p>A natural question with GATs is to ask &quot;what are they used for?&quot; Because GATs represent a kind of &quot;fundamental capability&quot; of traits, though, that question can be difficult to answer in a short summary -- they can be used for all kinds of things! Therefore, this section attempts to answer by summarizing &quot;design patterns&quot; that we have seen in the wild that are enabled by GATs. These patterns are described through a &quot;deep dive&quot; into a particular example, often of a crate in the wild; but they represent patterns that could be extracted and applied in other cases.</p>
+<h2 id="list-of-projects-using-gats"><a class="header" href="#list-of-projects-using-gats">List of projects using GATs</a></h2>
+<p>Over the years, many people have posted examples of how they would like to use GATs. compiler-errors compiled a mostly complete list which was <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1173170243">posted to the stabilization issue</a>. We reproduce that list here:</p>
+<h3 id="projects-using-gats"><a class="header" href="#projects-using-gats">Projects using GATs</a></h3>
+<ul>
+<li><a href="https://github.com/sfu-db/connector-x"><code>connector-x</code></a> - uses GATs to provide zero-copy interfaces to load data from DBs.</li>
+<li><a href="https://github.com/kas-gui/kas/pull/57"><code>kas</code></a> - uses Generic Associated Types to avoid the unsafety around draw_handle and size_handle, fixing a possible memory-safety violation in the process.
+<ul>
+<li>&quot;generic associated types remove a usage of unsafe (revealing a bug in the process), and are almost certainly the way forward (once the compiler properly supports this)&quot;</li>
+</ul>
+</li>
+<li><a href="https://github.com/tikv/raft-engine/pull/96"><code>raft-engine</code></a> - uses GATs in a generic builder pattern</li>
+</ul>
+<h3 id="blocked-at-least-in-part-by-gats"><a class="header" href="#blocked-at-least-in-part-by-gats">Blocked (at least in part) by GATs:</a></h3>
+<ul>
+<li>Rust in the linux kernel - https://github.com/Rust-for-Linux/linux/issues/2</li>
+<li><a href="https://github.com/udoprog/audio/issues/3#issuecomment-1021805121"><code>udoprog/audio</code></a> - &quot;My goal is to author a set of traits and data structures that can be used across audio libraries in the ecosystem. I'm currently holding off on GATs landing, since that's needed to provide proper abstractions without incurring a runtime overhead.&quot;</li>
+<li><a href="https://github.com/Emoun/graphene/issues/7"><code>graphene</code></a> - &quot;This would allow the result types of most Graph methods to be impl Iterator, such that implementors can use whatever implementation they want. To achieve this currently we are using <code>Box&lt;Iterator&gt;</code> as return types which is inefficient.&quot;</li>
+<li><a href="https://github.com/amzn/ion-rust/issues/98"><code>ion-rust</code></a> - &quot;Currently, delegation via our current APIs are difficult because we cannot have an associated type that can be constructed with a per invocation lifetime. This example illustrates this, and shows how we can work around this by the judicious use of unsafe code[...]&quot;</li>
+<li><a href="https://github.com/AltSysrq/proptest/issues/9"><code>proptest</code></a> - GATs could be used to represent non-owned values</li>
+<li><a href="https://github.com/paritytech/ink/pull/1217#issuecomment-1124049962"><code>ink</code></a> - GATs could be used to simplify macro codegen around trait impl</li>
+<li><a href="https://github.com/madsmtm/objc2/pull/37"><code>objc2</code></a> - Could use GATs to abstract over a generic <code>Reference</code> type, simplifying two methods into one</li>
+<li><a href="https://github.com/Mange/mpris-rs/issues/64"><code>mpris-rs</code></a> - GATs could be used to abstract over an iterator type</li>
+<li><a href="https://github.com/DioxusLabs/dioxus/pull/412#issue-1239019905"><code>dioxus</code></a> - &quot;It allows some property of a node to depend on both the state of it's children and it's parent. Specifically this would make text wrapping, and overflow possible&quot;</li>
+<li><a href="https://github.com/pchampin/sophia_rs/issues/19#issuecomment-563972666"><code>sophia_rs</code></a> - An other way to go would be to have an &quot;rdf-api&quot; crate similar to what RDF/JS is doing for the RDF models and its commons extensions. And have Oxigraph and Sophia and hopefully the other RDF related libraries in Rust use it. But it might be hard to build a nice and efficient API without GAT.</li>
+</ul>
+<h3 id="other-miscellaneous-mentions-of-gats-or-gats-blocked-a-rewrite-but-workarounds-were-found"><a class="header" href="#other-miscellaneous-mentions-of-gats-or-gats-blocked-a-rewrite-but-workarounds-were-found">Other miscellaneous mentions of GATs, or GATs blocked a rewrite but workarounds were found</a></h3>
+<ul>
+<li><a href="https://github.com/veracruz-project/veracruz/pull/269"><code>veracruz</code></a> - The workaround here is to require the associated-type implementations to all be &quot;lifetime-less&quot;, which probably requires unsafe code in the implementations.</li>
+<li><a href="https://github.com/rust-embedded-community/embedded-nal/issues/31#issuecomment-736676502"><code>embedded-nal</code></a> - Using a typestate pattern to represent UDP trait's states</li>
+<li><a href="https://github.com/rust-ml/linfa/issues/119#issuecomment-884628664"><code>linfa</code></a> - For now though, there are several limitations to the implementation due to a lack of type-system features. For instance, it has to return a Vec of references to points because the lifetime to &amp;self has to show up somewhere in the return type, and we don't have access to GATs yet. Basically, I get around these issues by performing more allocation than we should [...]</li>
+<li><a href="https://github.com/meilisearch/heed/pull/92"><code>heed</code></a> - Initial rewrite of a trait relied on GATs, was eventually worked around but has its own limitations?</li>
+<li><code>ockam</code> - https://github.com/build-trust/ockam/issues/1564</li>
+<li><a href="https://github.com/jonhoo/rust-imap/pull/208#discussion_r680427811"><code>rust-imap</code></a> - could benefit with a GATified <code>Index</code> trait</li>
+<li><a href="https://github.com/lord/anchors/issues/4"><code>anchors</code></a> - &quot;GAT will let us skip cloning during map&quot;</li>
+<li><a href="https://github.com/capnproto/capnproto-rust/pull/201#issuecomment-731585030"><code>capnproto-rust</code></a> - The main obstacle is that getting this to work (particularly with <code>capnp::traits::Owned</code>) probably requires generic associated types, and it's unclear when those will land on stable rust.</li>
+<li><a href="https://github.com/metamolecular/gamma/issues/8"><code>gamma</code></a> - Could use GATs to return iterators instead of having to box them, possibly providing a more general API without the slowdown of boxing</li>
+<li><a href="https://github.com/Enet4/dicom-rs/pull/152#discussion_r681182316"><code>dicom-rs</code></a> - GAT could be used to representing lifetime of borrowed data</li>
+<li><a href="https://github.com/multiformats/rust-multihash/pull/116"><code>rust-multihash</code></a> - Apparently could use GATs to get around const-generics limitations </li>
+<li><a href="https://github.com/divviup/libprio-rs/pull/202#discussion_r839932483"><code>libprio-rs</code></a> - Doing better will require a feature called &quot;generic associated types&quot; (per the SO above). Unfortunately, GATs are not stabilized yet; it looks like they are set to be stabilized in a few months.</li>
+<li><a href="https://github.com/gluesql/gluesql/issues/483"><code>gluesql</code></a> - Could use GATs to turn a trait into an associated type<sup>(i think)</sup></li>
+<li><a href="https://github.com/AndWass/pushgen/issues/44#issuecomment-890302372"><code>pushgen</code></a> - mentioned that things could be simplified by GATs (or RPITIT)</li>
+<li><a href="https://github.com/olson-sean-k/plexus/issues/16#issuecomment-498786388"><code>plexus</code></a> - &quot;Until GATs land in stable Rust, this change requires boxing iterators to put them behind StorageProxy.&quot;</li>
+<li><a href="https://github.com/tensorflow/rust/issues/162#issuecomment-587226628"><code>tensorflow/rust</code></a> - &quot;It would be most natural to provide an iterator over the records, but no efficient implementation is possible without GATS which I think I was hoping would already be in the language by now.&quot;</li>
+</ul>
+<h3 id="general-themes-for-why-folks-want-gats"><a class="header" href="#general-themes-for-why-folks-want-gats">General themes for why folks want GATs</a></h3>
+<p>The general themes for why folks want GATs include...</p>
+<ul>
+<li>GATs to avoid boxing/cloning (achieving a more performant, zero-copy API)</li>
+<li>GATs to represent lifetime relationships that can't be expressed using regular associated types (e.g. <code>fn(&amp;self) -&gt; Self::Gat&lt;'_&gt;</code>)
+<ul>
+<li>Some of these get around it by using unsafe code which could be removed with GATs</li>
+</ul>
+</li>
+<li>GATs as a manual desugaring of RPITIT</li>
+<li>GATs to offer a more abstract/pluggable API</li>
+<li>GATs to provide a cleaner, DRY-er codebase</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iterable-lending-iterators-etc"><a class="header" href="#iterable-lending-iterators-etc">Iterable, lending iterators, etc</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<h2 id="summary-4"><a class="header" href="#summary-4">Summary</a></h2>
+<p>Traits often contain methods that return data borrowed from <code>self</code> or some other argument. When the type of data is an associated type, it needs to include a lifetime that links with <code>self</code> from a calling method. For example, in the <code>Iterable</code> trait...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Item&lt;'me&gt;
+    where
+        Self: 'me;
+
+    type Iter&lt;'me&gt;: Iterator&lt;Item = Self::Item&lt;'me&gt;&gt;
+    where
+        Self: 'me;
+
+    fn iter(&amp;iter self) -&gt; Self::Item&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...the <code>Item</code> and <code>Iter</code> traits take a <code>'me</code> parameter, which is linked to the <code>self</code> variable given when <code>iter</code> is called.</p>
+<h2 id="details-1"><a class="header" href="#details-1">Details</a></h2>
+<p>There are many variants on this pattern:</p>
+<ul>
+<li><code>Iterable</code>, as shown above;</li>
+<li><code>LendingIterator</code> (and other <code>LendingFoo</code>) traits, which permit one to iterate over items but where the data may be stored within the iterator itself;</li>
+<li>etc.</li>
+</ul>
+<p>The <code>where Self: 'me</code> shown in the summary is (hopefully) a temporary limitation imposed by the current MVP. It indicates that the <code>'me</code> lifetime can be used to borrow data from <code>Self</code>. Currently these where clauses are mandatory; they may be defaulted or made optional in the future. For a deeper explanation, see the <a href="design_patterns/../explainer/required_bounds.html">required bounds</a> page in the explainer.</p>
+<h2 id="workarounds"><a class="header" href="#workarounds">Workarounds</a></h2>
+<p>Lacking this pattern, there are a number of common workarounds, each with downsides:</p>
+<ul>
+<li>Use <code>Box&lt;dyn&gt;</code> values, as in <a href="https://github.com/Emoun/graphene/issues/7">graphene</a>, though this adds dynamic dispatch overhead, inhibits inlining, and makes interactions with <code>Send</code> and <code>Sync</code> more complex;</li>
+<li>Return a collection, like a <code>Vec</code>, <a href="https://github.com/metamolecular/gamma/issues/8">as in metamolectular</a>, though this results in unnecessary memory allocation;</li>
+<li>Use HRTB, as <a href="https://doc.rust-lang.org/nightly/nightly-rustc/rustc_data_structures/graph/trait.WithSuccessors.html">rustc does</a>, which is complex and leaks into your caller's signatures.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-many-modes-pattern"><a class="header" href="#the-many-modes-pattern">The &quot;many modes&quot; pattern</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<h2 id="summary-5"><a class="header" href="#summary-5">Summary</a></h2>
+<p>The &quot;many modes&quot; pattern is being able to take a single function and have it operate in multiple &quot;modes&quot;. In the specific case examined here, the chumsky parsing library, <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1118409546">GATs were used</a> to make the parsing combinators generic over a mode (produce a result vs do not produce a result). This results in significant speedups, because producing a result when you don't need one is expensive at runtime.</p>
+<p>To implement the &quot;many modes&quot; pattern, you often have a type representing each mode:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct ParseMode;
+struct CheckMode;
+<span class="boring">}
+</span></code></pre></pre>
+<p>and then with a trait that defines the effect of that type. This trait often has associated types that can, e.g., transform the result of a function executing in that mode. This associate type takes a generic parameter <code>T</code> representing the return type of the function in question:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Mode {
+    /// Represents the *actual* output when a function that produces 
+    /// `T` is processed in this mode.
+    type Output&lt;T&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="details-2"><a class="header" href="#details-2">Details</a></h2>
+<p><em>This was originally posted as a <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1167220240">comment on the issue thread</a>.</em></p>
+<p>The first example I looked at closely was the <a href="design_patterns/">chumsky parsing library</a>. This is leveraging a pattern that I would call the &quot;many modes&quot; pattern. The idea is that you have some &quot;core function&quot; but you want to execute this function in many different modes. Ideally, you'd like to define the modes independently from the function, and you'd like to be able to add more modes later without having to change the function at all. (If you're familiar with Haskell, monads are an example of this pattern; the monad specifies the &quot;mode&quot; in which some simple sequential function is executed.)</p>
+<p>chumsky is a parser combinator library, so the &quot;core function&quot; is a parse function, defined in the <code>Parser</code> trait. Each <code>Parser</code> trait impl contains a function that indicates how to parse some particular construct in the grammar. Normally, this parser function builds up a data structure representing the parsed data. But sometimes you don't need the full results of the parse: sometimes you might just like to know if the parse succeeds or fails, without building the parsed version. Thus, the &quot;many modes&quot; pattern: we'd like to be able to define our parser and then execute it against one of two modes, <em>emit</em> or <em>check</em>. The emit mode will build the data structure, but <em>check</em> will just check if the parse succeeds.</p>
+<p>In the past, chumsky only had one mode, so they always built the data structure. This could take significant time and memory. Adding the &quot;check&quot; mode let's them skip that, which is a significant performance win. Moreover, the modes are encapsulated within the library traits, and aren't visible to end-users. Nice!</p>
+<h3 id="how-did-chumsky-model-modes-with-gats"><a class="header" href="#how-did-chumsky-model-modes-with-gats">How did chumsky model modes with GATs?</a></h3>
+<p>Chumsky added a <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait, encapsulated as part of their <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L67"><code>internals</code></a> module. Instead of directly constructing the results from parsing, the <code>Parser</code> impls invoke methods on <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> with closures. This allows the mode to decide which parts of the parsing to execute and which to skip. So, in check mode, the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> would decide not to execute the closure that builds the output data structure, for example.</p>
+<p>Using this approach, the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L137"><code>Parser</code></a> trait does indeed have several 'entrypoint' methods, but they are all defaulted and just invoke a common implementation method called <code>go</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Parser&lt;'a, I: Input + ?Sized, E: Error&lt;I::Token&gt; = (), S: 'a = ()&gt; {
+    type Output;
+    
+    fn parse(&amp;self, input: &amp;'a I) -&gt; Result&lt;Self::Output, E&gt; ... {
+        self.go::&lt;Emit&gt;(...)
+    }
+
+    fn check(&amp;self, input: &amp;'a I) -&gt; Result&lt;(), E&gt; ... {
+        self.go::&lt;Check&gt;(...)
+    }
+    
+    #[doc(hidden)]
+    fn go&lt;M: Mode&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+    where
+        Self: Sized;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Implementations of <code>Parser</code> <em>just</em> specify the <code>go</code> method. Note that the impls are, presumably, either contained within <code>chumsky</code> or generated by <code>chumsky</code> proc-macros, so the <code>go</code> method doesn't need to be documented. However, <em>even if <code>go</code> were documented</em>, the <em>trait bounds</em> certainly look quite reasonable. (The type of <code>inp</code> is a bit...imposing, admittedly.)</p>
+<p>So how is the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait defined? Just to focus on the GAT, the trait look likes this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Mode {
+    type Output&lt;T&gt;;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Here, the <code>T</code> represents the result type of &quot;some parser parsed in this mode&quot;. GATs thus allow us to define a <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> that is <strong>independent</strong> from any particular <code>Parser</code>. There are two impls of <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> (also internal to chumsky):</p>
+<ul>
+<li><a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L115-L117"><code>Check</code></a>, defined like <code>struct Check; impl Mode for Check { type Output&lt;T&gt; = (); ... }</code>. In other words, no matter what parser you use, <code>Check</code> just builds a <code>()</code> result (success or failure is propagated inepdendently of the mode).</li>
+<li><a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L87-L89"><code>Emit</code></a>, defined like <code>struct Emit; impl Mode for Emit { type Output&lt;T&gt; = T; ... }</code>.  In <code>Emit</code> mode, the output is exactly what the parser generated.</li>
+</ul>
+<p>Note that you could, in theory, produce other modes. For example, a <code>Count</code> mode that not only computes success/failure but counts the number of nodes parsed, or perhaps a mode that computes hashes of the resulting parsed value. Moreover, you could add these modes (and the defaulted methods in <code>Parser</code>) <strong>without breaking any clients</strong>.</p>
+<h3 id="how-could-you-model-this-today"><a class="header" href="#how-could-you-model-this-today">How could you model this today?</a></h3>
+<p>I was trying to think how one might model this problem with traits today. All the options I came up with had significant downsides.</p>
+<p><strong>Multiple functions on the trait, or multiple traits.</strong> One obvious option would be to use multiple functions in the parse trait, or multiple traits:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Multiple functions
+trait Parser { fn parse(); fn check(); }
+
+// Multiple traits
+trait Parser: Checker { fn parse(); }
+trait Checker { fn check(); }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Both of these approaches mean that defining a new combinator requires writing the same logic twice, once for parse and once for check, but with small variations, which is both annoying and a great opportunity for bugs. It also means that if chumsky ever wanted to define a new mode, they would have to modify every implementation of <code>Parser</code> (a breaking change, to boot).</p>
+<p><strong>Mode with a type parameter.</strong> You could try defining a the mode trait with a type parameter, like so...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait ModeFor&lt;T&gt; {
+    type Output;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>go</code> function would then look like</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn go&lt;M: ModeFor&lt;Self::Output&gt;&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+where
+    Self: Sized;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In practice, though, this doesn't really work, for a number of reasons. One of them is that the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait includes methods like <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L74-L78"><code>combine</code></a>, which take the output of many parsers, not just one, and combine them together. Good luck writing that constraint with <code>ModeFor</code>. But even ignoring that, lacking HRTB, the signature of <code>go</code> itself is incomplete. The problem is that, given some impl of <code>Parser</code> for some parser type <code>MyParser</code>, <code>MyParser</code> only knows that <code>M</code> is a valid mode for its particular output. But maybe <code>MyParser</code> plans to (internally) use some other parser combinators that produce different kinds of results. Will the mode <code>M</code> still apply to those? We don't know. We'd have to be able to write a HRTB like <code>for&lt;O&gt; Mode&lt;O&gt;</code>, which Rust doesn't support yet:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn go&lt;M: for&lt;O&gt; Mode&lt;O&gt;&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+where
+    Self: Sized;
+<span class="boring">}
+</span></code></pre></pre>
+<p>But even if Rust <em>did</em> support it, you can see that the <code>Mode&lt;T&gt;</code> trait doesn't capture the user's intent as closely as the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait from Chumsky did. The <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait was defined independently from all parsers, which is what we wanted. The <code>Mode&lt;T&gt;</code> trait is defined relative to some specific parser, and then it falls to the <code>go</code> function to say &quot;oh, I want this to be a mode for <em>all</em> parsers&quot; using a HRTB.</p>
+<p>Using just HRTB (which, against, Rust doesn't have), you could define <em>another</em> trait...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Mode: for&lt;O&gt; ModeFor&lt;O&gt; {}
+
+trait ModeFor&lt;O&gt; {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...which would allow us to write <code>M: Mode</code> on <code>go</code> against, but it's hard to argue this is <em>simpler</em> than the original GAT variety. This extra <code>ModeFor</code> trait has a &quot;code smell&quot; to it, it's hard to understand why it is there. Whereas before, you implemented the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait in just the way you think about it, with a single impl that applies to all parsers...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Mode for Check {
+    type Output&lt;T&gt; = ();
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...you now write an impl of <code>ModeFor</code>, where one &quot;instance&quot; of the impl applies to only one parser (which has output type <code>O</code>). It feels indirect:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;O&gt; ModeFor&lt;O&gt; for Check {
+    type Output = ();
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="how-could-you-model-this-with-rpitit"><a class="header" href="#how-could-you-model-this-with-rpitit">How could you model this with RPITIT?</a></h3>
+<p>It's also been proposed that we should keep GATs, but only as an implementation detail for things like return position impl Trait in traits (RPITIT) or async functions. This implies that we could model the &quot;many modes&quot; pattern with RPITIT. If you look at the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait, though, you'll see that this simply doesn't work. Consider the <code>combine</code> method, which takes the results from two parsers and combines them to form a new result:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn combine&lt;T, U, V, F: FnOnce(T, U) -&gt; V&gt;(
+    x: Self::Output&lt;T&gt;,
+    y: Self::Output&lt;U&gt;,
+    f: F,
+) -&gt; Self::Output&lt;V&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>How could we write this in terms of a function that returns <code>impl Trait</code>?</p>
+<h3 id="other-patterns"><a class="header" href="#other-patterns">Other patterns</a></h3>
+<p>In this post, I went through the chumsky pattern in detail. I've not had time to dive quite as deep into other examples, but I've been reading through them and trying to extract out patterns. Here are a few patterns I extracted so far:</p>
+<h3 id="did-i-miss-something"><a class="header" href="#did-i-miss-something">Did I miss something?</a></h3>
+<p>Maybe you see a way to express the &quot;many modes&quot; pattern (or one of the other patterns I cited) in Rust today that works well? Let me know by commenting on the thread.</p>
+<p>(Since posting this, it occurs to me that one could probably use procedural macros to achieve some similar goals, though I think this approach would also have significant downsides.)</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="generic-scopes"><a class="header" href="#generic-scopes">Generic scopes</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<h2 id="summary-6"><a class="header" href="#summary-6">Summary</a></h2>
+<p>APIs like <a href="https://doc.rust-lang.org/std/thread/fn.scope.html"><code>std::thread::scope</code></a> follow a &quot;scope&quot; pattern:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>in_scope(|scope| {
+    ... /* can use `scope` in here */ ...
+})
+<span class="boring">}
+</span></code></pre></pre>
+<p>In this pattern, the closure takes a <code>scope</code> argument whose type is somehow limited to the closure body, often by including a fresh generic lifetime (<code>'env</code>, in the case of [<code>std::thread::scope</code>]). The closure is then able to invoke methods on <code>scope</code>. This pattern makes sense when there is some setup and teardown required both/after the scope (e.g., blocking on all the threads that were spawned to terminate).</p>
+<p>The &quot;generic scopes&quot; pattern encapsulates this &quot;scoped closure&quot; concept:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>owner.with_scope(|scope| {
+    ...
+})
+<span class="boring">}
+</span></code></pre></pre>
+<p>Here, the type of the <code>scope</code> that the closure will depend on the <code>with_scope</code> call, but it needs to include some fresh lifetime that is tied to the <code>with_scope</code> call itself.</p>
+<h2 id="details-3"><a class="header" href="#details-3">Details</a></h2>
+<p>The generic scopes pattern arise from <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1120354039">smithay</a> and was demonstrated by this <a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=a23b6a846aa1a506c199f7792e1abd3e">playground</a>) snippet.</p>
+<p>In this case, the &quot;owner&quot; object is a renderer, and the &quot;scope&quot; call is called <code>render</code>. Clients invoke...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>r.render(|my_frame| { ... })
+<span class="boring">}
+</span></code></pre></pre>
+<p>...where the precise type of <code>my_frame</code> depends on the renderer. Frames often include thread-local information which should only be accessible during that callback.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pointer-types"><a class="header" href="#pointer-types">Pointer types</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<h2 id="summary-7"><a class="header" href="#summary-7">Summary</a></h2>
+<p>GATs allow code to be generic over &quot;references to data&quot;. This can include <code>Rc</code> vs <code>Arc</code>, but also other more abstract situations.</p>
+<h2 id="details-4"><a class="header" href="#details-4">Details</a></h2>
+<p>(To be written.)</p>
+<h2 id="references"><a class="header" href="#references">References</a></h2>
+<ul>
+<li>Pythonesque's <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1150127168">comment</a> covered one case where they <em>wanted</em> something like a pointer types pattern (I think) but had to work around it, as well as <a href="https://github.com/amethyst/specs/blob/master/src/storage/generic.rs#L114-L150">commits from Veloren</a> that may be this pattern (but could also be &quot;many modes&quot;).</li>
+<li>evenyag <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1170276610">writes</a> about <code>type-exercise-in-rust</code></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="design-discussions"><a class="header" href="#design-discussions">Design discussions</a></h1>
 <p>This directory hosts notes on important design discussions along with their resolutions.
 In the table of contents, you will find the overall status:</p>
@@ -513,19 +1199,223 @@ In the table of contents, you will find the overall status:</p>
 <li>💤 -- <strong>Paused.</strong> Not under active discussion, but we may be updating the write-up from time to time with details.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="outlives-defaults"><a class="header" href="#outlives-defaults">Outlives defaults</a></h1>
+<h2 id="summary-8"><a class="header" href="#summary-8">Summary</a></h2>
+<p>GATs as naively implemented have a major footgun. Given a trait like this...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
+
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...users would not be able to write a typical impl, e.g....</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
+    type Iter&lt;'c&gt; = std::slice::Iter&lt;'c, T&gt;;
+
+    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt; {
+        self.iter()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This would not work because the type <code>Iter&lt;'c, T&gt;</code> is only well-formed if <code>T: 'c</code>, and that is not known on the associated type. How should we manage this?</p>
+<h2 id="conclusion-require-probably-needed-where-clauses-on-gats-to-be-written-explicitly"><a class="header" href="#conclusion-require-probably-needed-where-clauses-on-gats-to-be-written-explicitly">Conclusion: Require &quot;probably needed&quot; where-clauses on GATs to be written explicitly</a></h2>
+<p>The original write-up and details of the discussion can be found <a href="design-discussions/./outlives-defaults-1.html">here</a>. The conclusion was to adopt the most conservative route and <strong>require</strong> users to explicitly write a set of where clauses on associated types. These where-clauses are deduced by examining the method signatures of methods that appear in the same trait, looking for relationships that hold within the methods and requiring those same relationships to be reproduced on the associated type.</p>
+<p>In our example trait <code>Iterable</code>...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
+
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...the method <code>iter</code> returns <code>&lt;Self as Iterable&gt;::Iter&lt;'s&gt;</code> (written in fully qualified form), and we have that <code>self: &amp;'s Self</code>. The parameter type implies that <code>Self: 's</code>, and therefore we require the bound <code>where Self: 'c</code> to be placed on the associated type:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Iter&lt;'c&gt;
+    where
+        Self: 'c; // required for trait to compile
+
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="rationale"><a class="header" href="#rationale">Rationale</a></h2>
+<p>The rationale for this decision is that it is the most forwards compatible one: we can opt to remove the required bounds later, and all code still works. We can also opt to add the required bounds by default later, and all existing code still works, it is merely more explicit than required.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
+<p>You can read more about this decision here:</p>
+<ul>
+<li>The explainer has a <a href="design-discussions/../explainer/required_bounds.html">page on this decision</a> that gives a more thorough explanation and covers how you can give feedback if you are finding this infereres with a trait you are trying to write.</li>
+<li>The <a href="design-discussions/./outlives-defaults-1.html">original write-up and associated discussion</a> is available. The issue was also discussed on <a href="https://github.com/rust-lang/rust/issues/87479">#87479</a> and there was also a <a href="https://github.com/rust-lang/lang-team/blob/master/design-meeting-minutes/2021-09-22-GAT-defaults.md">lang team design meeting</a>.</li>
+<li>This page supplied a reference version of the semantics, works through some examples, and motivates the rules.</li>
+</ul>
+<h2 id="reference-rules"><a class="header" href="#reference-rules">Reference rules</a></h2>
+<p>The precise rules are as follows:</p>
+<ul>
+<li>For every GAT <code>G</code> in a trait definition with generic parameters <code>X0...Xn</code> from the trait and <code>Xn..Xm</code> on the GAT... (e.g., <code>Item</code> or <code>Iterable</code>, in the case of <code>Iterable</code>, with generic parameters <code>[Self]</code> from the trait and <code>['me]</code> from the GAT)
+<ul>
+<li>If, for every method in the trait... (e.g., <code>iter</code>, in the case of <code>Iterable</code>)
+<ul>
+<li>When the method signature (argument types, return type, where clauses) references <code>G</code> like <code>&lt;P0 as Trait&lt;P1..Pn&gt;&gt;::G&lt;Pn..Pm&gt;</code> (e.g., <code>&lt;Self as Iterable&gt;::Iterator&lt;'a&gt;</code>, in the <code>iter</code> method, where <code>P0 = Self</code> and <code>P1</code> = <code>'a</code>)...
+<ul>
+<li>we can show that <code>Pi: Pj</code> for two parameters on the reference to <code>G</code>, and <code>Pi</code> is not <code>'static</code> (e.g., <code>Self: 'a</code>, in our example)
+<ul>
+<li>then the GAT must have <code>Xi: Xj</code> in its where clause list in the trait (e.g., <code>Self: 'me</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently asked questions</a></h2>
+<h3 id="can-you-work-through-the-iterable-example-in-more-detail"><a class="header" href="#can-you-work-through-the-iterable-example-in-more-detail">Can you work through the <code>Iterable</code> example in more detail?</a></h3>
+<p>You mean the reference example from this page? Sure! This trait requires a <code>where Self: 'c</code> clause on the associated type <code>Iter</code>...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
+
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...this occurs because:</p>
+<ul>
+<li>the <code>iter</code> function references <code>&lt;Self as Iterable&gt;::Iter&lt;'s&gt;</code> in its return type</li>
+<li>we can show that <code>Self: 's</code> in the method environment</li>
+<li>and <code>Self</code> is not <code>'static</code> (in fact, it's a type, not a lifetime)</li>
+<li>when we translate <code>Self: 's</code> into the namespace of <code>Iter</code>, we wind up with <code>Self: 'c</code>, which is the required bound</li>
+</ul>
+<h3 id="why-do-the-rules-ignore-parameters-equal-to-static"><a class="header" href="#why-do-the-rules-ignore-parameters-equal-to-static">Why do the rules ignore parameters equal to <code>'static</code>?</a></h3>
+<p>Consider <a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-1010484170">this example</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>#![feature(generic_associated_types)]
+
+<span class="boring">fn main() {
+</span>trait X&lt;'a&gt; {
+    type Y&lt;'b&gt;;
+    fn foo(&amp;self) -&gt; Self::Y&lt;'static&gt;;
+})):
+<span class="boring">}
+</span></code></pre></pre>
+<p>Without the special case for <code>'static</code>, we would see that the return type includes</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&lt;Self as X&lt;'a&gt;&gt;::Y&lt;'static&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>and then check that <code>'static: 'a</code> (it does, unsurprisingly), and hence conclude that we need to preserve that relationship by adding a <code>where 'b: 'a</code> clause to the associated type. But that where clause isn't likely to help any impls type check. In fact, the fact that <code>Self::Y&lt;'static&gt;</code> can be hard-coded into the trait signature suggests that, for all impls, the value of <code>Y</code> must either (a) not reference <code>'b</code> or else (b) only use <code>'b</code> as part of some ref <code>&amp;'b T</code> where <code>T: 'static</code>. So really there isn't much point to adding where-clauses relating <code>'b</code>. You <em>could</em> imagine that an impl might want to have <code>&amp;'a &amp;'b u32</code>, and to rely on the fact that <code>'b: 'a</code> in every case where it appears in the interface -- but right now, the only usage in the interface is <code>'static</code>, and so that same type could just be <code>&amp;'a &amp;'static u32</code>, which would work fine.</p>
+<h3 id="how-do-you-know-youve-gotten-the-exact-rules-for-required-bounds-correct-for-backcompat"><a class="header" href="#how-do-you-know-youve-gotten-the-exact-rules-for-required-bounds-correct-for-backcompat">How do you <em>know</em> you've gotten the exact rules for required bounds correct (for backcompat)?</a></h3>
+<p>Well, we are pretty sure, because our algorithm is quite general. It essentially looks for any patterns or relationships between parameters found in the method signatures of the trait, modulo the carve-out for <code>'static</code> described in answer to the previous question. It's possible that we could find a source of relationships we haven't considered, or we could find that the carve-out masks something more common, but those seem unlikely, and regardless they would likely be quite obscure cases (and hence it may be possible to tweak the rules without affecting existing code, or tweak the rules in an edition).</p>
+<h3 id="bounds-against-other-parameters"><a class="header" href="#bounds-against-other-parameters">Bounds against other parameters</a></h3>
+<p>The required bounds sometimes relate to parameters on the trait itself, and not the GAT parameters:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The reason for this is that the value of the <code>Item</code> type likely incorporates <code>'a</code> and <code>Self</code> and relies on the relationships of those types:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+
+impl&lt;'a, 'b&gt; Get&lt;'a&gt; for &amp;'b [String] {
+    type Item&lt;'c&gt; = &amp;'a str;
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt; {
+        &amp;self[0]
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="why-not-issue-default-bounds-against-other-associated-types"><a class="header" href="#why-not-issue-default-bounds-against-other-associated-types">Why not issue default bounds against other associated types?</a></h3>
+<p>Hmm, good question! It turns out that the idea of default bounds <em>is</em> applicable beyond GATs. For example, you might have a trait</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterator&lt;'i&gt; {
+    type Item;
+
+    fn foo(&amp;'i self) -&gt; Self::Item;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>and the code could suggest that <code>type Item</code> wants a where-clause like <code>where Self: 'i</code>. After all, it will only be used in cases where <code>&amp;'i self</code> is valid type.</p>
+<p>We actually tried to enable default bounds but found that it caused the compiler to fail to bootstrap. Interestingly the trait in question was found in gimli, and it turned out to be a case where the default bounds <em>weren't wrong</em>. They were expressing a lifetime relationship that the trait did require, but that relationship was being encoded on the trait in a different, arguably more roundabout way. The trait in question is the <a href="https://github.com/gimli-rs/object/blob/0a38064531fef4ddbaf93770a3551d333338980e/src/read/traits.rs#L24"><code>Object</code> trait</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object&lt;'data: 'file, 'file&gt;: read::private::Sealed {
+    ...
+    type SectionIterator: Iterator&lt;Item = Self::Section&gt;;
+    ...
+    fn sections(&amp;'file self) -&gt; Self::SectionIterator;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The error here suggested adding <code>where Self: 'file</code> to the <code>type SectionIterator</code>. Interestingly, if you look closely at the trait header, you can see that it is <code>'data: 'file</code>. This <code>'data</code> lifetime turns out to be the lifetime of data that appears in <code>Self</code>. So e.g. an <a href="https://github.com/gimli-rs/object/blob/0b76070f1281ebfad5b6b79c74f0c2508e5ee85c/src/read/coff/file.rs#L54">example impl</a> looks like this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;'data, 'file, R&gt; Object&lt;'data, 'file&gt; for CoffFile&lt;'data, R&gt;
+where
+    'data: 'file,
+    R: 'file + ReadRef&lt;'data&gt;,
+{
+    type Segment = CoffSegment&lt;'data, 'file, R&gt;;
+    type SegmentIterator = CoffSegmentIterator&lt;'data, 'file, R&gt;;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>In other words, the default bound of <code>where Self: 'file</code> was correct, but was being managed in a more complex way by the trait -- i.e., by adding a special lifetime (<code>'data</code>) into the trait signature that reflects &quot;the lifetime of borrowed data in <code>Self</code>&quot;, and then relating that lifetime to <code>'file</code>. In fact, the entire <code>Object</code> trait in gimil looks like it probably wanted to be a GAT, roughly like so:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object: read::private::Sealed {
+    ...
+    type SectionIterator&lt;'file&gt;: Iterator&lt;Item = Self::Section&gt;
+    where
+        Self: 'file;
+    ...
+    fn sections(&amp;self) -&gt; Self::SectionIterator&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>To my eyes, this is unquestionably a simpler trait (and it fits what will likely become a fairly standard pattern).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="outlives-defaults-1"><a class="header" href="#outlives-defaults-1">Outlives defaults</a></h1>
 <h2 id="links"><a class="header" href="#links">Links</a></h2>
 <ul>
 <li>Discussion issue: <a href="https://github.com/rust-lang/rust/issues/87479">#87479</a></li>
 </ul>
-<h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
+<h2 id="summary-9"><a class="header" href="#summary-9">Summary</a></h2>
 <p>We are moving towards stabilizing GATs (tracking issue: <a href="https://github.com/rust-lang/rust/issues/44265">#44265</a>) but there is one major ergonomic hurdle that we should decide how to manage before we go forward. In particular, a great many GAT use cases require a surprising where clause to be well-typed; this typically has the form <code>where Self: 'a</code>. In &quot;English&quot;, this states that the GAT can only be used with some lifetime <code>'a</code> that could've been used to borrow the <code>Self</code> type. This is because GATs are frequently used to return data owned by the <code>Self</code> type. It might be useful if we were to create some rules to add this rule by default. Once we stabilize, changing defaults will be more difficult, and could require an edition, therefore it's better to evaluate the rules now.</p>
 <h2 id="i-have-an-opinion-what-should-i-do"><a class="header" href="#i-have-an-opinion-what-should-i-do">I have an opinion! What should I do?</a></h2>
 <p>To make this decision in an informed way, <strong>what we need most are real-world examples and experience reports</strong>. If you are experimenting with GATs, for example, how often do you use <code>where Self: 'a</code> and how did you find out that it is necessary? Would the default proposals described below work for you? If not, can you describe the trait so we can understand why they would not work?</p>
 <p>Of great use would be example usages that do NOT require <code>where Self: 'a</code>. It'd be good to be able to evaluate the various defaulting schemes and see whether they would interfere with the trait. Knowing the trait and a rough sketch of the impls would be helpful.</p>
 <h2 id="background-what-where-clause-now"><a class="header" href="#background-what-where-clause-now">Background: what where clause now?</a></h2>
 <p>Consider the typical &quot;lending iterator&quot; example. The idea here is to have an iterator that produces values that may have references into the <strong>iterator itself</strong> (as opposed to references into the collection being iterated over). In other words, given a <code>next</code> method like <code>fn next&lt;'a&gt;(&amp;'a mut self)</code>, the returned items have to be able to reference <code>'a</code>. The typical <code>Iterator</code> trait cannot express that, but GATs can:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait LendingIterator {
     type Item&lt;'a&gt;;
@@ -535,8 +1425,7 @@ In the table of contents, you will find the overall status:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Unfortunately, this trait definition turns out to be not quite right in practice. Consider an example like this, an iterator that yields a reference to the same item over and over again (note that it owns the item it is referencing):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct RefOnce&lt;T&gt; {
     my_data: T    
@@ -553,8 +1442,7 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 </span></code></pre></pre>
 <p>Here, the type <code>type Item&lt;'a&gt; = &amp;'a T</code> declaration is actually illegal. Why is that? The assumption when authoring the trait was that <code>'a</code> would always be the lifetime of the <code>self</code> reference in the <code>next</code> function, of course, but that is not in fact <em>required</em>. People can reference <code>Item</code> with any lifetime they want. For example, what if somebody wrote the type <code>&lt;SomeType&lt;T&gt; as LendingIterator&gt;::Item&lt;'static&gt;</code>? In this case, <code>T: 'static</code> would have to be true, but <code>T</code> may in fact contain borrowed references. This is why the compiler gives you a &quot;T may not outlive <code>'a</code>&quot; error (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=821e30ee635326a22fc19cd940bbaf62">playground</a>). </p>
 <p>We can encode the constraint that &quot;<code>'a</code> is meant to be the lifetime of the <code>self</code> reference&quot; by adding a <code>where Self: 'a</code> clause to the <code>type Item</code> declaration. This is saying &quot;you can only use a <code>'a</code> that could be a reference to <code>Self</code>&quot;. If you make this change, you'll find that the code compiles (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=87cb2430ee76ece77499d3c6605874df">playground</a>): </p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait LendingIterator {
     type Item&lt;'a&gt; where Self: 'a;
@@ -567,8 +1455,7 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 <p>If the associated type cannot refer to data that comes from the <code>Self</code> type, then the <code>where Self: 'a</code> is unnecessary, and is in fact somewhat constraining.</p>
 <h3 id="example-output-doesnt-borrow-from-self"><a class="header" href="#example-output-doesnt-borrow-from-self">Example: Output doesn't borrow from Self</a></h3>
 <p>In the <code>Parser</code> trait, the <code>Output</code> does not ultimately contain data borrowed from <code>self</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Parser {
     type Output&lt;'a&gt;;
@@ -577,8 +1464,7 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>If you were to implement <code>Parser</code> for some reference type (in this case, <code>&amp;'b Dummy</code>) you can now set <code>Output</code> to something that has no relation to <code>'b</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;'b&gt; Parser for &amp;'b Dummy {
     type Output&lt;'a&gt; = &amp;'a [u8];
@@ -590,8 +1476,7 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Note that you would need a similar <code>where</code> clause if you were going to have a setup like:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Transform&lt;Input&gt; {
     type Output&lt;'a&gt;
@@ -605,8 +1490,7 @@ impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
 <h3 id="example-iter-static"><a class="header" href="#example-iter-static">Example: Iter static</a></h3>
 <p>In the previous example, the lifetime parameter for <code>Output</code> was not related to the <code>self</code> parameter. Are there (realistic) examples where the associated type is applied to the lifetime parameter from <code>self</code> <em>but</em> the <code>where Self: 'a</code> is not desired?</p>
 <p>There are some, but they rely on having &quot;special knowledge&quot; of the types that will be used in the impl, and they don't seem especially realistic. The reason is that, if you have a GAT with a lifetime parameter, it is likely that the GAT contains some data borrowed for that lifetime! But if you use the lifetime of <code>self</code>, that implies we are borrowing some data from <code>self</code> -- however, it doesn't <em>necessarily</em> imply that we are borrowing data of any particular type. Consider this example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Message {
     type Data&lt;'a&gt;: Display;
@@ -643,8 +1527,7 @@ impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
 <h3 id="smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters"><a class="header" href="#smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters">Smart default: add <code>where Self: 'a</code> if the GAT is used with the lifetime from <code>&amp;self</code> (and extend to other type parameters)</a></h3>
 <p>Analyze the types of methods within the trait definition. It a GAT is applied to a lifetime <code>'x</code>, examine the implied bounds of the method for bounds of the form <code>T: 'x</code>, where <code>T</code> is an input parameter to the trait. If we find such bounds on all methods for every use of the GAT, then add the corresponding default.</p>
 <p>Consider the <code>LendingIterator</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait LendingIterator {
     type Item&lt;'a&gt;;
@@ -657,8 +1540,7 @@ impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
 <p>This check is a fairly simple syntactic check, though not necessarily easy to explain. It would accept all the examples that appear in this document, including the example with <code>fn default() -&gt; Self::Data&lt;'static&gt;</code> (in that case, the default is not triggered, because we found a use of <code>Data</code> that is applied to a lifetime for which no implied bound applies). The only case where this default behaves <em>incorrectly</em> is the case where all uses of <code>Self::Data</code> that appear within the trait need the default, but there are uses outside the trait that do not (I couldn't come up with a realistic example of how to do this usefully).</p>
 <h4 id="extending-to-other-type-parameters"><a class="header" href="#extending-to-other-type-parameters">Extending to other type parameters</a></h4>
 <p>The inference can be extended naturally beyond <code>self</code> to other type parameters. Therefore this example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Parser&lt;Input&gt; {
     type Output&lt;'i&gt;;
@@ -669,8 +1551,7 @@ impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
 </span></code></pre></pre>
 <p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
 <p>Similarly:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Parser&lt;Input&gt; {
     type Output&lt;'i&gt;;
@@ -682,8 +1563,7 @@ impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
 <p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
 <h4 id="avoiding-the-default"><a class="header" href="#avoiding-the-default">Avoiding the default</a></h4>
 <p>If this default is truly not desired, there is a workaround: one can declare a supertrait that contains just the associated type. For example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait IterType {
     type Iter&lt;'b&gt;;
@@ -697,8 +1577,7 @@ trait LendingIterator: IterType {
 <p>This workaround is not especially obvious, however.</p>
 <h4 id="related-precedent"><a class="header" href="#related-precedent">Related precedent</a></h4>
 <p>We used to require <code>T: 'a</code> bounds in structs:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Foo&lt;'a, T&gt; {
     x: &amp;'a T
@@ -713,8 +1592,7 @@ trait LendingIterator: IterType {
 <h2 id="appendix-a-ruled-out-alternatives"><a class="header" href="#appendix-a-ruled-out-alternatives">Appendix A: Ruled out alternatives</a></h2>
 <h3 id="special-syntax"><a class="header" href="#special-syntax">Special syntax</a></h3>
 <p>We could use the <code>'self</code> &quot;keyword&quot;, permitted only in GATs, to indicate &quot;a lifetime with the where clause <code>where Self: 'self</code>&quot;. The <code>LendingIterator</code> trait would therefore be written</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait LendingIterator {
     type Item&lt;'self&gt;;
@@ -737,8 +1615,7 @@ trait LendingIterator: IterType {
 </ul>
 <h2 id="appendix-c-other-examples"><a class="header" href="#appendix-c-other-examples">Appendix C: Other examples</a></h2>
 <h3 id="example-ruma"><a class="header" href="#example-ruma">Example: Ruma</a></h3>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Every endpoint in the Matrix REST API has two request and response types in Ruma, one Incoming
 // (used for deserialization) and out Outgoing (used for serialization). To avoid annoying clones when
@@ -757,13 +1634,124 @@ pub trait IncomingRequest: Sized {
 <span class="boring">}
 </span></code></pre></pre>
 <p><a href="https://docs.rs/ruma-api/0.17.1/ruma_api/trait.IncomingRequest.html">full definition</a></p>
+<h2 id="appendix-d-examples"><a class="header" href="#appendix-d-examples">Appendix D: Examples</a></h2>
+<p>We go through several examples and document whether and why bounds are required.</p>
+<h3 id="default-bounds-in-return-position"><a class="header" href="#default-bounds-in-return-position">Default bounds in return position</a></h3>
+<pre><pre class="playground"><code class="language-rust">#![feature(generic_associated_types)]
+
+trait Foo {
+    type Item&lt;'me&gt;
+    where
+        Self: 'me; // &lt;-- Required
+
+    fn push_back&lt;'a&gt;(&amp;'a mut self) -&gt; Self::Item&lt;'a&gt;;
+}
+
+fn main() { }
+</code></pre></pre>
+<p>The bound here is required because:</p>
+<ul>
+<li><code>push_back</code> returns a value of type <code>Self::Item&lt;'a&gt;</code>:
+<ul>
+<li>the <code>&amp;'a mut self</code> parameter implies that <code>Self: 'a</code></li>
+<li>therefore, we require this bound be written on the trait</li>
+</ul>
+</li>
+</ul>
+<h3 id="no-default-bounds-in-argument-position"><a class="header" href="#no-default-bounds-in-argument-position">No default bounds in argument position</a></h3>
+<pre><pre class="playground"><code class="language-rust">#![feature(generic_associated_types)]
+
+trait Foo {
+    type Item&lt;'me&gt;; 
+    fn push_back1&lt;'a&gt;(&amp;'a mut self, arg: Self::Item&lt;'a&gt;);
+    fn push_back2&lt;'a&gt;(&amp;'a mut self, arg: &amp;mut Self::Item&lt;'a&gt;);
+}
+
+fn main() { }
+</code></pre></pre>
+<p>No bounds here are required because <code>Self::Item</code> only appears in argument position.</p>
+<h3 id="bounds-against-other-parameters-1"><a class="header" href="#bounds-against-other-parameters-1">Bounds against other parameters</a></h3>
+<p>The required bounds sometimes relate to parameters on the trait itself, and not the GAT parameters:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The reason for this is that the value of the <code>Item</code> type likely incorporates <code>'a</code> and <code>Self</code> and relies on the relationships of those types:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+
+impl&lt;'a, 'b&gt; Get&lt;'a&gt; for &amp;'b [String] {
+    type Item&lt;'c&gt; = &amp;'a str;
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt; {
+        &amp;self[0]
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>You may have noticed that <code>Item</code> didn't need to be a GAT at all here -- in fact, the same logic would apply to a trait with no lifetime parameters. However, adding the rules that users write the bounds explicitly after the fact is not backwards compatible. We found crates that would stop compiling, such as gimli:</p>
+<p>https://github.com/gimli-rs/object/blob/0a38064531fef4ddbaf93770a3551d333338980e/src/read/traits.rs#L24</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object&lt;'data: 'file, 'file&gt;: read::private::Sealed {
+    ...
+    type SectionIterator: Iterator&lt;Item = Self::Section&gt;;
+    // needs `Self: 'file`
+    ...
+    fn sections(&amp;'file self) -&gt; Self::SectionIterator;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Interestingly, if you look closely at the trait header, you can see that it is <code>'data: 'file</code>. This <code>'data</code> lifetime turns out to be the lifetime of data that appears in <code>Self</code>. So e.g. an <a href="https://github.com/gimli-rs/object/blob/0b76070f1281ebfad5b6b79c74f0c2508e5ee85c/src/read/coff/file.rs#L54">example impl</a> looks like this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;'data, 'file, R&gt; Object&lt;'data, 'file&gt; for CoffFile&lt;'data, R&gt;
+where
+    'data: 'file,
+    R: 'file + ReadRef&lt;'data&gt;,
+{
+    type Segment = CoffSegment&lt;'data, 'file, R&gt;;
+    type SegmentIterator = CoffSegmentIterator&lt;'data, 'file, R&gt;;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>In other words, the default bound of <code>where Self: 'file</code> was correct, but was being managed in a more complex way by the trait -- i.e., by adding a special lifetime (<code>'data</code>) into the trait signature that reflects &quot;the lifetime of borrowed data in <code>Self</code>&quot;, and then relating that lifetime to <code>'file</code>. In fact, the entire <code>Object</code> trait in gimil looks like it probably wanted to be a GAT, roughly like so:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object: read::private::Sealed {
+    ...
+    type SectionIterator&lt;'file&gt;: Iterator&lt;Item = Self::Section&gt;
+    where
+        Self: 'file;
+    ...
+    fn sections(&amp;self) -&gt; Self::SectionIterator&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>To my eyes, this is unquestionably a simpler trait (and it fits what will likely become a fairly standard pattern).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-where-does-the-where-clause-go"><a class="header" href="#-where-does-the-where-clause-go">💬 Where does the where clause go?</a></h1>
 <p>This is write-up of the conclusion to the [where does the where clause go?] question. To read more background, see the <a href="design-discussions/where-the-where-1.html#links-to-older-discussions">links</a> section below.</p>
 <h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
 <h3 id="where-clauses-in-generic-associated-types-comes-after-valuebinding"><a class="header" href="#where-clauses-in-generic-associated-types-comes-after-valuebinding">Where clauses in generic associated types comes after value/binding</a></h3>
 <p>Example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait MyTrait {
     type MyType&lt;T&gt;: Iterator
@@ -781,8 +1769,7 @@ impl MyTrait for MyOtherType {
 <p>Effectively the <code>= type</code> in the impl replaces the <code>: Bound</code> from the declaration with the value that has to meet those bounds.</p>
 <h3 id="later-phase-type-aliases"><a class="header" href="#later-phase-type-aliases">Later phase: type aliases</a></h3>
 <p>Type aliases will eventually be aligned to this syntax as well:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type MyType&lt;T&gt; = Vec&lt;T&gt; where T: Ord;
 <span class="boring">}
@@ -790,8 +1777,7 @@ impl MyTrait for MyOtherType {
 <p>Currently, however, where clauses on type aliases are ignored, so we will not stabilize this new syntax until they have the meaning we want.</p>
 <h3 id="suggestions-for-users-who-put-the-where-clause-in-the-wrong-place"><a class="header" href="#suggestions-for-users-who-put-the-where-clause-in-the-wrong-place">Suggestions for users who put the where clause in the wrong place</a></h3>
 <p>We will parse where clauses in both positions and suggest to users that they be moved:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl MyTrait for MyOtherType {
     type MyType&lt;T&gt;
@@ -804,8 +1790,7 @@ impl MyTrait for MyOtherType {
 <p>Gets an error with a suggested rewrite. The compiler proceeds &quot;as if&quot; the where clauses had been written after the <code>= Type</code>.</p>
 <h3 id="where-clause-syntax-for-trait-aliases-will-have-to-be-revisited"><a class="header" href="#where-clause-syntax-for-trait-aliases-will-have-to-be-revisited">Where clause syntax for trait aliases will have to be revisited</a></h3>
 <p>As described in the FAQ below, we currently support trait alias syntax like</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
 <span class="boring">}
@@ -830,23 +1815,20 @@ impl MyTrait for MyOtherType {
 <p>In the case of an impl specifying the value for an associated type, the &quot;important stuff&quot; the value of the associated type.</p>
 <h3 id="what-about-trait-aliases-dont-they-distinguish-where-clause-placement"><a class="header" href="#what-about-trait-aliases-dont-they-distinguish-where-clause-placement">What about trait aliases, don't they distinguish where clause placement?</a></h3>
 <p>As currently implemented, trait aliases have two distinct possible placements for where clauses, which effectively distinguishes between a <em>where clause</em> (which must be proven true in order to use the alias) and an <em>implied bound</em> (which is part of what the alias expands to). One can write:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Foo&lt;T: Debug&gt; = Bar&lt;T&gt; + Baz&lt;T&gt;
 <span class="boring">}
 </span></code></pre></pre>
 <p>in which case <code>where X: Foo&lt;Y&gt;</code> is only legal if <code>Y: Debug</code> is known from some other place. This is roughly equivalent to a trait like so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Foo1&lt;T: Debug&gt;: Bar&lt;T&gt; + Baz&lt;T&gt; { }
 <span class="boring">}
 </span></code></pre></pre>
 <p>The clause <code>where X: Foo1&lt;Y&gt;</code> is also only valid when <code>Y: Debug</code> is known. This is in contrast to the &quot;supertraits&quot; <code>Bar&lt;Y&gt;</code> and <code>Baz&lt;Y&gt;</code>, which are implied by <code>X: Foo1&lt;Y&gt;</code> (&quot;supertraits&quot; are also sometimes called &quot;implied bounds&quot;).</p>
 <p>Alternatively, one can include the where clause in the &quot;value&quot; of the trait alias like so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait ReverseEq&lt;T&gt; = where T: PartialEq&lt;Self&gt;;
 <span class="boring">}
@@ -855,8 +1837,7 @@ impl MyTrait for MyOtherType {
 <p>Our decision was that this is a subtle distinction and that using the placement of the where clause was not a great way to make it.</p>
 <h3 id="is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language"><a class="header" href="#is-that-trait-alias-syntax-consistent-with-the-rest-of-the-language">Is that trait alias syntax consistent with the rest of the language?</a></h3>
 <p>Not really. There are other places in the language that could benefit from a similar flexibility around implied bounds. For example, one could imagine wanting to have an associated type <code>T::MyType&lt;Y&gt;</code> where it is known that <code>Y: PartialEq&lt;T::MyType&lt;Y&gt;&gt;</code>, but this cannot be readily written with today's syntax:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait MyTrait {
     type MyType&lt;T&gt;: PartialEq&lt;T&gt;;
@@ -872,8 +1853,7 @@ impl MyTrait for MyOtherType {
 <p>In short, this might be a reasonable choice to make, but we should make it uniformly, and it shuts down the direction of using the lack of bounds in the impl as a kind of signal.</p>
 <h3 id="why-not-change-type-alias-notation-too"><a class="header" href="#why-not-change-type-alias-notation-too">Why not change type alias notation too?</a></h3>
 <p>Top-level type aliases currently parse with the where clause before the <code>=</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>type Foo&lt;T&gt; where T: Ord = T;
 <span class="boring">}
@@ -889,7 +1869,7 @@ impl MyTrait for MyOtherType {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="where-does-the-where-clause-go"><a class="header" href="#where-does-the-where-clause-go">Where does the where clause go?</a></h1>
 <h2 id="update"><a class="header" href="#update">UPDATE</a></h2>
 <p>This document is retained for historical purposes. See the <a href="design-discussions/./where-the-where-1.html">Where the Where</a> conclusion for the most up-to-date conversation.</p>
-<h2 id="summary-2"><a class="header" href="#summary-2">Summary</a></h2>
+<h2 id="summary-10"><a class="header" href="#summary-10">Summary</a></h2>
 <p>Proposed: to alter the syntax of where clauses on type aliases so that they appear <em>after</em> the value:</p>
 <pre><code>type StringMap&lt;K&gt; = BTreeMap&lt;K, String&gt;
 where
@@ -898,8 +1878,7 @@ where
 <p>This applies both in top-level modules and in trats (associated types, generic or otherwise).</p>
 <h2 id="background"><a class="header" href="#background">Background</a></h2>
 <p>The current syntax for where to place the &quot;where clause&quot; of a generic associated types is awkward. Consider this example (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=bdb55a5d5cb17e20d73e22a3f2db0e57">playground</a>):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
     type Iter&lt;'a&gt; where Self: 'a;
@@ -919,8 +1898,7 @@ impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Note the impl. Most people expect the impl to be written as follows (indeed, the author wrote it this way in the first draft):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl Iterable for Vec&lt;T&gt; {
     type Iter&lt;'a&gt;  = &lt;&amp;'a [T] as Iterator&gt;::Iter
@@ -949,8 +1927,7 @@ fn main() { }
 <h2 id="alternatives-1"><a class="header" href="#alternatives-1">Alternatives</a></h2>
 <h3 id="keep-the-current-syntax"><a class="header" href="#keep-the-current-syntax">Keep the current syntax.</a></h3>
 <p>In this case, we must settle the question of how we expect it to be formatted (surely not as I have shown it above).</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
     type Iter&lt;'a&gt; where Self: 'a 
@@ -964,6 +1941,20 @@ fn main() { }
 </span></code></pre></pre>
 <h3 id="accept-either"><a class="header" href="#accept-either">Accept either</a></h3>
 <p>What do we do if both are supplied?</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="are-gats-too-complex"><a class="header" href="#are-gats-too-complex">Are GATs too complex?</a></h1>
+<h2 id="question"><a class="header" href="#question">Question</a></h2>
+<h2 id="conclusion-1"><a class="header" href="#conclusion-1">Conclusion</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="should-gats-only-support-lifetime-parameters"><a class="header" href="#should-gats-only-support-lifetime-parameters">Should GATs only support lifetime parameters?</a></h1>
+<h2 id="question-1"><a class="header" href="#question-1">Question</a></h2>
+<p>One possibility is to only stabilize GATs with lifetime parameters:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterable {
+    type Item&lt;'a&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="conclusion-2"><a class="header" href="#conclusion-2">Conclusion</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-faq"><a class="header" href="#-faq">😕 FAQ</a></h1>
 
                     </main>

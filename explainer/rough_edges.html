@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>💬 Design discussions - Generic Associated Types Initiative</title>
+        <title>Rough edges - Generic Associated Types Initiative</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/index.html" class="active">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item expanded "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item expanded "><a href="../explainer/rough_edges.html" class="active">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,23 +137,27 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="design-discussions"><a class="header" href="#design-discussions">Design discussions</a></h1>
-<p>This directory hosts notes on important design discussions along with their resolutions.
-In the table of contents, you will find the overall status:</p>
-<ul>
-<li>✅ -- <strong>Settled!</strong> Input only needed if you have identified a fresh consideration that is not covered by the write-up.</li>
-<li>💬 -- <strong>Under active discussion.</strong> Check the write-up, which may contain a list of questions or places where feedback is desired.</li>
-<li>💤 -- <strong>Paused.</strong> Not under active discussion, but we may be updating the write-up from time to time with details.</li>
-</ul>
-
+                        <h1 id="rough-edges"><a class="header" href="#rough-edges">Rough edges</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> [<img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" />][rust-lang/rust#96709]</p>
+<p>[rust-lang/rust#96709]: https://github.com/rust-lang/rust/pull/96709 <img src="https://img.shields.io/badge/note-seeking%20feedback-informational" alt="seeking feedback" /></p>
+<p>The current MVP state includes a number of known rough edges, explained here.</p>
+<div class="table-wrapper"><table><thead><tr><th>Edge</th><th>Brief explanation</th></tr></thead><tbody>
+<tr><td>Clumsy HRTB syntax</td><td>The syntax <code>for&lt;'a&gt; T: Iterable&lt;Item&lt;'a&gt; = ...&gt;</code> is clumsy</td></tr>
+<tr><td><a href="./required_bounds.html">Required bounds</a></td><td>Compiler requires you to write <code>where Self: 'me</code> a lot</td></tr>
+<tr><td><a href="./no_implied_bounds.html">No implied bounds on HRTB</a></td><td>The <code>for&lt;'a&gt;</code> syntax should really mean &quot;for any suitable <code>'a</code>&quot; to avoid false errors</td></tr>
+<tr><td>HRTB limited to lifetimes</td><td>You cannot write <code>for&lt;T&gt;</code> or <code>for&lt;const C&gt;</code> to talk about types, lifetimes</td></tr>
+<tr><td>Polonius interaction</td><td>Some GAT patterns require polonius to pass the borrow checker</td></tr>
+<tr><td>Not dyn safe</td><td>Traits with GATs are not dyn safe, even if those GATs are limited to lifetimes</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../design_patterns/pointer_types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../explainer/where-clauses.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../design-discussions/outlives-defaults.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../explainer/required_bounds.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -162,10 +166,10 @@ In the table of contents, you will find the overall status:</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../design_patterns/pointer_types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../explainer/where-clauses.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../design-discussions/outlives-defaults.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../explainer/required_bounds.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

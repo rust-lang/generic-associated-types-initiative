@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Concern: GATs permit abstractions that make Rust harder to use - Generic Associated Types Initiative</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item expanded "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mvp/concern-too-complex.html" class="active">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Generic Associated Types Initiative</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/generic-associated-types-initiative" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="gats-permit-complex-patterns-that-will-on-net-make-rust-harder-to-use"><a class="header" href="#gats-permit-complex-patterns-that-will-on-net-make-rust-harder-to-use">GATs permit complex patterns that will, on net, make Rust harder to use</a></h1>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>There is no question that GATs enable <a href="../design_patterns.html">new design patterns</a>. For the most part, these design patterns take the form of enabling a new kind of abstraction. For example, <a href="../design_patterns/many_modes.html">many modes</a> allows a trait that encapsulates a &quot;mode&quot; in which some other code will be executed; lacking GATs, this can only be done in simple cases. These new design patterns may <strong>locally</strong> improve the code, but, if it becomes commonplace to use more complex abstractions in Rust code bases, Rust code overall will become harder for people to understand and read. <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1168643277">As burntsushi wrote:</a></p>
+<blockquote>
+<p>The complexity increase comes precisely from the abstraction power given to folks. By increasing the accessibility to that power, that power will in turn be used more frequently and users of the language will need to contend with those abstractions. </p>
+</blockquote>
+<p>burntsushi continues (emphasis ours):</p>
+<blockquote>
+<p>Here's where we come to the contentious part of this perspective: <strong>a lot of people have real difficulty understanding abstractions.</strong></p>
+</blockquote>
+<p>Nick Cameron also <a href="https://www.ncameron.org/blog/complexity/">wrote a blog post</a> covering this theme. One of Nick's comments on Zulip points out that duplicated code in an API surface is annoying to maintain, but could be easier for consumers:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287854656">Nick Cameron</a>: I think the risk of features like GATs is that encourages smaller, more abstract APIs which are more satisfying for library authors but which are harder for the median user to comprehend. For a non-GAT example, consider Result and Option compared to a more abstract monadic type. The latter reduces code duplication in the library and perhaps permits more interoperability, but we prefer having separate Result and Option in Rust because for most users, it's easier to understand an API with concrete values and functions like Ok and unwrap, rather than abstract concepts like unit and bind.</p>
+</blockquote>
+<h2 id="what-are-the-alternatives"><a class="header" href="#what-are-the-alternatives">What are the alternatives?</a></h2>
+<p>Nobody is contending that the <a href="../design_patterns.html">design patterns</a> aren't addressing real problems, but they are contending that <strong>solving those problems with a trait-based abstraction may not be the right approach</strong>. So what are these alternatives? </p>
+<ul>
+<li>In some cases, it's a &quot;slightly less convenient API&quot; (as in <a href="https://docs.rs/csv/latest/csv/struct.Reader.html#method.read_record">CSV reader</a>).</li>
+<li>In others, the answer is some combination of macros and code generation. For example, the <a href="../design_patterns/many_modes.html">many modes</a> pattern was used to make parser combinators work better, but that could also be addressed via procedural macros and code generation.</li>
+<li>In yet others, it's HRTB; the standard workaround for the <a href="../design_patterns/iterable.html"><code>Iterable</code></a> pattern is to write <code>for&lt;'c&gt; Iterate&lt;'c&gt;</code>, for example.</li>
+<li>Finally, it is sometimes possible to workaround the lack of GATs by introducing runtime overhead. e.g., foregoing the optimizations that <a href="../design_patterns/many_modes.html">many modes</a> enabled, or using an enum, or a trait object.</li>
+</ul>
+<h2 id="counterpoint-gats-often-allow-library-authors-to-hide-complexity"><a class="header" href="#counterpoint-gats-often-allow-library-authors-to-hide-complexity">Counterpoint: GATs often allow library authors to hide complexity</a></h2>
+<p>Somewhat counter the above, frequently the goal with GATs is actually to make the interface of the library <em>simpler</em>:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287855607">oli:</a> Yes, and in user libraries right now you do stumble across those very complex APIs that work around the lack of GATs</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1170092720">vultix</a>: I've personally seen two use-cases where GATs would have been useful, both times while writing libraries. We found an ugly workaround for the first use-case that wasn't horrible, but the second workaround made the user-facing api severely worse.</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/amzn/ion-rust/issues/98">almann</a>: Currently, delegation via our current APIs are difficult because we cannot have an associated type that can be constructed with a per invocation lifetime. This <a href="https://gist.github.com/almann/d21da1856d2a3c9f95dd04248a17d3ce">example</a> illustrates this, and shows how we can work around this by the judicious use of <code>unsafe</code> code, by essentially emulating the reference with pointers we know to be scoped appropriately. We also work around the lack of GAT by simplifying the value writer used in the implementation of <code>IonCAnnotationsFieldWriter</code> for <code>IonCWriterHandle</code> by refering to <code>Self</code> which works, but makes the API potentially easier to misuse.</p>
+</blockquote>
+<p>The <a href="../design_patterns/many_modes.html">many modes</a> pattern shows how the Chumsky parser generator used GATs internally. They don't appear in the public facing methods.</p>
+<p>Jake Goulding points out that we hear very few stories of people who tried GATs but backed off:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287858483">Jake Goulding</a>: It would be wonderful if there were experience reports of people saying &quot;I thought I needed GATs but after writing them I realized I could do X instead and that was much clearer&quot;. My one experience was that I could use one of the stable GAT workarounds, but it felt wrong and I was happy to trial-run the nightly GAT version instead.</p>
+</blockquote>
+<p>Nick Cameron:
+IMO, this is complicated. However, many uses of it do not require understanding every nuance of what's going on in there:</p>
+<p>That's fair. I think in general it is true, like sum is easier to understand than fold, or cloned is easier than map, but that doesn't necessarily mean that the more abstract thing is too difficult to understand. And the more abstract one is likely more general, so there's a trade-off for each case</p>
+<h2 id="counterpoint-macros-are-not-easier"><a class="header" href="#counterpoint-macros-are-not-easier">Counterpoint: Macros are not easier</a></h2>
+<p>Many folks chimed in to express their feeling that proc macros, or duplicated code, are not easier to understand or maintain. Some examples:</p>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288732525">Alice Cecile</a>: Macros are so much worse to read / write / maintain than pretty much any type magic I've ever seen. Even very simple stuff is rough</p>
+</blockquote>
+<blockquote>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288796879">Ralf Jung</a>: I would not call <a href="https://doc.rust-lang.org/nightly/std/fmt/trait.Debug.html#impl-Debug-for-fn()%20-%3E%20Ret">this kind of nonsense</a> very clear. macros do tend to lead to state explosion and huge amounts of redundancy in the docs, making it very hard to see the actual pattern. that's unsurprising since the compiler is never told about the pattern. (that particular example is not solved by GATs, it requires other new type system features, including variadics. it just demonstrates well the perils of macro-generated code.)</p>
+</blockquote>
+<h2 id="counterpoint-arguing-against-a-feature-because-it-could-be-misused-would-block-many-parts-of-rust"><a class="header" href="#counterpoint-arguing-against-a-feature-because-it-could-be-misused-would-block-many-parts-of-rust">Counterpoint: Arguing against a feature because it could be misused would block many parts of Rust</a></h2>
+<p>https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287765775</p>
+<p><a href="https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/GATs.20and.20complexity/near/287841239">Ralf Jung</a> writes:</p>
+<blockquote>
+<p>yes, that I think is the main argument to me. not having a feature because it could be used to write unnecessarily complicated APIs sounds like a bad argument to me -- it effectively means preventing some people from writing good APIs (assuming we accept there are APIs where the GAT version is clearly superior) for fear of other people writing bad APIs. one can already write unnecessarily complicated APIs in Rust in a lot of ways -- e.g. we didnt block proc-macros just because they can be used for bad APIs, though anyone who had to debug other people's sea of macros knows it can easily lead to terribly opaque API surfaces.
+heck, we have unsafe code, where the consequences of using the feature in the wrong way are (IMO) a lot worse than GATs. I dont understand why GATs are suddenly considered a problem when they are (IMO) a feature much less in danger of being misused than unsafe code or proc macros. Rust has empowerment literally in its one-sentence slurb: we give people powerful tools and all the help we can to use them, and we accept that this means some people will misuse them, and we do what we can (technically and socially) to mitigate the consequences of that.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../mvp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../mvp/concern-too-rough.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../mvp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../mvp/concern-too-rough.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Initial write-up - Generic Associated Types Initiative</title>
+        <title>Defining and implementing the Iterable trait with GATs - Generic Associated Types Initiative</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-discussions/where-the-where.html" class="active">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item expanded "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item expanded "><a href="../explainer/iterable.html" class="active">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,90 +137,94 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="where-does-the-where-clause-go"><a class="header" href="#where-does-the-where-clause-go">Where does the where clause go?</a></h1>
-<h2 id="update"><a class="header" href="#update">UPDATE</a></h2>
-<p>This document is retained for historical purposes. See the <a href="./where-the-where-1.html">Where the Where</a> conclusion for the most up-to-date conversation.</p>
-<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<p>Proposed: to alter the syntax of where clauses on type aliases so that they appear <em>after</em> the value:</p>
-<pre><code>type StringMap&lt;K&gt; = BTreeMap&lt;K, String&gt;
-where
-    K: PartialOrd
-</code></pre>
-<p>This applies both in top-level modules and in trats (associated types, generic or otherwise).</p>
-<h2 id="background"><a class="header" href="#background">Background</a></h2>
-<p>The current syntax for where to place the &quot;where clause&quot; of a generic associated types is awkward. Consider this example (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=bdb55a5d5cb17e20d73e22a3f2db0e57">playground</a>):</p>
+                        <h1 id="defining-and-implementing-the-iterable-trait-with-gats"><a class="header" href="#defining-and-implementing-the-iterable-trait-with-gats">Defining and implementing the Iterable trait with GATs</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<blockquote>
+<p><a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">Play with this example on the Rust playground.</a></p>
+</blockquote>
+<p>To express traits like <code>Iterable</code>, we can make use generic associated types -- that is, associated types with generic parameters. Here is the complete <code>Iterable</code> trait:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterable {
-    type Iter&lt;'a&gt; where Self: 'a;
+    // Type of item yielded up; will be a reference into `Self`.
+    type Item&lt;'collection&gt;
+    where
+        Self: 'collection;
 
-    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt;;
+    // Type of iterator we return. Will return `Self::Item` elements.
+    type Iterator&lt;'collection&gt;: Iterator&lt;Item = Self::Item&lt;'collection&gt;&gt;
+    where
+        Self: 'collection;
+
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iterator&lt;'c&gt;;
+    //           ^^                         ^^
+    //
+    // Returns a `Self::Iter` derived from `self`.
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Let's walk through it piece by piece...</p>
+<ul>
+<li>We added a <code>'collection</code> parameter to <code>Item</code>. This represents &quot;the specific collection that the <code>Item</code> is borrowed from&quot; (or, if you prefer, the lifetime for which that collection is borrowed). </li>
+<li>The same <code>'collection</code> parameter is added to <code>Iterator</code>, indicating the collection that the iterator borrows its items from.</li>
+<li>In the <code>iter</code> method, the value of <code>'collection</code> comes from <code>self</code>, indicating that <code>iter</code> returns an <code>Iterator</code> linked to <code>self</code>.</li>
+<li>Each associated type also has a <code>where Self: 'collection</code> bound. These bounds are required by the compiler -- if you don't add them, you will get a compilation error. As <a href="./explainer/required_bounds.html">explained here</a>, this is a compromise that is part of the GATs MVP to give us time to work out the best long-term solution.
+<ul>
+<li>The bound <code>where Self: 'collection</code> is called an <em>outlives bound</em> -- it indicates that the data in <code>Self</code> must outlive the <code>'collection</code> lifetime</li>
+</ul>
+</li>
+</ul>
+<h2 id="implementing-the-trait"><a class="header" href="#implementing-the-trait">Implementing the trait</a></h2>
+<p>Let's write an implementation of this trait. We'll implement it for the <code>Vec&lt;T&gt;</code> type; a <code>&amp;Vec&lt;T&gt;</code> can be coerced into a <code>&amp;[T]</code> slice, so we can re-use the slice <code>Iter</code> that we defined before (the <a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">playground</a> link includes an impl of <code>Iterable</code> for <code>[T]</code> as well, but we'll use <code>Vec</code> here because it's more convenient).</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// from before
+struct Iter&lt;'c, T&gt; {
+    data: &amp;'c [T],
 }
 
 impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Iter&lt;'a&gt;
-    where 
-        Self: 'a = &lt;&amp;'a [T] as IntoIterator&gt;::IntoIter;
+    type Item&lt;'c&gt; = &amp;'c T
+    where
+        T: 'c;
+    
+    type Iterator&lt;'c&gt; = Iter&lt;'c, T&gt;
+    where
+        T: 'c;
 
-    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt; {
-        self.iter()
+    fn iter&lt;'c&gt;(&amp;'c self) -&gt; Self::Iterator&lt;'c&gt; {
+        Iter { data: self }
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Note the impl. Most people expect the impl to be written as follows (indeed, the author wrote it this way in the first draft):</p>
+<h2 id="invoking-it"><a class="header" href="#invoking-it">Invoking it</a></h2>
+<p>Now that we have the <code>Iterable</code> trait, we can reference it in our &quot;count twice&quot; function.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>impl Iterable for Vec&lt;T&gt; {
-    type Iter&lt;'a&gt;  = &lt;&amp;'a [T] as Iterator&gt;::Iter
-    where 
-        Self: 'a;
+</span>fn count_twice&lt;I: Iterable&gt;(collection: &amp;I) {
+    let mut count = 0;
+    for _ in collection.iter() {
+        count += 1;
+    }
 
-    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt; {
-        self.iter()
+    for elem in collection.iter() {
+        process(elem, count);
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>However, this placement of the where clause is in fact rather inconsistent, since the <code>= &lt;&amp;'a [T] as Iterator&gt;::Iter</code> is in some sense the &quot;body&quot; of the item.</p>
-<p>The same current syntax is used for where clauses on type aliases (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=74eeed1795b693f238150f825a0e8438">playground</a>):</p>
-<pre><pre class="playground"><code class="language-rust">type Foo&lt;T&gt; where T: Eq = Vec&lt;T&gt;;
-
-fn main() { }
-</code></pre></pre>
-<h2 id="top-level-type-aliases"><a class="header" href="#top-level-type-aliases">Top-level type aliases</a></h2>
-<p>Currently, we accept where clauses in top-level type aliases, but they are deprecated (warning) and semi-ignored:</p>
-<pre><code>type StringMap&lt;K&gt; where
-    K: PartialOrd
-= BTreeMap&lt;K, String&gt;
-</code></pre>
-<p>Under this proposal, this syntax remains, but is deprecated. The newer syntax for type aliases (with <code>where</code> coming after the type) would remain feature gated until such time as we enforce the expected semantics.</p>
-<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
-<h3 id="keep-the-current-syntax"><a class="header" href="#keep-the-current-syntax">Keep the current syntax.</a></h3>
-<p>In this case, we must settle the question of how we expect it to be formatted (surely not as I have shown it above).</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
-    type Iter&lt;'a&gt; where Self: 'a 
-        = &lt;&amp;'a [T] as IntoIterator&gt;::IntoIter;
-
-    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt; {
-        self.iter()
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<h3 id="accept-either"><a class="header" href="#accept-either">Accept either</a></h3>
-<p>What do we do if both are supplied?</p>
+<p>and we can invoke that by writing code like <code>count_twice(&amp;vec![1, 2, 3, 4, 5, 6])</code>.</p>
+<p><a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2021&amp;gist=558ba120ead44f1e2f3825cb0df943da">Play with the code from this section on the Rust playground.</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../design-discussions/where-the-where-1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../explainer/motivation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../design-discussions/complexity.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../explainer/where-clauses.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -229,10 +233,10 @@ fn main() { }
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../design-discussions/where-the-where-1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../explainer/motivation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../design-discussions/complexity.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../explainer/where-clauses.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

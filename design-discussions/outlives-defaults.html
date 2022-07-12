@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../updates.html">✏️ Updates</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../updates/2021-oct.html">2021-Oct</a></li></ol></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/using.html">Using GATs</a></li><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/future_directions.html">Future directions</a></li></ol></li><li class="chapter-item "><a href="../RFC.html">✨ RFC</a></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-discussions/outlives-defaults.html" class="active">💬 Outlives defaults</a></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item "><a href="../design_patterns/many_modes.html">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item expanded "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-discussions/outlives-defaults.html" class="active">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -138,250 +138,210 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="outlives-defaults"><a class="header" href="#outlives-defaults">Outlives defaults</a></h1>
-<h2 id="links"><a class="header" href="#links">Links</a></h2>
-<ul>
-<li>Discussion issue: <a href="https://github.com/rust-lang/rust/issues/87479">#87479</a></li>
-</ul>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<p>We are moving towards stabilizing GATs (tracking issue: <a href="https://github.com/rust-lang/rust/issues/44265">#44265</a>) but there is one major ergonomic hurdle that we should decide how to manage before we go forward. In particular, a great many GAT use cases require a surprising where clause to be well-typed; this typically has the form <code>where Self: 'a</code>. In &quot;English&quot;, this states that the GAT can only be used with some lifetime <code>'a</code> that could've been used to borrow the <code>Self</code> type. This is because GATs are frequently used to return data owned by the <code>Self</code> type. It might be useful if we were to create some rules to add this rule by default. Once we stabilize, changing defaults will be more difficult, and could require an edition, therefore it's better to evaluate the rules now.</p>
-<h2 id="i-have-an-opinion-what-should-i-do"><a class="header" href="#i-have-an-opinion-what-should-i-do">I have an opinion! What should I do?</a></h2>
-<p>To make this decision in an informed way, <strong>what we need most are real-world examples and experience reports</strong>. If you are experimenting with GATs, for example, how often do you use <code>where Self: 'a</code> and how did you find out that it is necessary? Would the default proposals described below work for you? If not, can you describe the trait so we can understand why they would not work?</p>
-<p>Of great use would be example usages that do NOT require <code>where Self: 'a</code>. It'd be good to be able to evaluate the various defaulting schemes and see whether they would interfere with the trait. Knowing the trait and a rough sketch of the impls would be helpful.</p>
-<h2 id="background-what-where-clause-now"><a class="header" href="#background-what-where-clause-now">Background: what where clause now?</a></h2>
-<p>Consider the typical &quot;lending iterator&quot; example. The idea here is to have an iterator that produces values that may have references into the <strong>iterator itself</strong> (as opposed to references into the collection being iterated over). In other words, given a <code>next</code> method like <code>fn next&lt;'a&gt;(&amp;'a mut self)</code>, the returned items have to be able to reference <code>'a</code>. The typical <code>Iterator</code> trait cannot express that, but GATs can:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>GATs as naively implemented have a major footgun. Given a trait like this...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'a&gt;;
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
 
-    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt;;
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Unfortunately, this trait definition turns out to be not quite right in practice. Consider an example like this, an iterator that yields a reference to the same item over and over again (note that it owns the item it is referencing):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>...users would not be able to write a typical impl, e.g....</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct RefOnce&lt;T&gt; {
-    my_data: T    
-}
+</span>impl&lt;T&gt; Iterable for Vec&lt;T&gt; {
+    type Iter&lt;'c&gt; = std::slice::Iter&lt;'c, T&gt;;
 
-impl&lt;T&gt; LendingIterator for RefOnce&lt;T&gt; {
-    type Item&lt;'a&gt; where Self: 'a = &amp;'a T;
-
-    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt; {
-        &amp;self.my_data
+    fn iter(&amp;self) -&gt; Self::Iter&lt;'_&gt; {
+        self.iter()
     }
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Here, the type <code>type Item&lt;'a&gt; = &amp;'a T</code> declaration is actually illegal. Why is that? The assumption when authoring the trait was that <code>'a</code> would always be the lifetime of the <code>self</code> reference in the <code>next</code> function, of course, but that is not in fact <em>required</em>. People can reference <code>Item</code> with any lifetime they want. For example, what if somebody wrote the type <code>&lt;SomeType&lt;T&gt; as LendingIterator&gt;::Item&lt;'static&gt;</code>? In this case, <code>T: 'static</code> would have to be true, but <code>T</code> may in fact contain borrowed references. This is why the compiler gives you a &quot;T may not outlive <code>'a</code>&quot; error (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=821e30ee635326a22fc19cd940bbaf62">playground</a>). </p>
-<p>We can encode the constraint that &quot;<code>'a</code> is meant to be the lifetime of the <code>self</code> reference&quot; by adding a <code>where Self: 'a</code> clause to the <code>type Item</code> declaration. This is saying &quot;you can only use a <code>'a</code> that could be a reference to <code>Self</code>&quot;. If you make this change, you'll find that the code compiles (<a href="https://play.rust-lang.org/?version=nightly&amp;mode=debug&amp;edition=2018&amp;gist=87cb2430ee76ece77499d3c6605874df">playground</a>): </p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>This would not work because the type <code>Iter&lt;'c, T&gt;</code> is only well-formed if <code>T: 'c</code>, and that is not known on the associated type. How should we manage this?</p>
+<h2 id="conclusion-require-probably-needed-where-clauses-on-gats-to-be-written-explicitly"><a class="header" href="#conclusion-require-probably-needed-where-clauses-on-gats-to-be-written-explicitly">Conclusion: Require &quot;probably needed&quot; where-clauses on GATs to be written explicitly</a></h2>
+<p>The original write-up and details of the discussion can be found <a href="./outlives-defaults-1.html">here</a>. The conclusion was to adopt the most conservative route and <strong>require</strong> users to explicitly write a set of where clauses on associated types. These where-clauses are deduced by examining the method signatures of methods that appear in the same trait, looking for relationships that hold within the methods and requiring those same relationships to be reproduced on the associated type.</p>
+<p>In our example trait <code>Iterable</code>...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'a&gt; where Self: 'a;
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
 
-    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt;;
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h2 id="when-would-you-not-want-the-where-clause-self-a"><a class="header" href="#when-would-you-not-want-the-where-clause-self-a">When would you NOT want the where clause <code>Self: 'a</code>?</a></h2>
-<p>If the associated type cannot refer to data that comes from the <code>Self</code> type, then the <code>where Self: 'a</code> is unnecessary, and is in fact somewhat constraining.</p>
-<h3 id="example-output-doesnt-borrow-from-self"><a class="header" href="#example-output-doesnt-borrow-from-self">Example: Output doesn't borrow from Self</a></h3>
-<p>In the <code>Parser</code> trait, the <code>Output</code> does not ultimately contain data borrowed from <code>self</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<p>...the method <code>iter</code> returns <code>&lt;Self as Iterable&gt;::Iter&lt;'s&gt;</code> (written in fully qualified form), and we have that <code>self: &amp;'s Self</code>. The parameter type implies that <code>Self: 's</code>, and therefore we require the bound <code>where Self: 'c</code> to be placed on the associated type:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>trait Parser {
-    type Output&lt;'a&gt;;
-    fn parse&lt;'a&gt;(&amp;mut self, data: &amp;'a [u8]) -&gt; Self::Output&lt;'a&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>If you were to implement <code>Parser</code> for some reference type (in this case, <code>&amp;'b Dummy</code>) you can now set <code>Output</code> to something that has no relation to <code>'b</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;'b&gt; Parser for &amp;'b Dummy {
-    type Output&lt;'a&gt; = &amp;'a [u8];
-
-    fn parse&lt;'a&gt;(&amp;mut self, data: &amp;'a [u8]) -&gt; Self::Output&lt;'a&gt; {
-        data 
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Note that you would need a similar <code>where</code> clause if you were going to have a setup like:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Transform&lt;Input&gt; {
-    type Output&lt;'a&gt;
+</span>trait Iterable {
+    type Iter&lt;'c&gt;
     where
-        Input: 'i;
+        Self: 'c; // required for trait to compile
 
-    fn transform&lt;'i&gt;(&amp;mut self: &amp;'i Input) -&gt; Self::Output&lt;'i&gt;;
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<h3 id="example-iter-static"><a class="header" href="#example-iter-static">Example: Iter static</a></h3>
-<p>In the previous example, the lifetime parameter for <code>Output</code> was not related to the <code>self</code> parameter. Are there (realistic) examples where the associated type is applied to the lifetime parameter from <code>self</code> <em>but</em> the <code>where Self: 'a</code> is not desired?</p>
-<p>There are some, but they rely on having &quot;special knowledge&quot; of the types that will be used in the impl, and they don't seem especially realistic. The reason is that, if you have a GAT with a lifetime parameter, it is likely that the GAT contains some data borrowed for that lifetime! But if you use the lifetime of <code>self</code>, that implies we are borrowing some data from <code>self</code> -- however, it doesn't <em>necessarily</em> imply that we are borrowing data of any particular type. Consider this example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Message {
-    type Data&lt;'a&gt;: Display;
-
-    fn data&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Data&lt;'b&gt;;
-
-    fn default() -&gt; Self::Data&lt;'static&gt;;
-}
-
-struct MyMessage&lt;T&gt; {
-    text: String,
-    payload: T,
-}
-
-impl&lt;T&gt; Message for MyMessage&lt;T&gt; {
-    type Data&lt;'a&gt;: Display = &amp;'a str;
-    // No requirement that `T: 'a`!
-
-    fn data&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Data&lt;'b&gt; {
-        // In here, we know that `T: 'b`
-    }
-
-    fn default() -&gt; Self::Data&lt;'static&gt; {
-        &quot;Hello, world&quot;        
-    }
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Here the <code>where T: 'a</code> requirement is not necessary, and may in fact be annoying when invoking <code>&lt;MyMessage&lt;T&gt; as Message&gt;::default()</code> (as it would then require that <code>T: 'static</code>).</p>
-<p>Another possibility is that the usage of <code>&lt;MyMessage&lt;T&gt; as Message&gt;::Data&lt;'static&gt;</code> doesn't appear inside the trait definition, although it is hard to imagine exactly how one writes a useful function like that in practice.</p>
-<h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
-<h3 id="status-quo"><a class="header" href="#status-quo">Status quo</a></h3>
-<p>We ship with no default. This kind of locks in a box, because adding a default later would be a breaking change to existing impls that are affected by the default. since some of them may be using the associated types with a lifetime unrelated to <code>Self</code>. Note though that a sufficiently tailored default would only break code that was going to -- or perhaps <em>very likely to</em> -- not compile anyhow.</p>
-<h3 id="smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters"><a class="header" href="#smart-default-add-where-self-a-if-the-gat-is-used-with-the-lifetime-from-self-and-extend-to-other-type-parameters">Smart default: add <code>where Self: 'a</code> if the GAT is used with the lifetime from <code>&amp;self</code> (and extend to other type parameters)</a></h3>
-<p>Analyze the types of methods within the trait definition. It a GAT is applied to a lifetime <code>'x</code>, examine the implied bounds of the method for bounds of the form <code>T: 'x</code>, where <code>T</code> is an input parameter to the trait. If we find such bounds on all methods for every use of the GAT, then add the corresponding default.</p>
-<p>Consider the <code>LendingIterator</code> trait:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'a&gt;;
-
-    fn next&lt;'b&gt;(&amp;'b mut self) -&gt; Self::Item&lt;'b&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Analyzing the closure body, we see that it contains <code>Self::Item&lt;'b&gt;</code> where <code>'b</code> is the lifetime of the <code>self</code> reference (e.g., <code>self: &amp;'b Self</code> or <code>self: &amp;'b mut Self</code>). The implied bounds of this method contain <code>Self: 'b</code>. Since there is only one use of <code>Self::Item&lt;'b&gt;</code>, and the implied bound <code>Self: 'b</code> applies in that case, then we add the default <code>where Self: 'a</code> to the GAT. </p>
-<p>This check is a fairly simple syntactic check, though not necessarily easy to explain. It would accept all the examples that appear in this document, including the example with <code>fn default() -&gt; Self::Data&lt;'static&gt;</code> (in that case, the default is not triggered, because we found a use of <code>Data</code> that is applied to a lifetime for which no implied bound applies). The only case where this default behaves <em>incorrectly</em> is the case where all uses of <code>Self::Data</code> that appear within the trait need the default, but there are uses outside the trait that do not (I couldn't come up with a realistic example of how to do this usefully).</p>
-<h4 id="extending-to-other-type-parameters"><a class="header" href="#extending-to-other-type-parameters">Extending to other type parameters</a></h4>
-<p>The inference can be extended naturally beyond <code>self</code> to other type parameters. Therefore this example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Parser&lt;Input&gt; {
-    type Output&lt;'i&gt;;
-
-    fn get&lt;'input&gt;(&amp;mut self, i: &amp;'input Input) -&gt; Self::Output&lt;'input&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
-<p>Similarly:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Parser&lt;Input&gt; {
-    type Output&lt;'i&gt;;
-
-    fn get(&amp;mut self, i: &amp;'input Input) -&gt; Self::Output&lt;'input&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>would infer a <code>where Input: 'i</code> bound on <code>type Output&lt;'i&gt;</code>.</p>
-<h4 id="avoiding-the-default"><a class="header" href="#avoiding-the-default">Avoiding the default</a></h4>
-<p>If this default is truly not desired, there is a workaround: one can declare a supertrait that contains just the associated type. For example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait IterType {
-    type Iter&lt;'b&gt;;
-}
-
-trait LendingIterator: IterType {
-    fn next(&amp;mut self) -&gt; Self::Iter&lt;'_&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>This workaround is not especially obvious, however.</p>
-<h4 id="related-precedent"><a class="header" href="#related-precedent">Related precedent</a></h4>
-<p>We used to require <code>T: 'a</code> bounds in structs:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct Foo&lt;'a, T&gt; {
-    x: &amp;'a T
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>but as of <a href="https://rust-lang.github.io/rfcs/2093-infer-outlives.html">RFC 2093</a> we infer such bounds from the fields in the struct body. In this case, if we do come up with a default rule, we are essentially inferring the presence of such bounds by usages of the associated type within the trait definition.</p>
-<h2 id="recommendation"><a class="header" href="#recommendation">Recommendation</a></h2>
-<p>Niko's recommendation is to use the &quot;smart defaults&quot;. Why? They basically always do the right thing, thus contributing to <a href="https://rustacean-principles.netlify.app/how_rust_empowers/supportive.html">supportive</a>, at the cost of (theoretical) <a href="https://rustacean-principles.netlify.app/how_rust_empowers/versatile.html">versatility</a>. This seems like the right trade-off to me.</p>
-<p>The counterargument would be: the rules are sufficiently complex, we can potentially add this later, and people are going to be surprised by this default when it &quot;goes wrong&quot; for them. It would be hard, but not impossible, to add a tailored error message for cases where the <code>where T: 'b</code> check fails.</p>
-<p>Not sure about Jack's opinion. =)</p>
-<h2 id="appendix-a-ruled-out-alternatives"><a class="header" href="#appendix-a-ruled-out-alternatives">Appendix A: Ruled out alternatives</a></h2>
-<h3 id="special-syntax"><a class="header" href="#special-syntax">Special syntax</a></h3>
-<p>We could use the <code>'self</code> &quot;keyword&quot;, permitted only in GATs, to indicate &quot;a lifetime with the where clause <code>where Self: 'self</code>&quot;. The <code>LendingIterator</code> trait would therefore be written</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait LendingIterator {
-    type Item&lt;'self&gt;;
-
-    fn next(&amp;mut self) -&gt; Self::Item&lt;'_&gt;;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p><em>Forwards compatibility note:</em> This option could be added later; note also that <code>'self</code> is not currently valid.</p>
-<p><strong>Why not?</strong> <code>'self</code> is an awfully suggestive syntax. It may be useful for things like self-referential structs. This just doesn't important enough.</p>
-<h3 id="force-people-to-write-where-self-a"><a class="header" href="#force-people-to-write-where-self-a">Force people to write <code>where Self: 'a</code></a></h3>
-<p>To buy time, we could force people to write <code>where Self: 'a</code>, so that we can later allow it to be elided. This unfortunately would eliminate a number of valid use cases for GATs (though they would later be supported).</p>
-<p><strong>Why not?</strong> Rules out a number of useful cases.</p>
-<h3 id="dumb-default-always-default-to-where-self-a"><a class="header" href="#dumb-default-always-default-to-where-self-a">Dumb default: Always default to <code>where Self: 'a</code></a></h3>
-<p>The most obvious default is to add <code>where Self: 'a</code> to the where clause list for any GAT with a lifetime parameter <code>'a</code>, but that seems too crude. It will rule out all existing cases unless we add some form of &quot;opt-out&quot; syntax, for which we have no real precedent.</p>
-<p><strong>Why not?</strong> Rules out a number of useful cases.</p>
-<h2 id="appendix-b-considerations"><a class="header" href="#appendix-b-considerations">Appendix B: Considerations</a></h2>
+<h2 id="rationale"><a class="header" href="#rationale">Rationale</a></h2>
+<p>The rationale for this decision is that it is the most forwards compatible one: we can opt to remove the required bounds later, and all code still works. We can also opt to add the required bounds by default later, and all existing code still works, it is merely more explicit than required.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
+<p>You can read more about this decision here:</p>
 <ul>
-<li><a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-890111937">How 'obvious' are the rules?</a></li>
+<li>The explainer has a <a href="../explainer/required_bounds.html">page on this decision</a> that gives a more thorough explanation and covers how you can give feedback if you are finding this infereres with a trait you are trying to write.</li>
+<li>The <a href="./outlives-defaults-1.html">original write-up and associated discussion</a> is available. The issue was also discussed on <a href="https://github.com/rust-lang/rust/issues/87479">#87479</a> and there was also a <a href="https://github.com/rust-lang/lang-team/blob/master/design-meeting-minutes/2021-09-22-GAT-defaults.md">lang team design meeting</a>.</li>
+<li>This page supplied a reference version of the semantics, works through some examples, and motivates the rules.</li>
 </ul>
-<h2 id="appendix-c-other-examples"><a class="header" href="#appendix-c-other-examples">Appendix C: Other examples</a></h2>
-<h3 id="example-ruma"><a class="header" href="#example-ruma">Example: Ruma</a></h3>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<h2 id="reference-rules"><a class="header" href="#reference-rules">Reference rules</a></h2>
+<p>The precise rules are as follows:</p>
+<ul>
+<li>For every GAT <code>G</code> in a trait definition with generic parameters <code>X0...Xn</code> from the trait and <code>Xn..Xm</code> on the GAT... (e.g., <code>Item</code> or <code>Iterable</code>, in the case of <code>Iterable</code>, with generic parameters <code>[Self]</code> from the trait and <code>['me]</code> from the GAT)
+<ul>
+<li>If, for every method in the trait... (e.g., <code>iter</code>, in the case of <code>Iterable</code>)
+<ul>
+<li>When the method signature (argument types, return type, where clauses) references <code>G</code> like <code>&lt;P0 as Trait&lt;P1..Pn&gt;&gt;::G&lt;Pn..Pm&gt;</code> (e.g., <code>&lt;Self as Iterable&gt;::Iterator&lt;'a&gt;</code>, in the <code>iter</code> method, where <code>P0 = Self</code> and <code>P1</code> = <code>'a</code>)...
+<ul>
+<li>we can show that <code>Pi: Pj</code> for two parameters on the reference to <code>G</code>, and <code>Pi</code> is not <code>'static</code> (e.g., <code>Self: 'a</code>, in our example)
+<ul>
+<li>then the GAT must have <code>Xi: Xj</code> in its where clause list in the trait (e.g., <code>Self: 'me</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently asked questions</a></h2>
+<h3 id="can-you-work-through-the-iterable-example-in-more-detail"><a class="header" href="#can-you-work-through-the-iterable-example-in-more-detail">Can you work through the <code>Iterable</code> example in more detail?</a></h3>
+<p>You mean the reference example from this page? Sure! This trait requires a <code>where Self: 'c</code> clause on the associated type <code>Iter</code>...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>// Every endpoint in the Matrix REST API has two request and response types in Ruma, one Incoming
-// (used for deserialization) and out Outgoing (used for serialization). To avoid annoying clones when
-// sending a request, most non-copy fields in the outgoing structs are references.
-//
-// The request traits have an associated type for the corresponding response type so things can be
-// matched up properly.
-pub trait IncomingRequest: Sized {
-    // This is the current definition of the associated type I'd like to make generic.
-    type OutgoingResponse: OutgoingResponse;
-    // AFAICT adding a lifetime parameter is all I need.
-    type OutgoingResponse&lt;'a&gt;: OutgoingResponse;
+</span>trait Iterable {
+    type Iter&lt;'c&gt;;
 
-    // Other trait members... (not using Self::OutgoingResponse)
+    fn iter&lt;'s&gt;(&amp;'s self) -&gt; Self::Iter&lt;'s&gt;;
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><a href="https://docs.rs/ruma-api/0.17.1/ruma_api/trait.IncomingRequest.html">full definition</a></p>
+<p>...this occurs because:</p>
+<ul>
+<li>the <code>iter</code> function references <code>&lt;Self as Iterable&gt;::Iter&lt;'s&gt;</code> in its return type</li>
+<li>we can show that <code>Self: 's</code> in the method environment</li>
+<li>and <code>Self</code> is not <code>'static</code> (in fact, it's a type, not a lifetime)</li>
+<li>when we translate <code>Self: 's</code> into the namespace of <code>Iter</code>, we wind up with <code>Self: 'c</code>, which is the required bound</li>
+</ul>
+<h3 id="why-do-the-rules-ignore-parameters-equal-to-static"><a class="header" href="#why-do-the-rules-ignore-parameters-equal-to-static">Why do the rules ignore parameters equal to <code>'static</code>?</a></h3>
+<p>Consider <a href="https://github.com/rust-lang/rust/issues/87479#issuecomment-1010484170">this example</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>#![feature(generic_associated_types)]
+
+<span class="boring">fn main() {
+</span>trait X&lt;'a&gt; {
+    type Y&lt;'b&gt;;
+    fn foo(&amp;self) -&gt; Self::Y&lt;'static&gt;;
+})):
+<span class="boring">}
+</span></code></pre></pre>
+<p>Without the special case for <code>'static</code>, we would see that the return type includes</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&lt;Self as X&lt;'a&gt;&gt;::Y&lt;'static&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>and then check that <code>'static: 'a</code> (it does, unsurprisingly), and hence conclude that we need to preserve that relationship by adding a <code>where 'b: 'a</code> clause to the associated type. But that where clause isn't likely to help any impls type check. In fact, the fact that <code>Self::Y&lt;'static&gt;</code> can be hard-coded into the trait signature suggests that, for all impls, the value of <code>Y</code> must either (a) not reference <code>'b</code> or else (b) only use <code>'b</code> as part of some ref <code>&amp;'b T</code> where <code>T: 'static</code>. So really there isn't much point to adding where-clauses relating <code>'b</code>. You <em>could</em> imagine that an impl might want to have <code>&amp;'a &amp;'b u32</code>, and to rely on the fact that <code>'b: 'a</code> in every case where it appears in the interface -- but right now, the only usage in the interface is <code>'static</code>, and so that same type could just be <code>&amp;'a &amp;'static u32</code>, which would work fine.</p>
+<h3 id="how-do-you-know-youve-gotten-the-exact-rules-for-required-bounds-correct-for-backcompat"><a class="header" href="#how-do-you-know-youve-gotten-the-exact-rules-for-required-bounds-correct-for-backcompat">How do you <em>know</em> you've gotten the exact rules for required bounds correct (for backcompat)?</a></h3>
+<p>Well, we are pretty sure, because our algorithm is quite general. It essentially looks for any patterns or relationships between parameters found in the method signatures of the trait, modulo the carve-out for <code>'static</code> described in answer to the previous question. It's possible that we could find a source of relationships we haven't considered, or we could find that the carve-out masks something more common, but those seem unlikely, and regardless they would likely be quite obscure cases (and hence it may be possible to tweak the rules without affecting existing code, or tweak the rules in an edition).</p>
+<h3 id="bounds-against-other-parameters"><a class="header" href="#bounds-against-other-parameters">Bounds against other parameters</a></h3>
+<p>The required bounds sometimes relate to parameters on the trait itself, and not the GAT parameters:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The reason for this is that the value of the <code>Item</code> type likely incorporates <code>'a</code> and <code>Self</code> and relies on the relationships of those types:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Get&lt;'a&gt; {
+    type Item&lt;'c&gt;
+    where
+        Self: 'a; // &lt;-- Required
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt;;
+}
+
+impl&lt;'a, 'b&gt; Get&lt;'a&gt; for &amp;'b [String] {
+    type Item&lt;'c&gt; = &amp;'a str;
+
+    fn get(&amp;'a self) -&gt; Self::Item&lt;'static&gt; {
+        &amp;self[0]
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="why-not-issue-default-bounds-against-other-associated-types"><a class="header" href="#why-not-issue-default-bounds-against-other-associated-types">Why not issue default bounds against other associated types?</a></h3>
+<p>Hmm, good question! It turns out that the idea of default bounds <em>is</em> applicable beyond GATs. For example, you might have a trait</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Iterator&lt;'i&gt; {
+    type Item;
+
+    fn foo(&amp;'i self) -&gt; Self::Item;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>and the code could suggest that <code>type Item</code> wants a where-clause like <code>where Self: 'i</code>. After all, it will only be used in cases where <code>&amp;'i self</code> is valid type.</p>
+<p>We actually tried to enable default bounds but found that it caused the compiler to fail to bootstrap. Interestingly the trait in question was found in gimli, and it turned out to be a case where the default bounds <em>weren't wrong</em>. They were expressing a lifetime relationship that the trait did require, but that relationship was being encoded on the trait in a different, arguably more roundabout way. The trait in question is the <a href="https://github.com/gimli-rs/object/blob/0a38064531fef4ddbaf93770a3551d333338980e/src/read/traits.rs#L24"><code>Object</code> trait</a>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object&lt;'data: 'file, 'file&gt;: read::private::Sealed {
+    ...
+    type SectionIterator: Iterator&lt;Item = Self::Section&gt;;
+    ...
+    fn sections(&amp;'file self) -&gt; Self::SectionIterator;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The error here suggested adding <code>where Self: 'file</code> to the <code>type SectionIterator</code>. Interestingly, if you look closely at the trait header, you can see that it is <code>'data: 'file</code>. This <code>'data</code> lifetime turns out to be the lifetime of data that appears in <code>Self</code>. So e.g. an <a href="https://github.com/gimli-rs/object/blob/0b76070f1281ebfad5b6b79c74f0c2508e5ee85c/src/read/coff/file.rs#L54">example impl</a> looks like this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;'data, 'file, R&gt; Object&lt;'data, 'file&gt; for CoffFile&lt;'data, R&gt;
+where
+    'data: 'file,
+    R: 'file + ReadRef&lt;'data&gt;,
+{
+    type Segment = CoffSegment&lt;'data, 'file, R&gt;;
+    type SegmentIterator = CoffSegmentIterator&lt;'data, 'file, R&gt;;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>In other words, the default bound of <code>where Self: 'file</code> was correct, but was being managed in a more complex way by the trait -- i.e., by adding a special lifetime (<code>'data</code>) into the trait signature that reflects &quot;the lifetime of borrowed data in <code>Self</code>&quot;, and then relating that lifetime to <code>'file</code>. In fact, the entire <code>Object</code> trait in gimil looks like it probably wanted to be a GAT, roughly like so:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// An object file.
+pub trait Object: read::private::Sealed {
+    ...
+    type SectionIterator&lt;'file&gt;: Iterator&lt;Item = Self::Section&gt;
+    where
+        Self: 'file;
+    ...
+    fn sections(&amp;self) -&gt; Self::SectionIterator&lt;'_&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>To my eyes, this is unquestionably a simpler trait (and it fits what will likely become a fairly standard pattern).</p>
 
                     </main>
 
@@ -390,7 +350,7 @@ pub trait IncomingRequest: Sized {
                             <a rel="prev" href="../design-discussions/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../design-discussions/where-the-where-1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../design-discussions/outlives-defaults-1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -402,7 +362,7 @@ pub trait IncomingRequest: Sized {
                     <a rel="prev" href="../design-discussions/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../design-discussions/where-the-where-1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../design-discussions/outlives-defaults-1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

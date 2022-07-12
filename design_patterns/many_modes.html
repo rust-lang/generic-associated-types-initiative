@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Many modes - Generic Associated Types Initiative</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html">👋 Welcome</a></li><li class="chapter-item "><a href="../CHARTER.html">📜 Charter</a></li><li class="chapter-item "><a href="../mvp.html">🏗️ MVP Stabilization</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../mvp/concern-too-complex.html">Concern: GATs permit abstractions that make Rust harder to use</a></li><li class="chapter-item "><a href="../mvp/concern-too-rough.html">Concern: GATs are too hard to learn, especially in their current state</a></li><li class="chapter-item "><a href="../mvp/concern-lifetimes-only.html">Concern: we should stabilize lifetime GATs only</a></li><li class="chapter-item "><a href="../mvp/concern-backcompat.html">Concern: not confident the current MVP is backwards compatible</a></li><li class="chapter-item "><a href="../mvp/concern-right-rules-for-required-bounds.html">Concern: Do we have the right rules for required bounds?</a></li></ol></li><li class="chapter-item "><a href="../explainer.html">📚 Explainer</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/motivation.html">Why GATs?</a></li><li class="chapter-item "><a href="../explainer/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../explainer/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../explainer/rough_edges.html">Rough edges</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../explainer/required_bounds.html">Required bounds</a></li><li class="chapter-item "><a href="../explainer/no_implied_bounds.html">No implied bounds on HRTB</a></li></ol></li></ol></li><li class="chapter-item "><a href="../shiny_future.html">🔮 Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../shiny_future/iterable.html">Defining and implementing the Iterable trait with GATs</a></li><li class="chapter-item "><a href="../shiny_future/where-clauses.html">GATs in where-clauses</a></li><li class="chapter-item "><a href="../shiny_future/proposals.html">Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../design_patterns.html">✍️ Design patterns</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design_patterns/iterable.html">Iterable and lending iterators</a></li><li class="chapter-item expanded "><a href="../design_patterns/many_modes.html" class="active">Many modes</a></li><li class="chapter-item "><a href="../design_patterns/generic_scopes.html">Generic scopes</a></li><li class="chapter-item "><a href="../design_patterns/pointer_types.html">Pointer types</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/index.html">💬 Design discussions</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults.html">💬 Outlives defaults</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/outlives-defaults-1.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/where-the-where-1.html">💬 Where does the where clause go?</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../design-discussions/where-the-where.html">Initial write-up</a></li></ol></li><li class="chapter-item "><a href="../design-discussions/complexity.html">💬 Are GATs too complex?</a></li><li class="chapter-item "><a href="../design-discussions/lifetimes-only.html">💬 Should GATs only support lifetime parameters?</a></li></ol></li><li class="chapter-item "><a href="../FAQ.html">😕 FAQ</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Generic Associated Types Initiative</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/generic-associated-types-initiative" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="the-many-modes-pattern"><a class="header" href="#the-many-modes-pattern">The &quot;many modes&quot; pattern</a></h1>
+<p><img src="https://img.shields.io/badge/status-nightly-important" alt="available on nightly" /> <a href="https://github.com/rust-lang/rust/pull/96709"><img src="https://img.shields.io/badge/note-stabilization%20in%20progress-informational" alt="stabilization" /></a></p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>The &quot;many modes&quot; pattern is being able to take a single function and have it operate in multiple &quot;modes&quot;. In the specific case examined here, the chumsky parsing library, <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1118409546">GATs were used</a> to make the parsing combinators generic over a mode (produce a result vs do not produce a result). This results in significant speedups, because producing a result when you don't need one is expensive at runtime.</p>
+<p>To implement the &quot;many modes&quot; pattern, you often have a type representing each mode:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct ParseMode;
+struct CheckMode;
+<span class="boring">}
+</span></code></pre></pre>
+<p>and then with a trait that defines the effect of that type. This trait often has associated types that can, e.g., transform the result of a function executing in that mode. This associate type takes a generic parameter <code>T</code> representing the return type of the function in question:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Mode {
+    /// Represents the *actual* output when a function that produces 
+    /// `T` is processed in this mode.
+    type Output&lt;T&gt;;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2 id="details"><a class="header" href="#details">Details</a></h2>
+<p><em>This was originally posted as a <a href="https://github.com/rust-lang/rust/pull/96709#issuecomment-1167220240">comment on the issue thread</a>.</em></p>
+<p>The first example I looked at closely was the <a href="">chumsky parsing library</a>. This is leveraging a pattern that I would call the &quot;many modes&quot; pattern. The idea is that you have some &quot;core function&quot; but you want to execute this function in many different modes. Ideally, you'd like to define the modes independently from the function, and you'd like to be able to add more modes later without having to change the function at all. (If you're familiar with Haskell, monads are an example of this pattern; the monad specifies the &quot;mode&quot; in which some simple sequential function is executed.)</p>
+<p>chumsky is a parser combinator library, so the &quot;core function&quot; is a parse function, defined in the <code>Parser</code> trait. Each <code>Parser</code> trait impl contains a function that indicates how to parse some particular construct in the grammar. Normally, this parser function builds up a data structure representing the parsed data. But sometimes you don't need the full results of the parse: sometimes you might just like to know if the parse succeeds or fails, without building the parsed version. Thus, the &quot;many modes&quot; pattern: we'd like to be able to define our parser and then execute it against one of two modes, <em>emit</em> or <em>check</em>. The emit mode will build the data structure, but <em>check</em> will just check if the parse succeeds.</p>
+<p>In the past, chumsky only had one mode, so they always built the data structure. This could take significant time and memory. Adding the &quot;check&quot; mode let's them skip that, which is a significant performance win. Moreover, the modes are encapsulated within the library traits, and aren't visible to end-users. Nice!</p>
+<h3 id="how-did-chumsky-model-modes-with-gats"><a class="header" href="#how-did-chumsky-model-modes-with-gats">How did chumsky model modes with GATs?</a></h3>
+<p>Chumsky added a <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait, encapsulated as part of their <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L67"><code>internals</code></a> module. Instead of directly constructing the results from parsing, the <code>Parser</code> impls invoke methods on <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> with closures. This allows the mode to decide which parts of the parsing to execute and which to skip. So, in check mode, the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> would decide not to execute the closure that builds the output data structure, for example.</p>
+<p>Using this approach, the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L137"><code>Parser</code></a> trait does indeed have several 'entrypoint' methods, but they are all defaulted and just invoke a common implementation method called <code>go</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Parser&lt;'a, I: Input + ?Sized, E: Error&lt;I::Token&gt; = (), S: 'a = ()&gt; {
+    type Output;
+    
+    fn parse(&amp;self, input: &amp;'a I) -&gt; Result&lt;Self::Output, E&gt; ... {
+        self.go::&lt;Emit&gt;(...)
+    }
+
+    fn check(&amp;self, input: &amp;'a I) -&gt; Result&lt;(), E&gt; ... {
+        self.go::&lt;Check&gt;(...)
+    }
+    
+    #[doc(hidden)]
+    fn go&lt;M: Mode&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+    where
+        Self: Sized;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Implementations of <code>Parser</code> <em>just</em> specify the <code>go</code> method. Note that the impls are, presumably, either contained within <code>chumsky</code> or generated by <code>chumsky</code> proc-macros, so the <code>go</code> method doesn't need to be documented. However, <em>even if <code>go</code> were documented</em>, the <em>trait bounds</em> certainly look quite reasonable. (The type of <code>inp</code> is a bit...imposing, admittedly.)</p>
+<p>So how is the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait defined? Just to focus on the GAT, the trait look likes this:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Mode {
+    type Output&lt;T&gt;;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Here, the <code>T</code> represents the result type of &quot;some parser parsed in this mode&quot;. GATs thus allow us to define a <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> that is <strong>independent</strong> from any particular <code>Parser</code>. There are two impls of <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> (also internal to chumsky):</p>
+<ul>
+<li><a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L115-L117"><code>Check</code></a>, defined like <code>struct Check; impl Mode for Check { type Output&lt;T&gt; = (); ... }</code>. In other words, no matter what parser you use, <code>Check</code> just builds a <code>()</code> result (success or failure is propagated inepdendently of the mode).</li>
+<li><a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L87-L89"><code>Emit</code></a>, defined like <code>struct Emit; impl Mode for Emit { type Output&lt;T&gt; = T; ... }</code>.  In <code>Emit</code> mode, the output is exactly what the parser generated.</li>
+</ul>
+<p>Note that you could, in theory, produce other modes. For example, a <code>Count</code> mode that not only computes success/failure but counts the number of nodes parsed, or perhaps a mode that computes hashes of the resulting parsed value. Moreover, you could add these modes (and the defaulted methods in <code>Parser</code>) <strong>without breaking any clients</strong>.</p>
+<h3 id="how-could-you-model-this-today"><a class="header" href="#how-could-you-model-this-today">How could you model this today?</a></h3>
+<p>I was trying to think how one might model this problem with traits today. All the options I came up with had significant downsides.</p>
+<p><strong>Multiple functions on the trait, or multiple traits.</strong> One obvious option would be to use multiple functions in the parse trait, or multiple traits:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Multiple functions
+trait Parser { fn parse(); fn check(); }
+
+// Multiple traits
+trait Parser: Checker { fn parse(); }
+trait Checker { fn check(); }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Both of these approaches mean that defining a new combinator requires writing the same logic twice, once for parse and once for check, but with small variations, which is both annoying and a great opportunity for bugs. It also means that if chumsky ever wanted to define a new mode, they would have to modify every implementation of <code>Parser</code> (a breaking change, to boot).</p>
+<p><strong>Mode with a type parameter.</strong> You could try defining a the mode trait with a type parameter, like so...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait ModeFor&lt;T&gt; {
+    type Output;
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>go</code> function would then look like</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn go&lt;M: ModeFor&lt;Self::Output&gt;&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+where
+    Self: Sized;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In practice, though, this doesn't really work, for a number of reasons. One of them is that the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait includes methods like <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L74-L78"><code>combine</code></a>, which take the output of many parsers, not just one, and combine them together. Good luck writing that constraint with <code>ModeFor</code>. But even ignoring that, lacking HRTB, the signature of <code>go</code> itself is incomplete. The problem is that, given some impl of <code>Parser</code> for some parser type <code>MyParser</code>, <code>MyParser</code> only knows that <code>M</code> is a valid mode for its particular output. But maybe <code>MyParser</code> plans to (internally) use some other parser combinators that produce different kinds of results. Will the mode <code>M</code> still apply to those? We don't know. We'd have to be able to write a HRTB like <code>for&lt;O&gt; Mode&lt;O&gt;</code>, which Rust doesn't support yet:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn go&lt;M: for&lt;O&gt; Mode&lt;O&gt;&gt;(&amp;self, inp: &amp;mut InputRef&lt;'a, '_, I, E, S&gt;) -&gt; PResult&lt;M, Self::Output, E&gt;
+where
+    Self: Sized;
+<span class="boring">}
+</span></code></pre></pre>
+<p>But even if Rust <em>did</em> support it, you can see that the <code>Mode&lt;T&gt;</code> trait doesn't capture the user's intent as closely as the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait from Chumsky did. The <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait was defined independently from all parsers, which is what we wanted. The <code>Mode&lt;T&gt;</code> trait is defined relative to some specific parser, and then it falls to the <code>go</code> function to say &quot;oh, I want this to be a mode for <em>all</em> parsers&quot; using a HRTB.</p>
+<p>Using just HRTB (which, against, Rust doesn't have), you could define <em>another</em> trait...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Mode: for&lt;O&gt; ModeFor&lt;O&gt; {}
+
+trait ModeFor&lt;O&gt; {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...which would allow us to write <code>M: Mode</code> on <code>go</code> against, but it's hard to argue this is <em>simpler</em> than the original GAT variety. This extra <code>ModeFor</code> trait has a &quot;code smell&quot; to it, it's hard to understand why it is there. Whereas before, you implemented the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait in just the way you think about it, with a single impl that applies to all parsers...</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Mode for Check {
+    type Output&lt;T&gt; = ();
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>...you now write an impl of <code>ModeFor</code>, where one &quot;instance&quot; of the impl applies to only one parser (which has output type <code>O</code>). It feels indirect:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl&lt;O&gt; ModeFor&lt;O&gt; for Check {
+    type Output = ();
+    ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="how-could-you-model-this-with-rpitit"><a class="header" href="#how-could-you-model-this-with-rpitit">How could you model this with RPITIT?</a></h3>
+<p>It's also been proposed that we should keep GATs, but only as an implementation detail for things like return position impl Trait in traits (RPITIT) or async functions. This implies that we could model the &quot;many modes&quot; pattern with RPITIT. If you look at the <a href="https://github.com/zesterer/chumsky/blob/6a82f90ae4c1a4564e024eb0f63121fc7b7d3c18/src/zero_copy/mod.rs#L70"><code>Mode</code></a> trait, though, you'll see that this simply doesn't work. Consider the <code>combine</code> method, which takes the results from two parsers and combines them to form a new result:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn combine&lt;T, U, V, F: FnOnce(T, U) -&gt; V&gt;(
+    x: Self::Output&lt;T&gt;,
+    y: Self::Output&lt;U&gt;,
+    f: F,
+) -&gt; Self::Output&lt;V&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>How could we write this in terms of a function that returns <code>impl Trait</code>?</p>
+<h3 id="other-patterns"><a class="header" href="#other-patterns">Other patterns</a></h3>
+<p>In this post, I went through the chumsky pattern in detail. I've not had time to dive quite as deep into other examples, but I've been reading through them and trying to extract out patterns. Here are a few patterns I extracted so far:</p>
+<h3 id="did-i-miss-something"><a class="header" href="#did-i-miss-something">Did I miss something?</a></h3>
+<p>Maybe you see a way to express the &quot;many modes&quot; pattern (or one of the other patterns I cited) in Rust today that works well? Let me know by commenting on the thread.</p>
+<p>(Since posting this, it occurs to me that one could probably use procedural macros to achieve some similar goals, though I think this approach would also have significant downsides.)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../design_patterns/iterable.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../design_patterns/generic_scopes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../design_patterns/iterable.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../design_patterns/generic_scopes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
