@@ -48,10 +48,11 @@ That's fair. I think in general it is true, like sum is easier to understand tha
 
 ## Counterpoint: Macros are not easier
 
-Many folks chimed in to express their feeling that proc macros, or duplicated code, are not easier to understand or maintain, e.g. [Alice Cecile here](https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288732525):
+Many folks chimed in to express their feeling that proc macros, or duplicated code, are not easier to understand or maintain. Some examples:
 
-> Alice Cecile: Macros are so much worse to read / write / maintain than pretty much any type magic I've ever seen. Even very simple stuff is rough
+> [Alice Cecile](https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288732525): Macros are so much worse to read / write / maintain than pretty much any type magic I've ever seen. Even very simple stuff is rough
 
+> [Ralf Jung](https://rust-lang.zulipchat.com/#narrow/stream/213817-t-lang/topic/type-GATs.20vs.20lifetime-GATs.20.5Bfrom.20GATs.20and.20complexity.5D/near/288796879): I would not call [this kind of nonsense](https://doc.rust-lang.org/nightly/std/fmt/trait.Debug.html#impl-Debug-for-fn()%20-%3E%20Ret) very clear. macros do tend to lead to state explosion and huge amounts of redundancy in the docs, making it very hard to see the actual pattern. that's unsurprising since the compiler is never told about the pattern. (that particular example is not solved by GATs, it requires other new type system features, including variadics. it just demonstrates well the perils of macro-generated code.)
 
 ## Counterpoint: Arguing against a feature because it could be misused would block many parts of Rust
 
