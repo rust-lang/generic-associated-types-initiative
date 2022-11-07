@@ -62,7 +62,7 @@ fn count_twice<I: Iterator>(iterator: I) {
 }
 ```
 
-Of course, most Rust types in the standard library have a method called `iter` that is exactly what we want (e.g., [`[T]::iter`](https://doc.rust-lang.org/std/primitive.slice.html#method.iter)). Given an `&'i self`, these functions return a fresh iterator that yields up `&'i T` references into the collection. Because they take a `&self`, they can be called as many times as we want. So, if we knew which kind of collection we had, we could easily write `count_twice` to take a `[T]` or a `HashMap<T>` or whatever. But what we if want to write it generically, so it works across *any* collection? That turns out to be impossible to do nicely with associated types.
+Of course, most Rust types in the standard library have a method called `iter` that is exactly what we want (e.g., [`[T]::iter`](https://doc.rust-lang.org/std/primitive.slice.html#method.iter)). Given an `&'i self`, these functions return a fresh iterator that yields up `&'i T` references into the collection. Because they take a `&self`, they can be called as many times as we want. So, if we knew which kind of collection we had, we could easily write `count_twice` to take a `[T]` or a `HashMap<T>` or whatever. But what if we want to write it generically, so it works across *any* collection? That turns out to be impossible to do nicely with associated types.
 
 To see why, let's try to write the code and see where we get a stuck. We'll start by defining an `Iterable` trait:
 
