@@ -56,7 +56,7 @@ impl Iterable for Vec<T> {
 }
 ```
 
-The problem comes from the associated types. Consider the `type Item<'c> = &'c T` declaration, for example: for the type `&'c T` to be legal, we must know that `T: 'c`. Otherwise, nothing stops us from using `Self::Item<'static>` to construct a reference with a lietime `'static` that may outlive its referent `T`, and that can lead to unsoundness in the type system. In the case of the `iter` method, the fact that it takes a parameter `self` of type `&'c Vec<T>` already implies that `T: 'me` (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT `Item`. This is why the associated types need a where clause:
+The problem comes from the associated types. Consider the `type Item<'c> = &'c T` declaration, for example: for the type `&'c T` to be legal, we must know that `T: 'c`. Otherwise, nothing stops us from using `Self::Item<'static>` to construct a reference with a lifetime `'static` that may outlive its referent `T`, and that can lead to unsoundness in the type system. In the case of the `iter` method, the fact that it takes a parameter `self` of type `&'c Vec<T>` already implies that `T: 'me` (otherwise that parameter would have an invalid type). However, that doesn't apply to the GAT `Item`. This is why the associated types need a where clause:
 
 ```rust
 impl Iterable for Vec<T> {
