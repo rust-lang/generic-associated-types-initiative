@@ -1,10 +1,8 @@
 # Defining and implementing the Iterable trait with GATs
 
-{{#include ../badges/nightly.md}} {{#include ../badges/stabilization-96709.md}}
-
 > [Play with this example on the Rust playground.][playground]
 
-[playground]: https://play.rust-lang.org/?version=nightly&mode=debug&edition=2021&gist=558ba120ead44f1e2f3825cb0df943da
+[playground]: https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=bb51162555c0f6621e635e2bba9e0b54
 
 To express traits like `Iterable`, we can make use generic associated types -- that is, associated types with generic parameters. Here is the complete `Iterable` trait:
 
